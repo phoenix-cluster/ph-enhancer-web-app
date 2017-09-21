@@ -9,20 +9,23 @@
       </a>
    </logo>
    <links>
-      <ul class="navbar-nav">
+      <nav>
+         <ul class="navbar-nav">
          <li class="nav-item active">
-            <a class="nav-link waves-light" mdbRippleRadius>Home <span class="sr-only">(current)</span></a>
+            <a class="nav-link waves-light" mdbRippleRadius routerLink="/index" >Home <span class="sr-only">(current)</span></a>
          </li>
          <li class="nav-item">
-            <a class="nav-link waves-light" mdbRippleRadius>Low Confident</a>
+            <a class="nav-link waves-light" mdbRippleRadius routerLink="/low_conf">Low Confident</a>
          </li>
          <li class="nav-item">
-            <a class="nav-link waves-light" mdbRippleRadius>High Confident</a>
+            <a class="nav-link waves-light" mdbRippleRadius routerLink="/high_conf">High Confident</a>
          </li>
          <li class="nav-item">
-            <a class="nav-link waves-light" >New Referring</a>
+            <a class="nav-link waves-light" mdbRippleRadius routerLink="/new_id">New Identified</a>
          </li>
       </ul>
+      </nav>
+
    </links>
 </mdb-navbar>
 </div>

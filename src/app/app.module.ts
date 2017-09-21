@@ -10,25 +10,36 @@ import { CommonModule }     from '@angular/common';
 import { FileUploadModule } from 'ng2-file-upload';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
+import {AppRoutingModule} from './app-routing.module';
 import { AppHeaderComponent } from './components/app-header/app-header.component';
 import { AppFooterComponent } from './components/app-footer/app-footer.component';
+import { HomePageComponent } from './components/home-page/home-page.component';
 
-import { MainLeftMetricsComponent } from './components/main-left-metrics/main-left-metrics.component';
-import { Chart1Component } from './components/main-left-metrics/chart1/chart1.component';
-import { Chart2Component } from './components/main-left-metrics/chart2/chart2.component';
-import { Chart3Component } from './components/main-left-metrics/chart3/chart3.component';
-import { Chart4Component } from './components/main-left-metrics/chart4/chart4.component';
-import { DescriptionComponent } from './components/main-left-metrics/description/description.component';
+import { MainLeftMetricsComponent } from './components/home-page/main-left-metrics/main-left-metrics.component';
+import { Chart1Component } from './components/home-page/main-left-metrics/chart1/chart1.component';
+import { Chart2Component } from './components/home-page/main-left-metrics/chart2/chart2.component';
+import { Chart3Component } from './components/home-page/main-left-metrics/chart3/chart3.component';
+import { Chart4Component } from './components/home-page/main-left-metrics/chart4/chart4.component';
+import { DescriptionComponent } from './components/home-page/main-left-metrics/description/description.component';
 
-import { MainRightAnalysisComponent } from './components/main-right-analysis/main-right-analysis.component';
-import { CheckExamplesComponent } from './components/main-right-analysis/check-examples/check-examples.component';
-import { UploadFilesComponent } from './components/main-right-analysis/do-analysis/upload-files/upload-files.component';
-import { SetParametersComponent } from './components/main-right-analysis/do-analysis/set-parameters/set-parameters.component';
-import { DoAnalysisComponent } from './components/main-right-analysis/do-analysis/do-analysis.component';
+import { MainRightAnalysisComponent } from './components/home-page/main-right-analysis/main-right-analysis.component';
+import { CheckExamplesComponent } from './components/home-page/main-right-analysis/check-examples/check-examples.component';
+import { UploadFilesComponent } from './components/home-page/main-right-analysis/do-analysis/upload-files/upload-files.component';
+import { SetParametersComponent } from './components/home-page/main-right-analysis/do-analysis/set-parameters/set-parameters.component';
+import { DoAnalysisComponent } from './components/home-page/main-right-analysis/do-analysis/do-analysis.component';
+import { LowConfPsmsComponent } from './components/low-conf-psms/low-conf-psms.component';
+import { HighConfPsmsComponent } from './components/high-conf-psms/high-conf-psms.component';
+import { NewIdentifiedComponent } from './components/new-identified/new-identified.component';
+import { ConfScoreChartComponent } from './components/low-conf-psms/conf-score-chart/conf-score-chart.component';
+import { ClusterRatioChartComponent } from './components/low-conf-psms/cluster-ratio-chart/cluster-ratio-chart.component';
+import { ClusterSizeChartComponent } from './components/low-conf-psms/cluster-size-chart/cluster-size-chart.component';
+import { PsmTablesComponent } from './components/low-conf-psms/psm-tables/psm-tables.component';
+import { ClusterSpectraTableComponent } from './components/low-conf-psms/cluster-spectra-table/cluster-spectra-table.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    HomePageComponent,
     AppHeaderComponent,
     AppFooterComponent,
     MainLeftMetricsComponent,
@@ -42,6 +53,14 @@ import { DoAnalysisComponent } from './components/main-right-analysis/do-analysi
     DoAnalysisComponent,
     UploadFilesComponent,
     SetParametersComponent,
+    LowConfPsmsComponent,
+    HighConfPsmsComponent,
+    NewIdentifiedComponent,
+    ConfScoreChartComponent,
+    ClusterRatioChartComponent,
+    ClusterSizeChartComponent,
+    PsmTablesComponent,
+    ClusterSpectraTableComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,7 +70,9 @@ import { DoAnalysisComponent } from './components/main-right-analysis/do-analysi
     NgbModule.forRoot(),
     MDBBootstrapModule.forRoot(),
     CommonModule,
-    FileUploadModule
+    FileUploadModule,
+    AppRoutingModule
+
     // AgmCoreModule.forRoot({
     //   // https://developers.google.com/maps/documentation/javascript/get-api-key?hl=en#key
     //   apiKey: 'Your_api_key'
