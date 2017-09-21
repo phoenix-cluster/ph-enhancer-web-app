@@ -1,0 +1,203 @@
+<h4>
+</h4>
+
+<!--Modal: Subscription From-->
+
+
+<ng-template #content let-c="close" let-d="dismiss">
+    <h2 class="modal-title">Upload files</h2>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+
+  <div class="container modal-body">
+
+    <div class="row">
+
+      <div class="col-md-3">
+
+        <h3>Select files</h3>
+
+        <div ng2FileDrop
+             [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+             (fileOver)="fileOverBase($event)"
+             [uploader]="uploader"
+             class="well my-drop-zone">
+          Base drop zone
+        </div>
+
+        <div ng2FileDrop
+             [ngClass]="{'another-file-over-class': hasAnotherDropZoneOver}"
+             (fileOver)="fileOverAnother($event)"
+             [uploader]="uploader"
+             class="well my-drop-zone">
+          Another drop zone
+        </div>
+
+        Multiple
+        <input type="file" ng2FileSelect [uploader]="uploader" multiple  /><br/>
+
+        Single
+        <input type="file" ng2FileSelect [uploader]="uploader" />
+      </div>
+
+      <div class="col-md-9" style="margin-bottom: 40px">
+
+        <h3>Upload queue</h3>
+        <p>Queue length: {{ uploader?.queue?.length }}</p>
+
+        <table class="table">
+          <thead>
+          <tr>
+            <th width="50%">Name</th>
+            <th>Size</th>
+            <th>Progress</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of uploader.queue">
+            <td><strong>{{ item?.file?.name }}</strong></td>
+            <td *ngIf="uploader.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+            <td *ngIf="uploader.isHTML5">
+              <div class="progress" style="margin-bottom: 0;">
+                <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+              </div>
+            </td>
+            <td class="text-center">
+              <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+              <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+              <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+            </td>
+            <td nowrap>
+              <button type="button" class="btn btn-success btn-xs"
+                      (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                <span class="glyphicon glyphicon-upload"></span> Upload
+              </button>
+              <button type="button" class="btn btn-warning btn-xs"
+                      (click)="item.cancel()" [disabled]="!item.isUploading">
+                <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+              </button>
+              <button type="button" class="btn btn-danger btn-xs"
+                      (click)="item.remove()">
+                <span class="glyphicon glyphicon-trash"></span> Remove
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
+        <div>
+          <div>
+            Queue progress:
+            <div class="progress" style="">
+              <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+            </div>
+          </div>
+          <button type="button" class="btn btn-success btn-s"
+                  (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+            <span class="glyphicon glyphicon-upload"></span> Upload all
+          </button>
+          <button type="button" class="btn btn-warning btn-s"
+                  (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+            <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
+          </button>
+          <button type="button" class="btn btn-danger btn-s"
+                  (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+            <span class="glyphicon glyphicon-trash"></span> Remove all
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-primary" (click)="c('Close click')">Close</button>
+  </div>
+
+</ng-template>
+
+<button class="btn btn-lg btn-outline-primary" (click)="open(content)">
+Upload files
+</button>
+
+<!--<hr>-->
+
+<!--<pre>{{closeResult}}</pre>-->
+
+<!--<button type="button" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#modalSubscription">Select files</button>-->
+
+<!--<div class="modal fade" id="modalSubscription" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">-->
+  <!--<div class="modal-dialog cascading-modal" role="document">-->
+    <!--&lt;!&ndash;Content&ndash;&gt;-->
+    <!--<div class="modal-content">-->
+
+      <!--&lt;!&ndash;Header&ndash;&gt;-->
+      <!--<div class="modal-header light-blue darken-3 white-text">-->
+        <!--<h4 class="title"><i class="fa fa-newspaper-o"></i> Subscription form</h4>-->
+        <!--<button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close">-->
+          <!--<span aria-hidden="true">&times;</span>-->
+        <!--</button>-->
+      <!--</div>-->
+      <!--&lt;!&ndash;Body&ndash;&gt;-->
+      <!--<div class="modal-body mb-0">-->
+
+        <!--<div class="md-form form-sm">-->
+          <!--<i class="fa fa-lock prefix"></i>-->
+          <!--<input type="password" id="form27" class="form-control">-->
+          <!--<label for="form27">Your name</label>-->
+        <!--</div>-->
+
+        <!--<div class="md-form form-sm">-->
+          <!--<i class="fa fa-envelope prefix"></i>-->
+          <!--<input type="text" id="form28" class="form-control">-->
+          <!--<label for="form28">Your email</label>-->
+        <!--</div>-->
+
+        <!--<div class="text-center mt-1-half">-->
+          <!--<button class="btn btn-info mb-1">Submit <i class="fa fa-check ml-1"></i></button>-->
+        <!--</div>-->
+
+      <!--</div>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;/.Content&ndash;&gt;-->
+  <!--</div>-->
+<!--</div>-->
+<!--&lt;!&ndash;Modal: Subscription From&ndash;&gt;-->
+
+<!--&lt;!&ndash; Button trigger modal &ndash;&gt;-->
+<!--<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#basicExample">-->
+  <!--Launch demo modal-->
+<!--</button>-->
+
+<!--&lt;!&ndash; Modal &ndash;&gt;-->
+<!--<div class="modal fade" id="basicExample" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">-->
+  <!--<div class="modal-dialog" role="document">-->
+    <!--&lt;!&ndash;Content&ndash;&gt;-->
+    <!--<div class="modal-content">-->
+      <!--&lt;!&ndash;Header&ndash;&gt;-->
+      <!--<div class="modal-header">-->
+        <!--<h4 class="modal-title w-100" id="myModalLabel">Modal title</h4>-->
+        <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+          <!--<span aria-hidden="true">&times;</span>-->
+        <!--</button>-->
+      <!--</div>-->
+      <!--&lt;!&ndash;Body&ndash;&gt;-->
+      <!--<div class="modal-body">-->
+        <!--...-->
+      <!--</div>-->
+      <!--&lt;!&ndash;Footer&ndash;&gt;-->
+      <!--<div class="modal-footer">-->
+        <!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;/.Content&ndash;&gt;-->
+  <!--</div>-->
+<!--</div>-->
+<!--&lt;!&ndash; Modal &ndash;&gt;-->
+

@@ -15,7 +15,7 @@ describe('MainRightAnalysisComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MainRightAnalysisComponent);
-    component = fixture.componentInstance;
+    component  fixture.componentInstance;
     fixture.detectChanges();
   });
 

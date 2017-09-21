@@ -1,0 +1,36 @@
+<h2 xmlns="http://www.w3.org/1999/html">Set Parameters</h2>
+
+<form role="form">
+    <div class="form-check abc-checkbox">
+        <input class="form-check-input" id="checkbox1" type="checkbox">
+        <label class="form-check-label" for="checkbox1">
+            Search Identified
+        </label>
+    </div>
+    <div class="form-check abc-checkbox">
+        <input class="form-check-input" id="checkbox2" type="checkbox">
+        <label class="form-check-label" for="checkbox2">
+            Search Unidentified
+        </label>
+    </div>
+    <div class="form-check form-check-inline abc-checkbox">
+        <input class="form-check-input" id="checkbox3" type="checkbox">
+        <label class="form-check-label" for="checkbox3">
+            Minimum Cluster Size
+        </label>
+        <input class="mb-2 mr-sm-2 mb-sm-0" id="minSize" list="clusterSizes" placeholder="5">
+            <datalist id="clusterSizes">
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </datalist>
+    </div>
+    <div class="form-row">
+        <button class="btn btn-lg btn-outline-primary" (click)="doAnalysis(content)">
+            Do Analysis
+        </button>
+    </div>
+</form>
