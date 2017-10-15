@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ModalDismissReasons, NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {FileUploader} from "ng2-file-upload";
 
-const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
+const URL = 'http://localhost:8090/upload/files';
 
 @Component({
   selector: 'app-upload-files',
@@ -15,7 +15,7 @@ export class UploadFilesComponent implements OnInit {
 
   constructor(private modalService: NgbModal) {}
 
-  public uploader:FileUploader = new FileUploader({url: URL});
+  public uploader:FileUploader = new FileUploader({url: URL, isHTML5:true, maxFileSize:1000*1000*1000});
   public hasBaseDropZoneOver:boolean = false;
   public hasAnotherDropZoneOver:boolean = false;
 
