@@ -900,7 +900,7 @@ var ui = require('jquery-ui');
 	    makeIonTableMovable(container, options);
 
 	    // CHANGING THE PLOT SIZE
-	    makePlotResizable(container);
+	    // makePlotResizable(container);
 
 	    // PRINT SPECTRUM
 	    printPlot(container);
@@ -969,52 +969,52 @@ var ui = require('jquery-ui');
 				.css( tooltipCSS ).appendTo("body").fadeIn(200);
     }
 
-	function makePlotResizable(container) {
-
-        var options = container.data("options");
-
-		$(getElementSelector(container, elementIds.slider_width)).slider({
-			value:options.width,
-			min: 100,
-			max: 1500,
-			step: 50,
-			slide: function(event, ui) {
-				var width = ui.value;
-				//console.log(ui.value);
-				options.width = width;
-				$(getElementSelector(container, elementIds.msmsplot)).css({width: width});
-                $(getElementSelector(container, elementIds.massErrorPlot)).css({width: width});
-
-				plotAccordingToChoices(container);
-				if(options.ms1peaks && options.ms1peaks.length > 0) {
-					$(getElementSelector(container, elementIds.msPlot)).css({width: width});
-					createMs1Plot(container);
-				}
-				$(getElementSelector(container, elementIds.slider_width_val)).text(width);
-				if ( options.sizeChangeCallbackFunction ) {
-					options.sizeChangeCallbackFunction();
-				}
-			}
-		});
-
-		$(getElementSelector(container, elementIds.slider_height)).slider({
-			value:options.height,
-			min: 100,
-			max: 1000,
-			step: 50,
-			slide: function(event, ui) {
-				var height = ui.value;
-				//console.log(ui.value);
-				options.height = height
-				$(getElementSelector(container, elementIds.msmsplot)).css({height: height});
-				plotAccordingToChoices(container);
-				$(getElementSelector(container, elementIds.slider_height_val)).text(height);
-				if ( options.sizeChangeCallbackFunction ) {
-					options.sizeChangeCallbackFunction();
-				}
-			}
-		});
-	}
+	// function makePlotResizable(container) {
+    //
+     //    var options = container.data("options");
+    //
+	// 	$(getElementSelector(container, elementIds.slider_width)).slider({
+	// 		value:options.width,
+	// 		min: 100,
+	// 		max: 1500,
+	// 		step: 50,
+	// 		slide: function(event, ui) {
+	// 			var width = ui.value;
+	// 			//console.log(ui.value);
+	// 			options.width = width;
+	// 			$(getElementSelector(container, elementIds.msmsplot)).css({width: width});
+     //            $(getElementSelector(container, elementIds.massErrorPlot)).css({width: width});
+    //
+	// 			plotAccordingToChoices(container);
+	// 			if(options.ms1peaks && options.ms1peaks.length > 0) {
+	// 				$(getElementSelector(container, elementIds.msPlot)).css({width: width});
+	// 				createMs1Plot(container);
+	// 			}
+	// 			$(getElementSelector(container, elementIds.slider_width_val)).text(width);
+	// 			if ( options.sizeChangeCallbackFunction ) {
+	// 				options.sizeChangeCallbackFunction();
+	// 			}
+	// 		}
+	// 	});
+    //
+	// 	$(getElementSelector(container, elementIds.slider_height)).slider({
+	// 		value:options.height,
+	// 		min: 100,
+	// 		max: 1000,
+	// 		step: 50,
+	// 		slide: function(event, ui) {
+	// 			var height = ui.value;
+	// 			//console.log(ui.value);
+	// 			options.height = height
+	// 			$(getElementSelector(container, elementIds.msmsplot)).css({height: height});
+	// 			plotAccordingToChoices(container);
+	// 			$(getElementSelector(container, elementIds.slider_height_val)).text(height);
+	// 			if ( options.sizeChangeCallbackFunction ) {
+	// 				options.sizeChangeCallbackFunction();
+	// 			}
+	// 		}
+	// 	});
+	// }
 
 	function printPlot(container) {
 
