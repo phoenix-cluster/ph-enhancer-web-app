@@ -3,23 +3,37 @@ import { Psm } from "../models/psm";
 import { Headers, Http } from "@angular/http";
 
 import 'rxjs/add/operator/toPromise'
+import {PSMsPage} from "../models/psmsPage";
 
 @Injectable()
 
 export class PsmTableService{
 
-  private psmsUrl = 'api/psms';
+  private baseUrl = 'http://localhost:8090/example/v1/';
   private psmTitleListUrl = 'api/psmTitleList';
   private headers = new Headers({'Content-type': 'application/json'});
 
   constructor(private http: Http){}
 
-	getPsms(): Promise<Psm[]>{
-    return this.http.get(this.psmsUrl)
-      .toPromise()
-      .then(response => response.json().data as Psm[])
-      .catch(this.handleError);
-	}
+	// getPsms(): Promise<Psm[]>{
+    // return this.http.get(this.psmsUrl)
+     //  .toPromise()
+     //  .then(response => response.json().data as Psm[])
+     //  .catch(this.handleError);
+	// }
+
+    getPsmsPage(page:number, size:number, sortField:string, sortDirection:string): Promise<PSMsPage>{
+        let psmsUrl = this.baseUrl + "scoredpsms?"
+            + "page=" + page
+            + "&size=" + size
+            + "&sortField=" + sortField
+            + "&sortDirection=" + sortDirection;
+
+        return this.http.get(psmsUrl)
+            .toPromise()
+            .then(response => response.json() as PSMsPage)
+            .catch(this.handleError);
+    }
 
     getPsmTitleList(listLen:number): Promise<string[]>{
     return this.http.get(this.psmTitleListUrl)

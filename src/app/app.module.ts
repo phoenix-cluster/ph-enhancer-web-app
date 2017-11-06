@@ -36,11 +36,13 @@ import { ClusterSizeChartComponent } from './components/low-conf-psms/cluster-si
 import { PsmTablesComponent } from './components/low-conf-psms/psm-tables/psm-tables.component';
 import { ClusterSpectraTableComponent } from './components/low-conf-psms/cluster-spectra-table/cluster-spectra-table.component';
 
-import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService }  from './services/in-memory-data.service';
+// import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
+// import { InMemoryDataService }  from './services/in-memory-data.service';
 import {PsmTableService} from "./services/psm-tabel.service";
 import {SpectrumTableService} from "./services/spectra-tabel.service";
+import {ClusterService} from "./services/cluster.service";
 import { SpectraComparerComponent } from './components/low-conf-psms/spectra-comparer/spectra-comparer.component';
+import {Cluster} from "./models/cluster";
 
 @NgModule({
   declarations: [
@@ -74,7 +76,7 @@ import { SpectraComparerComponent } from './components/low-conf-psms/spectra-com
     BrowserAnimationsModule,
     FormsModule,
     HttpModule,
-    InMemoryWebApiModule.forRoot(InMemoryDataService),
+    // InMemoryWebApiModule.forRoot(InMemoryDataService),
     NgbModule.forRoot(),
     MDBBootstrapModule.forRoot(),
     CommonModule,
@@ -86,7 +88,7 @@ import { SpectraComparerComponent } from './components/low-conf-psms/spectra-com
     //   apiKey: 'Your_api_key'
     // })
   ],
-  providers: [PsmTableService, SpectrumTableService],
+  providers: [PsmTableService, SpectrumTableService, ClusterService],
   bootstrap: [AppComponent],
   schemas:      [ NO_ERRORS_SCHEMA ]
 })

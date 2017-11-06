@@ -63,3 +63,19 @@ div.dataTables_wrapper div.dataTables_info {
   -ms-touch-action: manipulation;
   touch-action: manipulation;
 }
+
+.disabled {
+  cursor: not-allowed !important;
+  pointer-events:none;
+}
+
+.page-item.active .page-link {
+  z-index: 2;
+  color: #fff!important;
+  background-color: #007bff!important;
+  border-color: #007bff!important;
+}
+
+.unactived-sort-icon{
+  color: lightgrey;
+}

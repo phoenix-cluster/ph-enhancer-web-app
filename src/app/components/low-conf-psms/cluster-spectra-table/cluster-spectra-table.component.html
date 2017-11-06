@@ -6,9 +6,9 @@
                 <div class="dataTables_length" id="example_length">
                     <label>Show
                     <div class="select-wrapper form-control form-control-sm mdb-select"  style="margin-top: 0em">
-                        <select name="example_length" aria-controls="example" #spectrumTablePageSize
-                                class="form-control form-control-sm mdb-select initialized" >
-                            <!--class="form-control form-control-sm mdb-select initialized" (change)="rewritePsmTablebyPageSize(spectrumTablePageSize.value)">-->
+
+                        <select name="example_length" aria-controls="example" #psmTablePageSize
+                                class="form-control form-control-sm mdb-select initialized" (change)="onPageSizeChange(psmTablePageSize.value)">
                             <option value="10">10</option>
                             <option value="25">25</option>
                             <option value="50">50</option>
@@ -44,7 +44,7 @@
                     </tr>
                     </tfoot>
                     <tbody>
-                    <tr *ngFor="let spectrum of spectrumTable; let i=index" role="row form" class="odd">
+                    <tr *ngFor="let spectrum of currentSpectra; let i=index" role="row form" class="odd">
                         <ng-container *ngFor="let headItem of spectrumHeaders; let j=index" >
                             <td class="" >{{spectrum[headItem.headName]}}</td>
                         </ng-container>
@@ -56,34 +56,35 @@
         </div>
         <div class="row">
             <div class="col-sm-12 col-md-5">
-                <div class="dataTables_info" id="example_info" role="status" aria-live="polite">Showing 1 to 10 of 57
+                <div class="dataTables_info" id="example_info" role="status" aria-live="polite">Showing {{elemStart}} to {{elemEnd}} of {{totalElem}}
                     entries
                 </div>
             </div>
             <div class="col-sm-12 col-md-7">
                 <div class="dataTables_paginate paging_simple_numbers" id="example_paginate">
                     <ul class="pagination">
-                        <li class="paginate_button page-item previous disabled" id="example_previous"><a href="#"
-                                                                                                         aria-controls="example"
-                                                                                                         data-dt-idx="0"
-                                                                                                         tabindex="0"
-                                                                                                         class="page-link">Previous</a>
+                        <li class="paginate_button page-item previous" id="example_previous"
+                            [ngClass]="{'disabled':currentPage==1}"
+                            (click)="onPageChange(currentPage-1)" >
+                            <a
+                              aria-controls="example"
+                              data-dt-idx="0"
+                              tabindex="0"
+                              class="page-link">Previous
+                            </a>
                         </li>
-                        <li class="paginate_button page-item active"><a href="#" aria-controls="example" data-dt-idx="1"
-                                                                        tabindex="0" class="page-link">1</a></li>
-                        <li class="paginate_button page-item "><a href="#" aria-controls="example" data-dt-idx="2"
-                                                                  tabindex="0" class="page-link">2</a></li>
-                        <li class="paginate_button page-item "><a href="#" aria-controls="example" data-dt-idx="3"
-                                                                  tabindex="0" class="page-link">3</a></li>
-                        <li class="paginate_button page-item "><a href="#" aria-controls="example" data-dt-idx="4"
-                                                                  tabindex="0" class="page-link">4</a></li>
-                        <li class="paginate_button page-item "><a href="#" aria-controls="example" data-dt-idx="5"
-                                                                  tabindex="0" class="page-link">5</a></li>
-                        <li class="paginate_button page-item "><a href="#" aria-controls="example" data-dt-idx="6"
-                                                                  tabindex="0" class="page-link">6</a></li>
-                        <li class="paginate_button page-item next" id="example_next"><a href="#" aria-controls="example"
-                                                                                        data-dt-idx="7" tabindex="0"
-                                                                                        class="page-link">Next</a></li>
+                        <li *ngFor="let pageNo of pages"  class="page-item " [ngClass]="{'active':pageNo==currentPage}" (click)="onPageChange(pageNo)"><a aria-controls="example" data-dt-idx="1"
+                                                                                                   tabindex="0" class="page-link ">{{pageNo}}</a></li>
+
+
+                        <li class="paginate_button page-item next" id="example_next"
+                            [ngClass]="{'disabled':currentPage==totalPages}"
+                            (click)="onPageChange(currentPage+1)" >
+                            <a aria-controls="example"
+                               data-dt-idx="7" tabindex="0"
+                               class="page-link">Next
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>

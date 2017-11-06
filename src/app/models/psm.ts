@@ -3,22 +3,22 @@ export class Psm {
   static psmHeaders =
     [
      {"headName":"querySpectrumTitle", "order":"False"},
-     {"headName":"peptide", "order":"False"},
+     {"headName":"previousIdentification", "order":"False"},
      {"headName":"confidentScore", "order":"asc"},
-     {"headName":"clusterId", "order":"False"},
+     {"headName":"clusterID", "order":"False"},
      {"headName":"clusterRatio", "order":"desc"},
      {"headName":"clusterSize", "order":"desc"},
-     {"headName":"suggestedPeptide", "order":"False"},
+     {"headName":"recommendIdentification", "order":"False"},
      {"headName":"acceptence", "order":"False"}
    ];
 private id:number;
 private querySpectrumTitle:string;
-private peptide:string;
+private previousIdentification:string;
 private confidentScore:number;
-private clusterId:string;
+public  clusterId:string;
 private clusterRatio:number;
 private clusterSize:number;
-private suggestedPeptide:string;
+private recommendIdentification:string;
 private acceptence:string;
 
 }
