@@ -14,8 +14,8 @@ export class SpectrumTableService {
     constructor(private http: Http) {
     }
 
-    getSpectra(titlesStr:string): Promise<Spectrum[]> {
-        let spectraUrl = this.baseUrl.concat("spectrum/titles/", encodeURIComponent()titlesStr);
+    getSpectra(titlesStr: string): Promise<Spectrum[]> {
+        let spectraUrl = this.baseUrl.concat("spectrum/titles/", encodeURIComponent(titlesStr));
         // let spectraUrl = this.baseUrl.concat("spectrum/", encodeURIComponent(titlesStr));
         console.log(spectraUrl);
         return this.http.get(spectraUrl)
@@ -35,13 +35,13 @@ export class SpectrumTableService {
     //         .catch(this.handleError);
     // }
 
-    // getSpectrum(id: number): Promise<Spectrum>{
-    // const url = `${this.spectraUrl}/${id}`;
-    // return this.http.get(url)
-    //   .toPromise()
-    //   .then(response => response.json().data as Spectrum)
-    //   .catch(this.handleError);
-    // }
+    getSpectrum(titleStr: string): Promise<Spectrum> {
+        let spectrumUrl = this.baseUrl.concat("spectrum/", encodeURIComponent(titleStr));
+        return this.http.get(spectrumUrl)
+            .toPromise()
+            .then(response => response.json().data as Spectrum)
+            .catch(this.handleError);
+    }
 
     private handleError(error: any): Promise<any> {
         console.log('A error occurred', error);

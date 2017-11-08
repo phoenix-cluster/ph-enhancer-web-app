@@ -2,6 +2,11 @@
 //@import "../node_modules/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css";
 //@import "../asset/css/compiled.min.css";
 //@import url("//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css");
+
+@import '~@swimlane/ngx-datatable/release/index.css';
+@import '~@swimlane/ngx-datatable/release/themes/material.css';
+@import '~@swimlane/ngx-datatable/release/assets/icons.css';
+
 .modal { overflow: auto !important; }
 
 @media (min-width: 576px) {

@@ -1090,10 +1090,12 @@ var ui = require('jquery-ui');
 		calculateTheoreticalSeries(container, selectedIonTypes);
 
 		// add the un-annotated peaks
-		var data = [{data: options.peaks, color: "#bbbbbb", labelType: 'none'}];
-        var testdata = data[0];
-        testdata['yaxis'] = 2;
-        data.push(testdata);
+        var peaks1 = {data: options.peaks, color: "#bbbbbb", labelType: 'none', yaxis:1};
+        var peaks2 = {data: options.peaks2, color: "light-blue", labelType: 'none',yaxis:2 };
+        var data = [];
+        data.push(peaks1);
+        data.push(peaks2);
+
 		// add the annotated peaks
 		var seriesMatches = getSeriesMatches(container, selectedIonTypes);
 		for(var i = 0; i < seriesMatches.length; i += 1) {
