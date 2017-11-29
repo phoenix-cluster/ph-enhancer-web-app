@@ -33,20 +33,20 @@
                        cellspacing="0" width="100%" role="grid" aria-describedby="example_info" style="width: 100%;">
                     <thead>
                     <tr role="row">
-                        <th *ngFor="let headItem of spectrumHeaders" class="">{{headItem.headName}}
+                        <th *ngFor="let headItem of spectrumInClusterHeaders" class="">{{headItem.headName}}
                                 <i class="fa float-right" [ngClass]="getClassByOrder(headItem.order)"></i>
                         </th>
                     </thead>
                     <tfoot>
                     <tr>
-                        <th *ngFor="let headItem of spectrumHeaders" class="">{{headItem.headName}}
+                        <th *ngFor="let headItem of spectrumInClusterHeaders" class="">{{headItem.headName}}
                         </th>
                     </tr>
                     </tfoot>
                     <tbody>
-                    <tr *ngFor="let spectrum of currentSpectra; let i=index" role="row form" class="odd">
-                        <ng-container *ngFor="let headItem of spectrumHeaders; let j=index" >
-                            <td class="" >{{spectrum[headItem.headName]}}</td>
+                    <tr *ngFor="let spectrumInCluster of currentSpectra; let i=index" role="row form" class="odd">
+                        <ng-container *ngFor="let headItem of spectrumInClusterHeaders; let j=index" >
+                            <td class="" >{{spectrumInCluster[headItem.headName]}}</td>
                         </ng-container>
                     </tr>
 
@@ -75,7 +75,6 @@
                         </li>
                         <li *ngFor="let pageNo of pages"  class="page-item " [ngClass]="{'active':pageNo==currentPage}" (click)="onPageChange(pageNo)"><a aria-controls="example" data-dt-idx="1"
                                                                                                    tabindex="0" class="page-link ">{{pageNo}}</a></li>
-
 
                         <li class="paginate_button page-item next" id="example_next"
                             [ngClass]="{'disabled':currentPage==totalPages}"

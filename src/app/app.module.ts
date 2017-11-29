@@ -34,14 +34,17 @@ import { ConfScoreChartComponent } from './components/low-conf-psms/conf-score-c
 import { ClusterRatioChartComponent } from './components/low-conf-psms/cluster-ratio-chart/cluster-ratio-chart.component';
 import { ClusterSizeChartComponent } from './components/low-conf-psms/cluster-size-chart/cluster-size-chart.component';
 import { PsmTablesComponent } from './components/low-conf-psms/psm-tables/psm-tables.component';
-import { ClusterSpectraTableComponent } from './components/low-conf-psms/cluster-spectra-table/cluster-spectra-table.component';
+import { ClusterSpectraTableComponent } from './components/low-conf-psms/psm-tables/cluster-spectra-table/cluster-spectra-table.component';
 
 // import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 // import { InMemoryDataService }  from './services/in-memory-data.service';
 import {PsmTableService} from "./services/psm-tabel.service";
-import {SpectrumTableService} from "./services/spectra-tabel.service";
+import {SpectrumInClusterTableService} from "./services/spectra-in-cluster-tabel.service";
 import {ClusterService} from "./services/cluster.service";
-import { SpectraComparerComponent } from './components/low-conf-psms/spectra-comparer/spectra-comparer.component';
+import { ConfigModule, ConfigService } from './services/config.service';
+
+
+import { SpectraComparerComponent } from './components/low-conf-psms/psm-tables/spectra-comparer/spectra-comparer.component';
 import {Cluster} from "./models/cluster";
 
 @NgModule({
@@ -88,8 +91,14 @@ import {Cluster} from "./models/cluster";
     //   apiKey: 'Your_api_key'
     // })
   ],
-  providers: [PsmTableService, SpectrumTableService, ClusterService],
+  providers: [
+    PsmTableService,
+    SpectrumInClusterTableService,
+    ClusterService,
+    // ConfigService,
+    // ConfigModule.init(),
+  ],
   bootstrap: [AppComponent],
-  schemas:      [ NO_ERRORS_SCHEMA ]
+  schemas: [ NO_ERRORS_SCHEMA ]
 })
 export class AppModule { }

@@ -1,25 +1,27 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
 
 import jQuery from 'jquery';
 import $ from 'jquery';
 
-import "../../../asset/js/lorikeet/specview.js";
-import "../../../asset/js/lorikeet/jquery.flot.js";
-import "../../../asset/js/lorikeet/jquery.flot.selection.js";
-import "../../../asset/js/lorikeet/peptide.js";
-import "../../../asset/js/lorikeet/aminoacid.js";
-import "../../../asset/js/lorikeet/ion.js";
-import {Psm} from "../../../models/psm";
-import {SpectrumTableService} from "../../../services/spectra-tabel.service";
+import "../../../../assets/js/lorikeet/specview.js";
+import "../../../../assets/js/lorikeet/jquery.flot.js";
+import "../../../../assets/js/lorikeet/jquery.flot.selection.js";
+import "../../../../assets/js/lorikeet/peptide.js";
+import "../../../../assets/js/lorikeet/aminoacid.js";
+import "../../../../assets/js/lorikeet/ion.js";
+import {Psm} from "../../../../models/psm";
+import {SpectrumInClusterTableService} from "../../../../services/spectra-in-cluster-tabel.service";
+import {Spectrum} from "../../../../models/spectrum";
 
 @Component({
     selector: 'app-spectra-comparer',
     templateUrl: './spectra-comparer.component.html',
     styleUrls: ['./spectra-comparer.component.scss']
 })
-export class SpectraComparerComponent implements OnInit {
-    private currentPsm:Psm;
-    private currentClusterId:string;
+export class SpectraComparerComponent implements OnChanges{
+    @Input() currentPsm:Psm;
+    @Input() spectrum:Spectrum;
+    private currentClusterId;
     private currentPsmTitle:string;
 
     private psm_sequence:string;
@@ -32,12 +34,12 @@ export class SpectraComparerComponent implements OnInit {
 
     private cluster_peaks:any[];
 
-    constructor(private spectrumTableService: SpectrumTableService) {
+    constructor(private spectrumInClusterTableService: SpectrumInClusterTableService) {
         this.psm_varMods = [];
     }
 
 
-    ngOnInit() {
+    ngOnChanges() {
         this.currentClusterId = "5045204c-2f1c-4c26-ab85-b22af50eeb19";
         this.currentPsmTitle = "id=PXD000021;PRIDE_Exp_Complete_Ac_27189.xml;spectrum=758";
         this.resetData();
@@ -1546,6 +1548,10 @@ export class SpectraComparerComponent implements OnInit {
             peaks: this.psm_peaks,
             peaks2: this.cluster_peaks
         });
+    }
+
+    private handleError(error: any): void {
+        console.log('A error occurred', error);
     }
 
 }

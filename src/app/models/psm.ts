@@ -2,23 +2,30 @@
 export class Psm {
   static psmHeaders =
     [
-     {"headName":"querySpectrumTitle", "order":"False"},
-     {"headName":"previousIdentification", "order":"False"},
+     {"headName":"id", "order":"False"},
+     {"headName":"peptideSequence", "order":"False"},
      {"headName":"confidentScore", "order":"asc"},
-     {"headName":"clusterID", "order":"False"},
+     {"headName":"clusterId", "order":"False"},
      {"headName":"clusterRatio", "order":"desc"},
      {"headName":"clusterSize", "order":"desc"},
-     {"headName":"recommendIdentification", "order":"False"},
+     {"headName":"recommendPeptide", "order":"False"},
+     {"headName":"spectraNum", "order":"False"},
      {"headName":"acceptence", "order":"False"}
    ];
-private id:number;
-private querySpectrumTitle:string;
-private previousIdentification:string;
+
+
+   constructor(clusterId: string) {
+      this.clusterId = clusterId;
+   }
+
+   private id:number;
+private peptide:string;
 private confidentScore:number;
 public  clusterId:string;
 private clusterRatio:number;
 private clusterSize:number;
 private recommendIdentification:string;
+private spectraNum:number;
+private spectraTitles:string;
 private acceptence:string;
-
 }

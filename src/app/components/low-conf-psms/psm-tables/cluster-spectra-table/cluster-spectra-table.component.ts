@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {Spectrum} from "../../../models/spectrum";
-import {SpectrumTableService} from "../../../services/spectra-tabel.service";
-import {ClusterService} from "../../../services/cluster.service";
-import {Cluster} from "../../../models/cluster";
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
+import {SpectrumInCluster} from "../../../../models/spectrum-in-cluster";
+import {SpectrumInClusterTableService} from "../../../../services/spectra-in-cluster-tabel.service";
+import {ClusterService} from "../../../../services/cluster.service";
+import {Cluster} from "../../../../models/cluster";
 import {map} from "rxjs/operator/map";
 
 @Component({
@@ -10,8 +10,9 @@ import {map} from "rxjs/operator/map";
     templateUrl: './cluster-spectra-table.component.html',
     styleUrls: ['./cluster-spectra-table.component.scss']
 })
-export class ClusterSpectraTableComponent implements OnInit {
-    private spectrumHeaders = Spectrum.spectrumHeaders;
+export class ClusterSpectraTableComponent implements OnChanges {
+    @Input() currentClusterId:string;
+    private spectrumInClusterHeaders = SpectrumInCluster.spectrumInClusterHeaders;
     private currentPage: number = 1;
     private currentSize: number = 10;
     private currentSortField = "confidentScore";
@@ -23,31 +24,31 @@ export class ClusterSpectraTableComponent implements OnInit {
     private pages: number[];
     private sortByCol: string = "confidentScore"
 
-    private currentClusterId: string = "";
+    // private currentClusterId: string = "";
     private allSpectraTitlesOfaCluster: string[];
     private currentSpectraTitles: string[];
     private currentCluster: Cluster;
-    private currentSpectra: Spectrum[];
+    private currentSpectra: SpectrumInCluster[];
 
 
-    constructor(private spectrumTableService: SpectrumTableService,
+    constructor(private spectrumInClusterTableService: SpectrumInClusterTableService,
                 private clusterService: ClusterService) {
     }
 
-    // spectra : Spectrum[];
-    // spectrumMap = new Map<string, Spectrum>();
-    spectrumTitles: string[];
-    spectrumTable = new Array<Spectrum>();
+    // spectra : SpectrumInCluster[];
+    // spectrumInClusterMap = new Map<string, SpectrumInCluster>();
+    spectrumInClusterTitles: string[];
+    spectrumInClusterTable = new Array<SpectrumInCluster>();
 
     getSpectra(): void {
-        // this.spectrumTableService.getSpectra().then(spectra => {this.spectrumTable = spectra});
-        // this.spectrumTableService.getSpectraTitleList(10).then(spectrumTitles => {this.spectrumTitles = spectrumTitles; this.writeSpectrumTable()});
+        // this.spectrumInClusterTableService.getSpectra().then(spectra => {this.spectrumInClusterTable = spectra});
+        // this.spectrumInClusterTableService.getSpectraTitleList(10).then(spectrumInClusterTitles => {this.spectrumInClusterTitles = spectrumInClusterTitles; this.writeSpectrumInClusterTable()});
     }
 
-    ngOnInit() {
-        // this.getSpectra();
-        this.currentClusterId = "5045204c-2f1c-4c26-ab85-b22af50eeb19";
-        this.rewriteSpectrumTable();
+    ngOnChanges() {
+        this.currentPage = 1;
+        this.currentSize = 10;
+        this.rewriteSpectrumInClusterTable();
     }
 
     getClassByOrder(order: string): string {
@@ -75,26 +76,26 @@ export class ClusterSpectraTableComponent implements OnInit {
     }
 
     /** write the table by search terms, pagenations, asec/dec ...
-     *  based on the spectrumTitles, which comes from the server
+     *  based on the spectrumInClusterTitles, which comes from the server
      */
-    // writeSpectrumTable():void{
-    //   this.spectrumTable = [];
-    //   for(var spectrumTitle of this.spectrumTitles){
-    //     this.spectrumTable.push(this.spectrumMap.get(spectrumTitle))
+    // writeSpectrumInClusterTable():void{
+    //   this.spectrumInClusterTable = [];
+    //   for(var spectrumInClusterTitle of this.spectrumInClusterTitles){
+    //     this.spectrumInClusterTable.push(this.spectrumInClusterMap.get(spectrumInClusterTitle))
     //   }
 // }
 //
-//   rewriteSpectrumTablebyPageSize(pageSize:number):void{
+//   rewriteSpectrumInClusterTablebyPageSize(pageSize:number):void{
 //     alert(pageSize);
-//     this.spectrumTableService.getSpectraTitleList(pageSize).then(spectrumTitles => {this.spectrumTitles = spectrumTitles; this.writeSpectrumTable()});
+//     this.spectrumInClusterTableService.getSpectraTitleList(pageSize).then(spectrumInClusterTitles => {this.spectrumInClusterTitles = spectrumInClusterTitles; this.writeSpectrumInClusterTable()});
 //   }
 
-    // writeSpectrumTable(): void {
-    //      this.spectrumTable = [];
-    //      this.spectrumTitles = [];
-    //      for (let entry of Array.from(this.spectrumMap.entries())) {
-    //          this.spectrumTitles.push(entry[0]);
-    //          this.spectrumTable.push(entry[1]);
+    // writeSpectrumInClusterTable(): void {
+    //      this.spectrumInClusterTable = [];
+    //      this.spectrumInClusterTitles = [];
+    //      for (let entry of Array.from(this.spectrumInClusterMap.entries())) {
+    //          this.spectrumInClusterTitles.push(entry[0]);
+    //          this.spectrumInClusterTable.push(entry[1]);
     //      }
     //      ;
     //  }
@@ -102,33 +103,34 @@ export class ClusterSpectraTableComponent implements OnInit {
     onPageSizeChange(size: string): void {
         this.currentSize = parseInt(size);
         this.currentPage = 1;
-        this.rewriteSpectrumTable();
+        this.rewriteSpectrumInClusterTable();
     }
 
     onPageChange(page: number): void {
         this.currentPage = page;
-        this.rewriteSpectrumTable();
+        console.log("set current page to " + page);
+        this.rewriteSpectrumInClusterTable();
     }
 
-    rewriteSpectrumTable(): void {
+    rewriteSpectrumInClusterTable(): void {
         this.elemStart = (this.currentPage - 1) * this.currentSize + 1;
         this.elemEnd = (this.elemStart + this.currentSize) - 1;
-        this.getAllSpectraTitlesAndSet();
+        if(this.currentClusterId != "null_cluster_id")
+            {this.getAllSpectraTitlesAndSet();}
 
         // this.getSpectraPage(this.currentPage, this.currentSize, this.currentSortField, this.currentSortDirection);
     }
 
     private setCurrentSpectra(): void {
         let titles = this.currentSpectraTitles.join("||");
-        this.spectrumTableService.getSpectra(titles).then(spectra => {
+        this.spectrumInClusterTableService.getSpectra(titles).then(spectra => {
             this.currentSpectra = spectra;
-            //todo this.rePageSpectrumTable();
-        })
-
+            //todo this.rePageSpectrumInClusterTable();
+        }).catch(this.handleError)
     }
 
     private setCurrentSpectraTitles(): void {
-        this.currentSpectraTitles = this.allSpectraTitlesOfaCluster.slice(this.elemStart - 1, this.elemEnd - 1);
+        this.currentSpectraTitles = this.allSpectraTitlesOfaCluster.slice(this.elemStart - 1, this.elemEnd);
     }
 
     private getAllSpectraTitlesAndSet(): void {
@@ -138,32 +140,41 @@ export class ClusterSpectraTableComponent implements OnInit {
             this.currentCluster = cluster;
             localStorage.setItem(cluster.id, JSON.stringify(cluster));
             this.allSpectraTitlesOfaCluster = cluster.spectraTitles;
+            // console.log(this.allSpectraTitlesOfaCluster);
+            this.setPages();
             this.setCurrentSpectraTitles();
             this.setCurrentSpectra();
-            this.setPages();
-        });
+        }).catch(this.handleError);
         // }
     }
 
     onClickReSort(headItem): void {
-        console.log(headItem);
-        let index = this.spectrumHeaders.indexOf(headItem);
+        let index = this.spectrumInClusterHeaders.indexOf(headItem);
         if (headItem['order'] == 'asc') {
-            this.spectrumHeaders[index]['order'] = 'desc';
+            this.spectrumInClusterHeaders[index]['order'] = 'desc';
         }
         else {
-            this.spectrumHeaders[index]['order'] = 'asc';
+            this.spectrumInClusterHeaders[index]['order'] = 'asc';
         }
-        this.sortByCol = this.spectrumHeaders[index]['headName'];
+        this.sortByCol = this.spectrumInClusterHeaders[index]['headName'];
     }
 
     private setPages(): void {
         this.totalElem = this.allSpectraTitlesOfaCluster.length;
-        this.totalPages = this.totalElem/this.currentSize + 1;
+        this.totalPages = Math.floor(this.totalElem/this.currentSize) + 1;
         if (this.totalPages < 1) {
             console.error("Something is wrong, the total pages should >=1");
         }
+
         this.pages = [this.currentPage - 2, this.currentPage - 1, this.currentPage, this.currentPage + 1, this.currentPage + 2];
+
+        if (this.totalPages < 5) {
+            this.pages = [];
+            for (let i = 0; i < this.totalPages; i++) {
+                this.pages[i] = i+1;
+            }
+            return;
+        }
 
         if (this.currentPage - 2 < 1) {
             let leftOffset = 1 - this.pages[0];
@@ -171,19 +182,18 @@ export class ClusterSpectraTableComponent implements OnInit {
                 this.pages[i] += leftOffset;
             }
         }
+
         if (this.pages[4] > this.totalPages) {
-            let rightOffset = this.totalPages - this.pages[4];
+            let rightOffset =  this.pages[4] -  this.totalPages;
             for (let i = 0; i < this.pages.length; i++) {
                 this.pages[i] -= rightOffset;
             }
         }
 
-        if (this.totalPages < 5) {
-            this.pages = [];
-            for (let i = 0; i < this.pages.length; i++) {
-                this.pages[i] = i;
-            }
-        }
+    }
+
+    private handleError(error: any): void {
+        console.log('A error occurred', error);
     }
 
 }
