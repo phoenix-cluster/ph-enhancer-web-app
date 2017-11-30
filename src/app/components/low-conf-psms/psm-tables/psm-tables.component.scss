@@ -195,6 +195,9 @@ table.table-bordered.dataTable tbody td{
 .position_1 tbody td:last-child{
      width: 36%!important;
 }
+.nowrap{
+  flex-wrap: nowrap;
+}
 @media screen and (max-width:1030px){
   .new-col-md-6{
       -webkit-box-flex: 0;
@@ -259,28 +262,37 @@ table.table-bordered.dataTable tbody td{
       }
   
   }
-  @media screen and (max-width: 1239px){
+ 
     
-    .col-sm-3{
-      -webkit-box-flex: 0;
-      -ms-flex: 0 0 50%;
-      flex: 0 0 50%;
-      max-width: 50%;
-      position: relative;
-      width: 100%;
-      min-height: 1px;
-      padding-right: 15px;
-      padding-left: 15px;
-    }
     .position_1{
       width: 281px;
+      
     }
-  
-  }
-  @media screen and (min-width: 1239px){
-    
-    .position_1{
-      width: 281px!important;
+    .col-sm-3{
+      margin-left: 0px;
     }
+    @media screen and (max-width:1250px){
+      .col-sm-3{
+        margin-left: 100px;
+      }
+    }
+    @media screen and (max-width:1100px){
+      .col-sm-3{
+        margin-left: 150px;
+      }
+    }
+    @media screen and (max-width:870px){
+      .col-sm-3{
+        margin-left: 180px;
+      }
+    }
+    @media screen and (max-width:858px){
+      .nowrap{
+        flex-wrap: wrap;
+      }
+      .col-sm-3{
+        margin-left: 0px;
+      }
+    }
+ 
   
-  }
