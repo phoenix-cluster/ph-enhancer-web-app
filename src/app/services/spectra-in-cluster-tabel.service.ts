@@ -8,7 +8,7 @@ import {Headers, Http} from "@angular/http";
 
 export class SpectrumInClusterTableService {
 
-    private baseUrl = 'http://localhost:8090/example/v1/';
+    private baseUrl = 'http://192.168.6.20:8090/example/v1/';
     private headers = new Headers({'Content-type': 'application/json'});
 
     constructor(private http: Http) {

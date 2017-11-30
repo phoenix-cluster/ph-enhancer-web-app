@@ -22,5 +22,21 @@
   bottom: 0;
   left: 0;
 }
-
-
+/* add*/
+.outline{
+    border: 2px solid #45526E;
+    color: #9e9e9e!important;   
+    border-radius: 4px;
+}
+.modal-title{
+  padding-left: 10px;
+  color: #45526E;
+  font-weight: 500;
+}
+table.table th, table.table td{
+  padding: 0.75rem;
+}
+.col-md-9 p{
+  color: #45526E;
+  font-weight: 500;
+}
