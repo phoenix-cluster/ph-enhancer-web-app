@@ -1,9 +1,10 @@
 import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {SpectrumInCluster} from "../../../../models/spectrum-in-cluster";
-import {SpectrumInClusterTableService} from "../../../../services/spectra-in-cluster-tabel.service";
+import {SpectraInClusterTableService} from "../../../../services/spectra-in-cluster-tabel.service";
 import {ClusterService} from "../../../../services/cluster.service";
 import {Cluster} from "../../../../models/cluster";
 import {map} from "rxjs/operator/map";
+import {SpectrumService} from "../../../../services/spectrum.service";
 
 @Component({
     selector: 'app-cluster-spectra-table',
@@ -31,7 +32,8 @@ export class ClusterSpectraTableComponent implements OnChanges {
     private currentSpectra: SpectrumInCluster[];
 
 
-    constructor(private spectrumInClusterTableService: SpectrumInClusterTableService,
+    constructor(private spectrumInClusterTableService: SpectraInClusterTableService,
+                private spectrumService:SpectrumService,
                 private clusterService: ClusterService) {
     }
 
@@ -74,31 +76,6 @@ export class ClusterSpectraTableComponent implements OnChanges {
         let checkBox: HTMLInputElement = <HTMLInputElement> document.getElementById(checkBoxId);
         checkBox.indeterminate = true;
     }
-
-    /** write the table by search terms, pagenations, asec/dec ...
-     *  based on the spectrumInClusterTitles, which comes from the server
-     */
-    // writeSpectrumInClusterTable():void{
-    //   this.spectrumInClusterTable = [];
-    //   for(var spectrumInClusterTitle of this.spectrumInClusterTitles){
-    //     this.spectrumInClusterTable.push(this.spectrumInClusterMap.get(spectrumInClusterTitle))
-    //   }
-// }
-//
-//   rewriteSpectrumInClusterTablebyPageSize(pageSize:number):void{
-//     alert(pageSize);
-//     this.spectrumInClusterTableService.getSpectraTitleList(pageSize).then(spectrumInClusterTitles => {this.spectrumInClusterTitles = spectrumInClusterTitles; this.writeSpectrumInClusterTable()});
-//   }
-
-    // writeSpectrumInClusterTable(): void {
-    //      this.spectrumInClusterTable = [];
-    //      this.spectrumInClusterTitles = [];
-    //      for (let entry of Array.from(this.spectrumInClusterMap.entries())) {
-    //          this.spectrumInClusterTitles.push(entry[0]);
-    //          this.spectrumInClusterTable.push(entry[1]);
-    //      }
-    //      ;
-    //  }
 
     onPageSizeChange(size: string): void {
         this.currentSize = parseInt(size);

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Psm} from '../../../models/psm'
 import {PsmTableService} from '../../../services/psm-tabel.service'
+import {SpectrumService} from '../../../services/spectrum.service'
 import {Spectrum} from "../../../models/spectrum";
 
 @Component({
@@ -38,7 +39,7 @@ export class PsmTablesComponent implements OnInit {
         { name: 'Company' }
     ];
 
-    constructor(private psmTableService: PsmTableService,) {
+    constructor(private psmTableService: PsmTableService, private spectrumService:SpectrumService) {
         this.currentPsm = new Psm("null_cluster_id");
         this.currentSpectrumInProject = new Spectrum("null_spectrum_title", null, null)
     }
@@ -122,13 +123,13 @@ export class PsmTablesComponent implements OnInit {
 
     writeSpectrumTable(spectraTitlesStr:string) :void{
         let spectraTitles = spectraTitlesStr.split("||");
-        this.spectrumTable = [];
-        for(var i=0; i<spectraTitles.length; i++){
-            // let spectrum:Spectrum = {"title":spectraTitles[i]; "charge":1; "precursorMz":232.1}
-            let spectrum = new Spectrum(spectraTitles[i], 1, 232.1);
-            this.spectrumTable.push(spectrum);
-        }
-        console.log(this.spectrumTable)
+        this.spectrumService.getSpectra(spectraTitlesStr)
+            .then(spectra =>
+                {this.spectrumTable = spectra;
+                this.currentSpectrumInProject = this.spectrumTable[0];
+                }
+            ).catch(this.handleError);
+
     }
 
     onPageSizeChange(size:string): void {
@@ -203,6 +204,11 @@ export class PsmTablesComponent implements OnInit {
             }
         }
 
+    }
+
+
+    private handleError(error: any): void {
+        console.log('A error occurred', error);
     }
 
 }

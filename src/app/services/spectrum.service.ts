@@ -1,13 +1,14 @@
 import {Injectable} from "@angular/core";
 import {SpectrumInCluster} from "../models/spectrum-in-cluster";
 import {Headers, Http} from "@angular/http";
-import {Config} from "../models/config";
+import {Config} from "../models/config"
+import {Spectrum} from "../models/spectrum";
 
 // import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 
-export class SpectraInClusterTableService {
+export class SpectrumService {
 
     private baseUrl = Config.baseUrl;
     private headers = new Headers({'Content-type': 'application/json'});
@@ -15,13 +16,13 @@ export class SpectraInClusterTableService {
     constructor(private http: Http) {
     }
 
-    getSpectra(titlesStr: string): Promise<SpectrumInCluster[]> {
-        let spectraUrl = this.baseUrl.concat("spectrumInCluster/titles/", encodeURIComponent(titlesStr));
+    public getSpectra(titlesStr: string): Promise<Spectrum[]> {
+        let spectraUrl = this.baseUrl.concat("spectrum/titles/", encodeURIComponent(titlesStr));
         // let spectraUrl = this.baseUrl.concat("spectrumInCluster/", encodeURIComponent(titlesStr));
         console.log(spectraUrl);
         return this.http.get(spectraUrl)
             .toPromise()
-            .then(response => response.json() as SpectrumInCluster[])
+            .then(response => {let spectra:Spectrum[] = response.json() as Spectrum[]; return spectra})
             .catch(this.handleError);
     }
 

@@ -8,9 +8,11 @@ export class Spectrum {
     {"headName":"precursorMz", "order":"True"},
   ];
 
-  public title:string;
-  private charge:number;
-  private precursorMz:number;
+  title:string;
+  charge:number;
+  precursorMz:number;
+  peaklistMz:number[];
+  peaklistIntens:number[];
 
   constructor(title: string, charge: number, precursorMz: number) {
     this.title = title;
