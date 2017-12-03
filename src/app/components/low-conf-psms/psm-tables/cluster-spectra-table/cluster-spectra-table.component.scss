@@ -27,7 +27,10 @@ table.dataTable thead .sorting:before, table.dataTable thead .sorting:after, tab
   padding-bottom: 0;
 }
 table.dataTable {
-  margin-bottom: 3rem!important;
+  /*margin-bottom: 3rem!important;*/
+  margin-bottom: 20px!important;
+  table-layout: fixed;
+  word-break: break-all;
 }
 div.dataTables_wrapper div.dataTables_info {
   padding-top: 0;
@@ -78,4 +81,73 @@ div.dataTables_wrapper div.dataTables_info {
 
 .unactived-sort-icon{
   color: lightgrey;
+}
+/*show table nav*/
+.row .dataTables_length label{
+  border-left: 10px solid #45526e;
+  vertical-align: middle;
+  line-height: 37px;
+  padding-left: 10px;
+
+}
+.dataTables_wrapper   .mdb-select.form-control{
+  margin-top: 0em;
+  padding: 0px 0px;
+  margin: 0px 10px;
+  margin-left: 0px;
+  
+}
+ .dataTables_wrapper  select {
+  border: 1px solid #efefef!important;
+  margin-bottom: 0px;
+  margin-top: 0.2rem!important;
+}
+.page{
+  line-height: 35px;
+  margin-bottom: 40px;
+}
+.pd{
+  padding-top: 0px!important;
+}
+.pd_1{
+  padding-left: 0px;
+  padding-right: 0px;
+
+}
+.pd_2{
+  padding-right: 0px;
+}
+table.table-bordered.dataTable th,table.table-bordered.dataTable td{
+  text-align: center;
+}
+@media screen and (max-width:1030px){
+  
+  table.table-bordered.dataTable th,table.table-bordered.dataTable td{
+    min-width: 130px;
+    border: 1px solid #e9ecef;
+  }
+  
+  
+}
+@media screen and (max-width:932px){
+  
+  table.table-bordered.dataTable th,table.table-bordered.dataTable td{
+    min-width: 100px;
+    border: 1px solid #e9ecef;
+  }
+}
+@media screen and (max-width:770px){
+  
+  .new-col-5{
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 50%;
+    flex: 0 0 50%;
+    max-width: 50%;
+    position: relative;
+    width: 100%;
+    min-height: 1px;
+  }
+  div.dataTables_wrapper[_ngcontent-c8]   div.dataTables_info[_ngcontent-c8] {
+           text-align: left
+  }
 }

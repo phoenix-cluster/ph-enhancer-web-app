@@ -10,6 +10,7 @@ import {Config} from "../models/config";
 export class SpectraInClusterTableService {
 
     private baseUrl = Config.baseUrl;
+
     private headers = new Headers({'Content-type': 'application/json'});
 
     constructor(private http: Http) {

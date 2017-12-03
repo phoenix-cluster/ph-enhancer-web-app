@@ -2472,6 +2472,35 @@ var ui = require('jquery-ui');
         ionRow += '</nobr> ';
         return ionRow;
     }
+    /* scroll action*/ 
+    (function scroll(){
+        $(window).scroll(function(event){
+            event.stopPropagation();
+            var s=$(window).scrollTop();
+            if(s>100){
+                
+            $(".mdb-color").addClass('slide-btn');
+            $(".header").addClass('position');
+            
+            }
+            
+            else{
+                $('.mdb-color').removeClass('slide-btn');
+                $('.header').removeClass('position');
+            }
+            });
+        
+
+    })()
+    /* nav selected*/ 
+    $(function(){
+        $('ul.navbar-nav li').hover(function(event){
+            $(this).addClass('active').siblings().removeClass('active');
+        })
+       
+        
+    
+    })
 
 
 })(jQuery);

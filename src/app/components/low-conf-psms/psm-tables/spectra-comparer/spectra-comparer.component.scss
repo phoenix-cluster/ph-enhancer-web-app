@@ -1,1 +1,18 @@
 @import "../../../../assets/css/lorikeet.css";
+/*add new style*/
+.row .dataTables_length label{
+    border-left: 10px solid #45526e;
+    vertical-align: middle;
+    line-height: 37px;
+    padding-left: 10px;
+   
+  
+  }
+  .row{
+      margin-bottom: 20px;
+      font-weight: normal;
+  }
+  #lorikeet{
+      padding-bottom:40px;
+  }
+ 
