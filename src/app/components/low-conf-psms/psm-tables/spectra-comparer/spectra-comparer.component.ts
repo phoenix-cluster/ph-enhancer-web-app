@@ -24,6 +24,7 @@ import {Cluster} from "../../../../models/cluster";
 export class SpectraComparerComponent implements OnChanges{
     @Input() currentPsm:Psm;
     @Input() spectrum:Spectrum;
+    @Input() psmType:String;
     private currentClusterId;
     private currentCluster:Cluster;
     private currentSpectrumTitle:string;
@@ -54,7 +55,10 @@ export class SpectraComparerComponent implements OnChanges{
         // this.spectrumTableService.getSpectrum(this.currentPsmTitle).
         // then(spectrum =>{this.currentPsm = spectrum});
 
-        this.psm_sequence = this.currentPsm.peptideSequence;
+        this.psm_sequence = this.currentPsm.peptideSequence ;
+        if (this.psm_sequence == null && this.currentPsm.recommendPeptide != null){
+            this.psm_sequence = this.currentPsm.recommendPeptide.substring(6);
+        }
         // modification index = 14; modification mass = 16.0; modified residue = 'M'
         this.psm_varMods[0] = {index: 14, modMass: 16.0, aminoAcid: 'M'};
         // mass to be added to the N-terminus
@@ -97,6 +101,20 @@ export class SpectraComparerComponent implements OnChanges{
             this.cluster_peaks = this.getClusterPeaks(this.currentCluster);
             this.refreshViewer();
         }).catch(this.handleError);
+    }
+
+    private onCheckRecommClick(){
+        var checkRecommButton = document.getElementById("checkRecommButton");
+        if(checkRecommButton.innerText== "Check Recommend Sequence"){
+            checkRecommButton.innerText = "Check Original Sequence";
+            this.psm_sequence = this.currentPsm.recommendPeptide.substring(9);
+        }
+        else {
+            checkRecommButton.innerText = "Check Recommend Sequence";
+            this.psm_sequence = this.currentPsm.peptideSequence;
+        }
+
+        this.refreshViewer()
     }
 
     private getClusterPeaks(cluster:Cluster) :any[]{

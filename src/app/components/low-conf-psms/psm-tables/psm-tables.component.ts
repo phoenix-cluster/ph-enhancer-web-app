@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Psm} from '../../../models/psm'
 import {PsmTableService} from '../../../services/psm-tabel.service'
 import {SpectrumService} from '../../../services/spectrum.service'
 import {Spectrum} from "../../../models/spectrum";
+import {PSMsPage} from "../../../models/psmsPage";
 
 @Component({
     selector: 'app-psm-tables',
@@ -11,7 +12,7 @@ import {Spectrum} from "../../../models/spectrum";
 })
 export class PsmTablesComponent implements OnInit {
 
-
+    @Input() psmType:string;
     private psmHeaders = Psm.psmHeaders;
     private spectrumHeaders = Spectrum.spectrumHeaders;
     private currentPage:number = 1;
@@ -27,17 +28,6 @@ export class PsmTablesComponent implements OnInit {
     private currentPsm:Psm;
     private currentSpectrumInProject:Spectrum;
 
-
-    rows = [
-        { name: 'Austin', gender: 'Male', company: 'Swimlane' },
-        { name: 'Dany', gender: 'Male', company: 'KFC' },
-        { name: 'Molly', gender: 'Female', company: 'Burger King' },
-    ];
-    columns = [
-        { prop: 'name' },
-        { name: 'Gender' },
-        { name: 'Company' }
-    ];
 
     constructor(private psmTableService: PsmTableService, private spectrumService:SpectrumService) {
         this.currentPsm = new Psm("null_cluster_id");
@@ -56,17 +46,31 @@ export class PsmTablesComponent implements OnInit {
     // }
 
     getPSMsPage(page: number, size: number, sortField: string, sortDirection: string): void {
-        this.psmTableService.getPsmsPage(page, size, sortField, sortDirection).then(psms_page => {
-            this.psmMap.clear();
-            for (let psm of psms_page.scoredPSMs) this.psmMap.set(psm['id'], psm);
-            this.totalElem = psms_page.totalElements;
-            this.totalPages = psms_page.totalPages;
-            this.setPages();
-            this.writePsmTable();
-        });
+        if(this.psmType == "neg_score") {
+            this.psmTableService.getNegPsmsPage(page, size, sortField, sortDirection).then(psms_page => {
+                this.afterDataRetrieving(psms_page);
+            });
+        }
+
+        if(this.psmType == "recomm"){
+            this.psmTableService.getRecommIdPsmsPage(page, size, sortField, sortDirection).then(psms_page => {
+                this.afterDataRetrieving(psms_page);
+            });
+        }
+
+        if(this.psmType == "pos_score"){
+            console.log("here");
+            this.psmTableService.getPosPsmsPage(page, size, sortField, sortDirection).then(psms_page => {
+                this.afterDataRetrieving(psms_page);
+            });
+        }
+
     }
 
     ngOnInit() {
+        if(this.psmType == "neg_score") {this.currentSortDirection = "ASC"}
+        if(this.psmType == "pos_score") {this.currentSortDirection = "DESC"}
+        if(this.psmType == "recomm") {this.currentSortDirection = "DESC"}
         this.getPSMsPage(this.currentPage, this.currentSize, this.currentSortField, this.currentSortDirection);
     }
 
@@ -123,13 +127,18 @@ export class PsmTablesComponent implements OnInit {
 
     writeSpectrumTable(spectraTitlesStr:string) :void{
         let spectraTitles = spectraTitlesStr.split("||");
-        this.spectrumService.getSpectra(spectraTitlesStr)
-            .then(spectra =>
-                {this.spectrumTable = spectra;
-                this.currentSpectrumInProject = this.spectrumTable[0];
-                }
-            ).catch(this.handleError);
-
+        this.spectrumTable = [];
+        for(var i=0; i<spectraTitles.length; i+=100) {
+            var endIndex = i + 100;
+            if (endIndex>spectraTitles.length) endIndex = spectraTitles.length;
+            var tempSpectraTitlesStr = spectraTitles.slice(i, endIndex).join("||");
+            this.spectrumService.getSpectra(tempSpectraTitlesStr)
+                .then(spectra => {
+                        this.spectrumTable = this.spectrumTable.concat( spectra);
+                        this.currentSpectrumInProject = this.spectrumTable[0];
+                    }
+                ).catch(this.handleError);
+        }
     }
 
     onPageSizeChange(size:string): void {
@@ -206,9 +215,18 @@ export class PsmTablesComponent implements OnInit {
 
     }
 
+    private afterDataRetrieving(psms_page: PSMsPage) {
+                this.psmMap.clear();
+                for (let psm of psms_page.scoredPSMs) this.psmMap.set(psm['id'], psm);
+                this.totalElem = psms_page.totalElements;
+                this.totalPages = psms_page.totalPages;
+                this.setPages();
+                this.writePsmTable();
+    }
 
     private handleError(error: any): void {
         console.log('A error occurred', error);
     }
+
 
 }

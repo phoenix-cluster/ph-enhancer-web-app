@@ -369,7 +369,8 @@ var ui = require('jquery-ui');
         container.data("ionSeriesLabels", {a: [], b: [], c: [], x: [], y: [], z: []});
         container.data("ionSeriesMatch", {a: [], b: [], c: [], x: [], y: [], z: []});
 
-        var maxInt = getMaxInt(options);
+        var maxIntUp = getMaxInt(options.peaks);
+        var maxIntDown = getMaxInt(options.peaks2);
         var minInt = getMinInt(options);
         var __xrange = getPlotXRange(options);
 
@@ -391,19 +392,19 @@ var ui = require('jquery-ui');
                 // yaxis:
                 yaxes:[
                     { tickLength: 0, tickColor: "#000",
-                         max: maxInt*1.1,
-                         min: maxInt*-1.1,
-                         ticks: [0, maxInt*0.1, maxInt*0.2, maxInt*0.3, maxInt*0.4, maxInt*0.5,
-                                 maxInt*0.6, maxInt*0.7, maxInt*0.8, maxInt*0.9, maxInt],
-                         tickFormatter: function(val, axis) {return Math.round((val * 100)/maxInt)+"%";}
+                         max: maxIntUp*1.1,
+                         min: maxIntUp*-1.1,
+                         ticks: [0, maxIntUp*0.1, maxIntUp*0.2, maxIntUp*0.3, maxIntUp*0.4, maxIntUp*0.5,
+                                 maxIntUp*0.6, maxIntUp*0.7, maxIntUp*0.8, maxIntUp*0.9, maxIntUp],
+                         tickFormatter: function(val, axis) {return Math.round((val * 100)/maxIntUp)+"%";}
                     },
                     { tickLength: 0, tickColor: "#000",
-                        min: maxInt*-1.1,
-                        max: maxInt*1.1,
+                        min: maxIntDown*-1.1,
+                        max: maxIntDown*1.1,
                         position:"bottom",
-                        ticks: [0, maxInt*0.1, maxInt*0.2, maxInt*0.3, maxInt*0.4, maxInt*0.5,
-                            maxInt*0.6, maxInt*0.7, maxInt*0.8, maxInt*0.9, maxInt],
-                        tickFormatter: function(val, axis) {return Math.round((val * 100)/maxInt)+"%";},
+                        ticks: [0, maxIntDown*0.1, maxIntDown*0.2, maxIntDown*0.3, maxIntDown*0.4, maxIntDown*0.5,
+                            maxIntDown*0.6, maxIntDown*0.7, maxIntDown*0.8, maxIntDown*0.9, maxIntDown],
+                        tickFormatter: function(val, axis) {return Math.round((val * 100)/maxIntDown)+"%";},
                         transform: function (v) { return -v; },
                     }
                 ]
@@ -411,14 +412,14 @@ var ui = require('jquery-ui');
 
 
         container.data("plotOptions", plotOptions);
-        container.data("maxInt", maxInt);
+        container.data("maxInt", maxIntDown);
 
     }
 
-	function getMaxInt(options) {
+	function getMaxInt(peaks) {
 		var maxInt = 0;
-		for(var j = 0; j < options.peaks.length; j += 1) {
-			var peak = options.peaks[j];
+		for(var j = 0; j < peaks.length; j += 1) {
+			var peak = peaks[j];
 			if(peak[1] > maxInt) {
 				maxInt = peak[1];
 			}

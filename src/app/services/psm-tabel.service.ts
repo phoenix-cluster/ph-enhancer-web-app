@@ -10,7 +10,7 @@ import {Config} from "../models/config";
 
 export class PsmTableService{
 
-  private baseUrl = Config.baseUrl;
+  private baseUrl = Config.baseUrl + "scoredpsms/";
   private psmTitleListUrl = 'api/psmTitleList';
   private headers = new Headers({'Content-type': 'application/json'});
 
@@ -23,8 +23,8 @@ export class PsmTableService{
      //  .catch(this.handleError);
 	// }
 
-    getPsmsPage(page:number, size:number, sortField:string, sortDirection:string): Promise<PSMsPage>{
-        let psmsUrl = this.baseUrl + "scoredpsms?"
+    getNegPsmsPage(page:number, size:number, sortField:string, sortDirection:string): Promise<PSMsPage>{
+        let psmsUrl = this.baseUrl + "negscore?"
             + "page=" + page
             + "&size=" + size
             + "&sortField=" + sortField
@@ -35,6 +35,34 @@ export class PsmTableService{
             .then(response => response.json() as PSMsPage)
             .catch(this.handleError);
     }
+
+    getRecommIdPsmsPage(page:number, size:number, sortField:string, sortDirection:string): Promise<PSMsPage>{
+        let psmsUrl = this.baseUrl + "recomm?"
+            + "page=" + page
+            + "&size=" + size
+            + "&sortField=" + sortField
+            + "&sortDirection=" + sortDirection;
+
+        return this.http.get(psmsUrl)
+            .toPromise()
+            .then(response => response.json() as PSMsPage)
+            .catch(this.handleError);
+    }
+
+
+    getPosPsmsPage(page:number, size:number, sortField:string, sortDirection:string): Promise<PSMsPage>{
+        let psmsUrl = this.baseUrl + "posscore?"
+            + "page=" + page
+            + "&size=" + size
+            + "&sortField=" + sortField
+            + "&sortDirection=" + sortDirection;
+
+        return this.http.get(psmsUrl)
+            .toPromise()
+            .then(response => response.json() as PSMsPage)
+            .catch(this.handleError);
+    }
+
 
     getPsmTitleList(listLen:number): Promise<string[]>{
     return this.http.get(this.psmTitleListUrl)
