@@ -136,7 +136,7 @@
                                 <i class="fa fa-2x float-right unactived-sort-icon" ></i>
                         </th>
                     </thead>
-                    <tbody style="height:637px;">
+                    <tbody style="height:647px;">
                     <tr *ngFor="let spectrum of spectrumTable; let i=index" role="row form" class="odd" (click)="onSpectrumRowClick(spectrum)">
                         <ng-container *ngFor="let headItem of spectrumHeaders; let j=index" >
                             <td class="" *ngIf="j<spectrumHeaders.length">{{spectrum[headItem.headName]}}</td>
