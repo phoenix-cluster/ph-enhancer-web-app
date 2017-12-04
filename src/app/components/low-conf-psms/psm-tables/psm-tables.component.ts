@@ -85,6 +85,9 @@ export class PsmTablesComponent implements OnInit {
             case 'desc': {
                 return 'fa-sort-down';
             }
+            case 'True': {
+                return 'fa-sort';
+            }
         }
     }
 
@@ -164,13 +167,22 @@ export class PsmTablesComponent implements OnInit {
 
     onClickReSort(headItem):void{
         let index = this.psmHeaders.indexOf(headItem);
-        if (headItem['order'] == 'asc'){
+        for(var i=0; i<this.psmHeaders.length; i++) {
+            if(this.psmHeaders[i]['order'] != 'False' && i != index){
+                this.psmHeaders[i]['order'] = 'True';//set all sortable to ready status
+            }
+        }
+        //set clicked headitem to right direction
+        if (this.psmHeaders[index]['order'] == 'asc'){
+            this.psmHeaders[index]['order'] = 'desc';
+        } else if (this.psmHeaders[index]['order'] == 'desc'){
+            this.psmHeaders[index]['order'] = 'asc';
+        } else if (this.psmHeaders[index]['order'] == 'True'){
             this.psmHeaders[index]['order'] = 'desc';
         }
-        else{
-            this.psmHeaders[index]['order'] = 'asc';
-        }
-        this.sortByCol = this.psmHeaders[index]['headName'];
+        this.currentSortField = this.psmHeaders[index]['headName'];
+        this.currentSortDirection = this.psmHeaders[index]['order'];
+        this.rewritePsmTable();
     }
 
     onRowClick(psm:Psm):void{
