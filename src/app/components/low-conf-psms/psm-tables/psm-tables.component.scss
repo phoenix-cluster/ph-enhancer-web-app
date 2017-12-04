@@ -184,16 +184,16 @@ table.table-bordered.dataTable tbody td{
   width: 10.23%;
 }
 .position_1 tbody td{
-  width: 34.5%!important;
+  width: 36.4%!important;
 }
 .position_1 th{
-  width: 32%!important;
+  width: 35%!important;
 }
-.position_1 th:last-child{
-  width: 36%!important;
+.position_1 th:first-child{
+  width: 45%!important;
 }
-.position_1 tbody td:last-child{
-     width: 36%!important;
+.position_1 tbody td:first-child{
+     width: 47.2%!important;
 }
 .nowrap{
   flex-wrap: nowrap;
@@ -265,34 +265,23 @@ table.table-bordered.dataTable tbody td{
  
     
     .position_1{
-      width: 281px;
+     width: 512px;
       
     }
-    .col-sm-3{
-      margin-left: 0px;
-    }
-    @media screen and (max-width:1250px){
-      .col-sm-3{
-        margin-left: 100px;
-      }
-    }
-    @media screen and (max-width:1100px){
-      .col-sm-3{
-        margin-left: 150px;
-      }
-    }
-    @media screen and (max-width:870px){
-      .col-sm-3{
-        margin-left: 180px;
-      }
-    }
+   
+   
+    
     @media screen and (max-width:858px){
       .nowrap{
         flex-wrap: wrap;
       }
-      .col-sm-3{
-        margin-left: 0px;
-      }
+     
     }
  
-  
+    .nowrap{
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+    .new-col-md-8{
+      margin-right: 10px;
+    }
