@@ -180,7 +180,6 @@ export class PsmTablesComponent implements OnInit {
 
     onSpectrumRowClick(spectrum:Spectrum):void{
         this.currentSpectrumInProject = spectrum;
-        alert(this.currentSpectrumInProject.title);
     }
 
 
