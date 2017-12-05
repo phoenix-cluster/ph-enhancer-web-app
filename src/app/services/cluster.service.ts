@@ -5,6 +5,7 @@ import {Headers, Http} from "@angular/http";
 import 'rxjs/add/operator/toPromise'
 import {Cluster} from "../models/cluster";
 import {Config} from "../models/config";
+import {LocalStorageService} from "./local-storage.service";
 
 @Injectable()
 
@@ -13,18 +14,26 @@ export class ClusterService {
     private baseUrl = Config.baseUrl;
     private headers = new Headers({'Content-type': 'application/json'});
 
-    constructor(private http: Http) {
+    constructor(private http: Http, private localStorageService: LocalStorageService) {
     }
 
     public getACluster(clusterid: string): Promise<Cluster> {
         let clusterUrl = this.baseUrl + "clusters/"
             + clusterid;
-
-        return this.http.get(clusterUrl)
-            .toPromise()
-            //to do the map here!
-            .then(response => response.json() as Cluster)
+        let cluster = this.localStorageService.getData("cluster_" + clusterid);
+        if(cluster != null) {
+            return new Promise(resolve => resolve(cluster));
+        }else {
+            return this.http.get(clusterUrl)
+                .toPromise()
+            //     to do the map here!
+            .then(response => {
+                let newCluster: Cluster = response.json();
+                this.localStorageService.setData("cluster_" + clusterid, newCluster);
+                return newCluster;
+            })
             .catch(this.handleError);
+        }
     }
 
     getPsmTitleList(listLen: number): Promise<string[]> {

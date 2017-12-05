@@ -41,12 +41,13 @@ import {ClusterSpectraTableComponent} from './components/low-conf-psms/psm-table
 import {PsmTableService} from "./services/psm-tabel.service";
 import {SpectraInClusterTableService} from "./services/spectra-in-cluster-tabel.service";
 import {ClusterService} from "./services/cluster.service";
-import {ConfigModule, ConfigService} from './services/config.service';
 
 
 import {SpectraComparerComponent} from './components/low-conf-psms/psm-tables/spectra-comparer/spectra-comparer.component';
 import {Cluster} from "./models/cluster";
 import {SpectrumService} from "./services/spectrum.service";
+import {LocalStorageService} from "./services/local-storage.service";
+
 
 @NgModule({
     declarations: [
@@ -85,7 +86,7 @@ import {SpectrumService} from "./services/spectrum.service";
         MDBBootstrapModule.forRoot(),
         CommonModule,
         FileUploadModule,
-        AppRoutingModule
+        AppRoutingModule,
 
         // AgmCoreModule.forRoot({
         //   // https://developers.google.com/maps/documentation/javascript/get-api-key?hl=en#key
@@ -97,6 +98,7 @@ import {SpectrumService} from "./services/spectrum.service";
         SpectraInClusterTableService,
         ClusterService,
         SpectrumService,
+        LocalStorageService,
         // ConfigService,
         // ConfigModule.init(),
     ],

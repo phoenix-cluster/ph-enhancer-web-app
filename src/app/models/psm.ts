@@ -26,5 +26,5 @@ export class Psm {
     recommendPeptide: string;
     spectraNum: number;
     spectraTitles: string;
-    acceptence: boolean;
+    acceptance: number;
 }

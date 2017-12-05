@@ -13,6 +13,7 @@ import {Psm} from "../../../../models/psm";
 import {ClusterService} from "../../../../services/cluster.service";
 import {Spectrum} from "../../../../models/spectrum";
 import {Cluster} from "../../../../models/cluster";
+import {LocalStorageService} from "../../../../services/local-storage.service";
 
 @Component({
     selector: 'app-spectra-comparer',
@@ -25,6 +26,7 @@ export class SpectraComparerComponent implements OnChanges{
     @Input() currentPsm:Psm;
     @Input() spectrum:Spectrum;
     @Input() psmType:String;
+    // @Input() currentCluster:Cluster;
     private currentClusterId;
     private currentCluster:Cluster;
     private currentSpectrumTitle:string;
@@ -39,7 +41,8 @@ export class SpectraComparerComponent implements OnChanges{
 
     private cluster_peaks:any[];
 
-    constructor(private clusterService: ClusterService) {
+    constructor(private clusterService: ClusterService,
+                private localStorageService:LocalStorageService) {
         this.psm_varMods = [];
     }
 
@@ -47,7 +50,10 @@ export class SpectraComparerComponent implements OnChanges{
     ngOnChanges() {
         this.currentClusterId = this.currentPsm.clusterId;
         this.currentSpectrumTitle = this.spectrum.title;
-        this.resetDataAndRefresh();
+        if(this.currentClusterId != null && this.currentClusterId !="null_cluster_id"
+            && this.spectrum != null && this.spectrum.title != "null_spectrum_title") {
+            this.resetDataAndRefresh();
+        }
     }
 
     private resetDataAndRefresh():void{
@@ -69,7 +75,10 @@ export class SpectraComparerComponent implements OnChanges{
 
         // peaks in the scan: [m/z, intensity] pairs.
         this.psm_peaks = this.getPsmPeaks(this.spectrum);
-        this.getClusterAndRefresh();
+        this.clusterService.getACluster(this.currentClusterId).then(cluster=>this.currentCluster = cluster).catch(this.handleError);
+        this.cluster_peaks = this.getClusterPeaks(this.currentCluster);
+        this.resetCheckRecommButton();
+        this.refreshViewer();
     }
 
     private refreshViewer():void{
@@ -77,6 +86,11 @@ export class SpectraComparerComponent implements OnChanges{
         while (specviewer.firstChild) {
             specviewer.removeChild(specviewer.firstChild);
         }
+        if(this.psm_peaks ==null || this.cluster_peaks == null){
+            console.error("this.psm_peaks or this.cluster_peaks is null");
+            return;
+        }
+
 
         $("#lorikeet").specview({
             sequence: this.psm_sequence,
@@ -91,17 +105,6 @@ export class SpectraComparerComponent implements OnChanges{
             peaks: this.psm_peaks,
             peaks2: this.cluster_peaks
         });
-    }
-
-    private getClusterAndRefresh(){
-        this.clusterService.getACluster(this.currentClusterId).then(cluster => {
-            this.currentCluster = cluster;
-            console.log(this.currentCluster);
-            console.log(this.spectrum);
-            this.cluster_peaks = this.getClusterPeaks(this.currentCluster);
-            this.resetCheckRecommButton();
-            this.refreshViewer();
-        }).catch(this.handleError);
     }
 
     private onCheckRecommClick(){
@@ -125,6 +128,9 @@ export class SpectraComparerComponent implements OnChanges{
 
 
     private getClusterPeaks(cluster:Cluster) :any[]{
+        if(cluster == null) {
+            return;
+        }
         let mzArray = cluster.consensusMz;
         let intensArray = cluster.consensusIntens;
 
@@ -137,7 +143,6 @@ export class SpectraComparerComponent implements OnChanges{
             let apeak = [mzArray[i], intensArray[i]];
             clusterPeaks.push(apeak)
         }
-        console.log(clusterPeaks);
         return clusterPeaks;
     }
 
