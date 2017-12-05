@@ -24,7 +24,6 @@ export class PsmTablesComponent implements OnInit {
     private totalElem:number = 0;
     private totalPages:number = 0;
     private pages:number[];
-    private sortByCol:string = "confidentScore";
     private currentPsm:Psm;
     private currentSpectrumInProject:Spectrum;
 
@@ -91,16 +90,13 @@ export class PsmTablesComponent implements OnInit {
         }
     }
 
-    onAcceptClick(checkBoxId: string): void {
+    onAcceptClick(index: number): void {
+        let checkBoxId = 'psm_cb'+ this.psmTable[index]['id'];
         let checkBox: HTMLInputElement = <HTMLInputElement> document.getElementById(checkBoxId);
-        if (checkBox.readOnly) checkBox.checked = checkBox.readOnly = false;
-        else if (!checkBox.checked) checkBox.readOnly = checkBox.indeterminate = true;
+        this.psmTable[index].acceptence = !this.psmTable[index].acceptence ;
+         alert(this.currentPsm.acceptence );
     }
 
-    setIndeterminate(checkBoxId: string): void {
-        let checkBox: HTMLInputElement = <HTMLInputElement> document.getElementById(checkBoxId);
-        checkBox.indeterminate = true;
-    }
 
     /** write the table by search terms, pagenations, asec/dec ...
      *  based on the psmTitles, which comes from the server
@@ -228,13 +224,22 @@ export class PsmTablesComponent implements OnInit {
 
     private afterDataRetrieving(psms_page: PSMsPage) {
                 this.psmMap.clear();
-                for (let psm of psms_page.scoredPSMs) this.psmMap.set(psm['id'], psm);
+                for (let psm of psms_page.scoredPSMs) {
+                    psm.acceptence = false;
+                    this.psmMap.set(psm['id'], psm);
+                }
                 this.totalElem = psms_page.totalElements;
                 this.totalPages = psms_page.totalPages;
                 this.setPages();
                 this.writePsmTable();
     }
 
+    private isPsmSelected(id:number):boolean {
+        return this.currentPsm.id == id;
+    }
+    private isSpectrumSelected(title:string):boolean{
+            return this.currentSpectrumInProject.title == title;
+    }
     private handleError(error: any): void {
         console.log('A error occurred', error);
     }

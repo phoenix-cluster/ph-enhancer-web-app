@@ -66,12 +66,12 @@
                         </th>
                     </thead>
                     <tbody>
-                    <tr *ngFor="let psm of psmTable; let i=index" role="row form" class="odd" (click)="onRowClick(psm)">
+                    <tr *ngFor="let psm of psmTable; let i=index" role="row form" class="odd" [ngClass]="{'selected-row':isPsmSelected(psm['id'])}" >
                         <ng-container *ngFor="let headItem of psmHeaders; let j=index" >
-                            <td class="" *ngIf="j<psmHeaders.length-1">{{psm[headItem.headName]}}</td>
+                            <td class="" *ngIf="j<psmHeaders.length-1" (click)="onRowClick(psm)" >{{psm[headItem.headName]}}</td>
                             <td class="form-check form-check-inline abc-checkbox" *ngIf="j==psmHeaders.length-1">
                                 <!--{{psm[headItem.headName]}}-->
-                                <input class="form-check-input invisible" type="checkbox" [id]="'psm_cb'+psm['id']" (click)="onAcceptClick('psm_cb'+psm['id'])">
+                                <input class="form-check-input invisible" type="checkbox" [id]="'psm_cb'+psm['id']" [checked]="psm.acceptence"  (click)="onAcceptClick(i)">{{psm.acceptence}}
                                 <label class="form-check-label" [for]="'psm_cb'+psm['id']" ></label>
                             </td>
                         </ng-container>
@@ -145,7 +145,7 @@
                     <tbody>
                     <tr *ngFor="let spectrum of spectrumTable; let i=index" role="row form" class="odd" (click)="onSpectrumRowClick(spectrum)">
                         <ng-container *ngFor="let headItem of spectrumHeaders; let j=index" >
-                            <td class="" *ngIf="j<spectrumHeaders.length">{{spectrum[headItem.headName]}}</td>
+                            <td class="" *ngIf="j<spectrumHeaders.length" [ngClass]="{'selected-row':isSpectrumSelected(spectrum['title'])}">{{spectrum[headItem.headName]}}</td>
                             <td class="form-check form-check-inline abc-checkbox" *ngIf="j==spectrumHeaders.length-1">
                                 <!--{{psm[headItem.headName]}}-->
                                 <!--<input class="form-check-input invisible" type="checkbox" [id]="'psm_cb'+psm['id']" (click)="onAcceptClick('psm_cb'+psm['id'])">-->

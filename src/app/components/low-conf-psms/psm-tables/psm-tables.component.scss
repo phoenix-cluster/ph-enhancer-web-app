@@ -115,6 +115,10 @@ div.dataTables_wrapper div.dataTables_info {
   transform-origin: 100% 100%;
 }
 
+.default_acceptace{
+  border-color: transparent #172e5a #172e5a transparent;
+}
+
 .disabled {
   cursor: not-allowed !important;
   pointer-events:none;
@@ -294,5 +298,6 @@ table.table-bordered.dataTable tbody td{
         margin-left: 0px;
       }
     }
- 
-  
+  .selected-row{
+    color:palevioletred;
+  }

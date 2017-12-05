@@ -3,5 +3,5 @@
  */
 
 export class Config{
-    public static baseUrl = 'http://localhost:8090/example/v1/';
+    public static baseUrl = 'http://namenode:8090/example/v1/';
 }
