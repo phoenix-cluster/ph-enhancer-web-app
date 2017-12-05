@@ -99,6 +99,7 @@ export class SpectraComparerComponent implements OnChanges{
             console.log(this.currentCluster);
             console.log(this.spectrum);
             this.cluster_peaks = this.getClusterPeaks(this.currentCluster);
+            this.resetCheckRecommButton();
             this.refreshViewer();
         }).catch(this.handleError);
     }
@@ -116,6 +117,12 @@ export class SpectraComparerComponent implements OnChanges{
 
         this.refreshViewer()
     }
+
+    private resetCheckRecommButton(){
+        var checkRecommButton = document.getElementById("checkRecommButton");
+        checkRecommButton.innerText = "Check Recommend Sequence";
+    }
+
 
     private getClusterPeaks(cluster:Cluster) :any[]{
         let mzArray = cluster.consensusMz;

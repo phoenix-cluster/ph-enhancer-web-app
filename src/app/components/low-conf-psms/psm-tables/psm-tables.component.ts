@@ -94,7 +94,6 @@ export class PsmTablesComponent implements OnInit {
         let checkBoxId = 'psm_cb'+ this.psmTable[index]['id'];
         let checkBox: HTMLInputElement = <HTMLInputElement> document.getElementById(checkBoxId);
         this.psmTable[index].acceptence = !this.psmTable[index].acceptence ;
-         alert(this.currentPsm.acceptence );
     }
 
 
