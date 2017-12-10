@@ -9,7 +9,7 @@ export class Psm {
             {"headName": "clusterSize", "order": "True"},
             {"headName": "recommendPeptide", "order": "False"},
             {"headName": "spectraNum", "order": "False"},
-            {"headName": "acceptence", "order": "False"}
+            {"headName": "acceptance", "order": "False"}
         ];
 
 

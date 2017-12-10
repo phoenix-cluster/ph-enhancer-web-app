@@ -7,7 +7,12 @@ export class LocalStorageService {
     }
 
     public setData(key:string, data:any) {
-        localStorage.setItem(key, JSON.stringify(data));
+        try{
+            localStorage.setItem(key, JSON.stringify(data));
+        }catch (e){
+            localStorage.clear();
+            this.setData(key, data);
+        }
     }
     public getData(key:string) {
         return JSON.parse(localStorage.getItem(key));

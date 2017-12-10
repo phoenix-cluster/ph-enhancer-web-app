@@ -3,12 +3,12 @@ import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import jQuery from 'jquery';
 import $ from 'jquery';
 
-import "../../../../assets/js/lorikeet/specview.js";
-import "../../../../assets/js/lorikeet/jquery.flot.js";
-import "../../../../assets/js/lorikeet/jquery.flot.selection.js";
-import "../../../../assets/js/lorikeet/peptide.js";
-import "../../../../assets/js/lorikeet/aminoacid.js";
-import "../../../../assets/js/lorikeet/ion.js";
+import "../../../../../assets/js/lorikeet/specview.js";
+import "../../../../../assets/js/lorikeet/jquery.flot.js";
+import "../../../../../assets/js/lorikeet/jquery.flot.selection.js";
+import "../../../../../assets/js/lorikeet/peptide.js";
+import "../../../../../assets/js/lorikeet/aminoacid.js";
+import "../../../../../assets/js/lorikeet/ion.js";
 import {Psm} from "../../../../models/psm";
 import {ClusterService} from "../../../../services/cluster.service";
 import {Spectrum} from "../../../../models/spectrum";
@@ -22,27 +22,27 @@ import {LocalStorageService} from "../../../../services/local-storage.service";
     styleUrls: ['./spectra-comparer.component.scss']
 
 })
-export class SpectraComparerComponent implements OnChanges{
-    @Input() currentPsm:Psm;
-    @Input() spectrum:Spectrum;
-    @Input() psmType:String;
+export class SpectraComparerComponent implements OnChanges {
+    @Input() currentPsm: Psm;
+    @Input() spectrum: Spectrum;
+    @Input() psmType: String;
     // @Input() currentCluster:Cluster;
     private currentClusterId;
-    private currentCluster:Cluster;
-    private currentSpectrumTitle:string;
+    private currentCluster: Cluster;
+    private currentSpectrumTitle: string;
 
-    private psm_sequence:string;
-    private psm_varMods:any[];
-    private psm_ntermMod:number;
-    private psm_peaks:any[];
-    private psm_charge:number;
-    private psm_title:string;
-    private psm_precursorMz:number;
+    private psm_sequence: string;
+    private psm_varMods: any[];
+    private psm_ntermMod: number;
+    private psm_peaks: any[];
+    private psm_charge: number;
+    private psm_title: string;
+    private psm_precursorMz: number;
 
-    private cluster_peaks:any[];
+    private cluster_peaks: any[];
 
     constructor(private clusterService: ClusterService,
-                private localStorageService:LocalStorageService) {
+                private localStorageService: LocalStorageService) {
         this.psm_varMods = [];
     }
 
@@ -50,47 +50,54 @@ export class SpectraComparerComponent implements OnChanges{
     ngOnChanges() {
         this.currentClusterId = this.currentPsm.clusterId;
         this.currentSpectrumTitle = this.spectrum.title;
-        if(this.currentClusterId != null && this.currentClusterId !="null_cluster_id"
+        if (this.currentClusterId != null && this.currentClusterId != "null_cluster_id"
             && this.spectrum != null && this.spectrum.title != "null_spectrum_title") {
             this.resetDataAndRefresh();
         }
     }
 
-    private resetDataAndRefresh():void{
+    private resetDataAndRefresh(): void {
 
         // this.spectrumTableService.getSpectrum(this.currentPsmTitle).
         // then(spectrum =>{this.currentPsm = spectrum});
 
-        this.psm_sequence = this.currentPsm.peptideSequence ;
-        if (this.psm_sequence == null && this.currentPsm.recommendPeptide != null){
-            this.psm_sequence = this.currentPsm.recommendPeptide.substring(6);
+        this.psm_sequence = this.currentPsm.peptideSequence;
+        if (this.psm_sequence == null && this.currentPsm.recommendPeptide != null) {
+            var re = /R_Better_|PRE_/gi;
+            this.psm_sequence = this.currentPsm.recommendPeptide.replace(re,"");
         }
+        //todo psm should be considered here
         // modification index = 14; modification mass = 16.0; modified residue = 'M'
-        this.psm_varMods[0] = {index: 14, modMass: 16.0, aminoAcid: 'M'};
-        // mass to be added to the N-terminus
+        // this.psm_varMods[0] = {index: 14, modMass: 16.0, aminoAcid: 'M'};
         //todo: do we need to add this?
+        // mass to be added to the N-terminus
         // this.psm_ntermMod = 164.07;
-        this.psm_charge= this.spectrum.charge;
+        this.psm_charge = this.spectrum.charge;
         this.psm_title = this.spectrum.title;
 
         // peaks in the scan: [m/z, intensity] pairs.
         this.psm_peaks = this.getPsmPeaks(this.spectrum);
-        this.clusterService.getACluster(this.currentClusterId).then(cluster=>this.currentCluster = cluster).catch(this.handleError);
-        this.cluster_peaks = this.getClusterPeaks(this.currentCluster);
-        this.resetCheckRecommButton();
-        this.refreshViewer();
+        this.clusterService.getACluster(this.currentClusterId).then(
+            cluster => {
+                this.currentCluster = cluster;
+                this.cluster_peaks = this.getClusterPeaks(this.currentCluster);
+                if (this.psmType == "neg_score") {
+                    this.resetCheckRecommButton();
+                }
+                this.refreshViewer();
+            }).catch(this.handleError);
+
     }
 
-    private refreshViewer():void{
+    private refreshViewer(): void {
         var specviewer = document.getElementById("lorikeet");
         while (specviewer.firstChild) {
             specviewer.removeChild(specviewer.firstChild);
         }
-        if(this.psm_peaks ==null || this.cluster_peaks == null){
+        if (this.psm_peaks == null || this.cluster_peaks == null) {
             console.error("this.psm_peaks or this.cluster_peaks is null");
             return;
         }
-
 
         $("#lorikeet").specview({
             sequence: this.psm_sequence,
@@ -107,39 +114,41 @@ export class SpectraComparerComponent implements OnChanges{
         });
     }
 
-    private onCheckRecommClick(){
+    private onCheckRecommClick() {
         var checkRecommButton = document.getElementById("checkRecommButton");
-        if(checkRecommButton.innerText== "Check Recommend Sequence"){
+        if (checkRecommButton.innerText == "Check Recommend Sequence") {
             checkRecommButton.innerText = "Check Original Sequence";
-            this.psm_sequence = this.currentPsm.recommendPeptide.substring(9);
+            var re = /R_Better_|PRE_/gi;
+            this.psm_sequence = this.currentPsm.recommendPeptide.replace(re,"");
         }
         else {
             checkRecommButton.innerText = "Check Recommend Sequence";
             this.psm_sequence = this.currentPsm.peptideSequence;
         }
-
         this.refreshViewer()
     }
 
-    private resetCheckRecommButton(){
+    private resetCheckRecommButton() {
         var checkRecommButton = document.getElementById("checkRecommButton");
-        checkRecommButton.innerText = "Check Recommend Sequence";
+        if (checkRecommButton != null) {
+            checkRecommButton.innerText = "Check Recommend Sequence";
+        }
     }
 
 
-    private getClusterPeaks(cluster:Cluster) :any[]{
-        if(cluster == null) {
+    private getClusterPeaks(cluster: Cluster): any[] {
+        if (cluster == null) {
             return;
         }
         let mzArray = cluster.consensusMz;
         let intensArray = cluster.consensusIntens;
 
-        if(mzArray.length != intensArray.length) {
+        if (mzArray.length != intensArray.length) {
             console.error("Error, the length of mzArray and intensArray is diffrent");
         }
 
         let clusterPeaks = [];
-        for(var i=0; i<mzArray.length; i++) {
+        for (var i = 0; i < mzArray.length; i++) {
             let apeak = [mzArray[i], intensArray[i]];
             clusterPeaks.push(apeak)
         }
@@ -150,19 +159,19 @@ export class SpectraComparerComponent implements OnChanges{
         console.log('A error occurred', error);
     }
 
-    private getPsmPeaks(spectrum: Spectrum):any[] {
+    private getPsmPeaks(spectrum: Spectrum): any[] {
         let mzArray = spectrum.peaklistMz;
         let intensArray = spectrum.peaklistIntens;
 
-        if(mzArray == null){
+        if (mzArray == null) {
             return null;
         }
-        if(mzArray.length != intensArray.length) {
+        if (mzArray.length != intensArray.length) {
             console.error("Error, the length of mzArray and intensArray is diffrent");
         }
 
         let peaks = [];
-        for(var i=0; i<mzArray.length; i++) {
+        for (var i = 0; i < mzArray.length; i++) {
             let apeak = [mzArray[i], intensArray[i]];
             peaks.push(apeak)
         }

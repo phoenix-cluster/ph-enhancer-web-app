@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {SpectrumInCluster} from "../models/spectrum-in-cluster";
 import {Headers, Http} from "@angular/http";
 import {Config} from "../models/config";
+import {LocalStorageService} from "./local-storage.service";
 
 // import 'rxjs/add/operator/toPromise';
 
@@ -13,17 +14,30 @@ export class SpectraInClusterTableService {
 
     private headers = new Headers({'Content-type': 'application/json'});
 
-    constructor(private http: Http) {
+    constructor(private http: Http,
+                private localStorageService: LocalStorageService) {
     }
 
     getSpectra(titlesStr: string): Promise<SpectrumInCluster[]> {
         let spectraUrl = this.baseUrl.concat("spectrumInCluster/titles/", encodeURIComponent(titlesStr));
-        // let spectraUrl = this.baseUrl.concat("spectrumInCluster/", encodeURIComponent(titlesStr));
-        console.log(spectraUrl);
-        return this.http.get(spectraUrl)
-            .toPromise()
-            .then(response => response.json() as SpectrumInCluster[])
-            .catch(this.handleError);
+        let spectraInCluster = this.localStorageService.getData("spec_cluster" + titlesStr);
+        if(spectraInCluster != null) {
+            return new Promise(resolve => resolve(spectraInCluster));
+        }else {
+            return this.http.get(spectraUrl)
+                .toPromise()
+                .then(response => {
+                    let spectra: SpectrumInCluster[] = response.json() as SpectrumInCluster[];
+                    try{
+                        this.localStorageService.setData("spec_cluster" +titlesStr, spectra);
+                    }catch (e) {
+                        localStorage.clear();
+                        this.localStorageService.setData("spec_cluster" +titlesStr, spectra);
+                    }
+                    return spectra;
+                })
+                .catch(this.handleError);
+        }
     }
 
     // getSpectraTitleList(listLen: number): Promise<string[]> {
@@ -39,10 +53,24 @@ export class SpectraInClusterTableService {
 
     getSpectrumInCluster(titleStr: string): Promise<SpectrumInCluster> {
         let spectrumInClusterUrl = this.baseUrl.concat("spectrumInCluster/", encodeURIComponent(titleStr));
-        return this.http.get(spectrumInClusterUrl)
-            .toPromise()
-            .then(response => response.json().data as SpectrumInCluster)
-            .catch(this.handleError);
+        let spectrumInCluster = this.localStorageService.getData("spec_cluster" + titleStr);
+        if(spectrumInCluster != null) {
+            return new Promise(resolve => resolve(spectrumInCluster));
+        }else {
+            return this.http.get(spectrumInClusterUrl)
+                .toPromise()
+                .then(response => {
+                    let spectrum: SpectrumInCluster = response.json() as SpectrumInCluster;
+                    try {
+                        this.localStorageService.setData("spec_cluster" + titleStr, spectrum);
+                    }catch (e){
+                        localStorage.clear();
+                        this.localStorageService.setData("spec_cluster" + titleStr, spectrum);
+                    }
+                    return spectrum;
+                })
+                .catch(this.handleError);
+        }
     }
 
     private handleError(error: any): Promise<any> {
