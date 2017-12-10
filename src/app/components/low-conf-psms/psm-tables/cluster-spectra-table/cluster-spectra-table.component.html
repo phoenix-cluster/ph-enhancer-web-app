@@ -2,7 +2,7 @@
     
         <div id="example_wrapper " class="dataTables_wrapper container-fluid dt-bootstrap4 ">
             <div class="row">
-                <div class="col-sm-12 col-md-6 pd_1">
+                <div class="col-sm-12 col-md-6 pd_1" style="height:39px;">
                     <div class="dataTables_length" id="example_length">
                         <label>Show:&nbsp;
                         <div class="select-wrapper form-control form-control-sm mdb-select"  style="margin-top: 0em">
@@ -37,12 +37,7 @@
                                     <i class="fa float-right" [ngClass]="getClassByOrder(headItem.order)"></i>
                             </th>
                         </thead>
-                        <tfoot>
-                        <tr>
-                            <th *ngFor="let headItem of spectrumInClusterHeaders" class="">{{headItem.headName}}
-                            </th>
-                        </tr>
-                        </tfoot>
+                       
                         <tbody>
                         <tr *ngFor="let spectrumInCluster of currentSpectra; let i=index" role="row form" class="odd">
                             <ng-container *ngFor="let headItem of spectrumInClusterHeaders; let j=index" >
@@ -51,6 +46,12 @@
                         </tr>
     
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <th *ngFor="let headItem of spectrumInClusterHeaders" class="">{{headItem.headName}}
+                                </th>
+                            </tr>
+                            </tfoot>
                     </table>
                 </div>
             </div>

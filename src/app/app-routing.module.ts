@@ -19,8 +19,6 @@ const routes: Routes = [
     {path: 'low_conf', component: LowConfPsmsComponent},
     {path: 'high_conf', component: HighConfPsmsComponent},
     {path: 'new_id', component: NewIdentifiedComponent},
-    // {path: 'detail/:id', component: HeroDetailComponent},
-    // {path: 'heroes', component: HeroesComponent},
 ];
 
 @NgModule({

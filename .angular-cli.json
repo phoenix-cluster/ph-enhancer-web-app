@@ -9,7 +9,6 @@
       "outDir": "dist",
       "assets": [
         "assets",
-        "assets/config/*.json",
         "favicon.ico"
       ],
       "index": "index.html",
@@ -30,14 +29,14 @@
         "../node_modules/easy-pie-chart/dist/easypiechart.js",
         "../node_modules/screenfull/dist/screenfull.js",
         "../node_modules/hammerjs/hammer.min.js",
-        "../src/app/assets/js/lorikeet/jquery.min.js",
-        "../src/app/assets/js/lorikeet/jquery-ui.min.js",
-        "../src/app/assets/js/lorikeet/jquery.flot.js",
-        "../src/app/assets/js/lorikeet/jquery.flot.selection.js",
-        "../src/app/assets/js/lorikeet/peptide.js",
-        "../src/app/assets/js/lorikeet/aminoacid.js",
-        "../src/app/assets/js/lorikeet/ion.js",
-        "../src/app/assets/js/lorikeet/specview.js"
+        "../src/assets/js/lorikeet/jquery.min.js",
+        "../src/assets/js/lorikeet/jquery-ui.min.js",
+        "../src/assets/js/lorikeet/jquery.flot.js",
+        "../src/assets/js/lorikeet/jquery.flot.selection.js",
+        "../src/assets/js/lorikeet/peptide.js",
+        "../src/assets/js/lorikeet/aminoacid.js",
+        "../src/assets/js/lorikeet/ion.js",
+        "../src/assets/js/lorikeet/specview.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
