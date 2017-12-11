@@ -208,7 +208,7 @@ table.table-bordered.dataTable tbody td{
       width: 100%;
       min-height: 1px;
       padding-right: 15px;
-      padding-left: 15px;
+      padding-left: 30px;
   }
   
 
@@ -279,9 +279,12 @@ table.table-bordered.dataTable tbody td{
     }
  
     .nowrap{
-      padding-left: 15px;
+      padding-left: 30px;
       padding-right: 15px;
     }
     .new-col-md-8{
-      margin-right: 10px;
+      margin-right: 30px;
+    }
+    #spectrum_table{
+      padding-left: 30px;
     }
