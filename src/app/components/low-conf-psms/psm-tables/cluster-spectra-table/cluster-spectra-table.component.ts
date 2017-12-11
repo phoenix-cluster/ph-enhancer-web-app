@@ -1,10 +1,15 @@
 import {Component, Input, OnChanges, OnInit} from '@angular/core';
+
 import {SpectrumInCluster} from "../../../../models/spectrum-in-cluster";
 import {SpectraInClusterTableService} from "../../../../services/spectra-in-cluster-tabel.service";
 import {ClusterService} from "../../../../services/cluster.service";
 import {Cluster} from "../../../../models/cluster";
 import {map} from "rxjs/operator/map";
 import {SpectrumService} from "../../../../services/spectrum.service";
+import { LocalStorageService } from '../../../../services/local-storage.service';
+
+
+
 
 @Component({
     selector: 'app-cluster-spectra-table',
@@ -34,6 +39,7 @@ export class ClusterSpectraTableComponent implements OnChanges {
 
     constructor(private spectrumInClusterTableService: SpectraInClusterTableService,
                 private spectrumService:SpectrumService,
+                private localStorageService:LocalStorageService,
                 private clusterService: ClusterService) {
     }
 
@@ -115,7 +121,7 @@ export class ClusterSpectraTableComponent implements OnChanges {
         // if (cluster == null){
         this.clusterService.getACluster(this.currentClusterId).then(cluster => {
             this.currentCluster = cluster;
-            localStorage.setItem(cluster.id, JSON.stringify(cluster));
+            this.localStorageService.setData("cluster_"+this.currentClusterId, this.currentCluster);
             this.allSpectraTitlesOfaCluster = cluster.spectraTitles;
             // console.log(this.allSpectraTitlesOfaCluster);
             this.setPages();

@@ -5,11 +5,11 @@ export class Psm {
             {"headName": "peptideSequence", "order": "False"},
             {"headName": "confidentScore", "order": "asc"},
             {"headName": "clusterId", "order": "False"},
-            {"headName": "clusterRatio", "order": "desc"},
-            {"headName": "clusterSize", "order": "desc"},
+            {"headName": "clusterRatio", "order": "True"},
+            {"headName": "clusterSize", "order": "True"},
             {"headName": "recommendPeptide", "order": "False"},
             {"headName": "spectraNum", "order": "False"},
-            {"headName": "acceptence", "order": "False"}
+            {"headName": "acceptance", "order": "False"}
         ];
 
 
@@ -26,5 +26,5 @@ export class Psm {
     recommendPeptide: string;
     spectraNum: number;
     spectraTitles: string;
-    acceptence: string;
+    acceptance: number;
 }
