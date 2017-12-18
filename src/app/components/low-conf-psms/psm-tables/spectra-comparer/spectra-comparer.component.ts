@@ -14,6 +14,7 @@ import {ClusterService} from "../../../../services/cluster.service";
 import {Spectrum} from "../../../../models/spectrum";
 import {Cluster} from "../../../../models/cluster";
 import {LocalStorageService} from "../../../../services/local-storage.service";
+import {Modification} from "../../../../models/modification";
 
 @Component({
     selector: 'app-spectra-comparer',
@@ -34,6 +35,7 @@ export class SpectraComparerComponent implements OnChanges {
     private psm_sequence: string;
     private psm_varMods: any[];
     private psm_ntermMod: number;
+    private psm_ctermMod: number;
     private psm_peaks: any[];
     private psm_charge: number;
     private psm_title: string;
@@ -63,7 +65,7 @@ export class SpectraComparerComponent implements OnChanges {
 
         this.psm_sequence = this.currentPsm.peptideSequence;
         if (this.psm_sequence == null && this.currentPsm.recommendPeptide != null) {
-            var re = /R_Better_|PRE_/gi;
+            var re = /R_Better_|PRE_|R_NEW_/gi;
             this.psm_sequence = this.currentPsm.recommendPeptide.replace(re,"");
         }
         //todo psm should be considered here
@@ -72,6 +74,10 @@ export class SpectraComparerComponent implements OnChanges {
         //todo: do we need to add this?
         // mass to be added to the N-terminus
         // this.psm_ntermMod = 164.07;
+        if(this.psmType == "negscore" || this.psmType == "posscore")
+            this.set_mods(this.currentPsm.peptideMods, this.currentPsm.peptideSequence);
+        if(this.psmType == "recomm" )
+            this.set_mods(this.currentPsm.recommendPepMods, this.currentPsm.recommendPeptide);
         this.psm_charge = this.spectrum.charge;
         this.psm_title = this.spectrum.title;
 
@@ -81,7 +87,7 @@ export class SpectraComparerComponent implements OnChanges {
             cluster => {
                 this.currentCluster = cluster;
                 this.cluster_peaks = this.getClusterPeaks(this.currentCluster);
-                if (this.psmType == "neg_score") {
+                if (this.psmType == "negscore") {
                     this.resetCheckRecommButton();
                 }
                 this.refreshViewer();
@@ -108,7 +114,7 @@ export class SpectraComparerComponent implements OnChanges {
             //staticMods: staticMods,
             variableMods: this.psm_varMods,
             ntermMod: this.psm_ntermMod,
-            //ctermMod: ctermMod,
+            ctermMod: this.psm_ctermMod,
             peaks: this.psm_peaks,
             peaks2: this.cluster_peaks
         });
@@ -120,10 +126,12 @@ export class SpectraComparerComponent implements OnChanges {
             checkRecommButton.innerText = "Check Original Sequence";
             var re = /R_Better_|PRE_/gi;
             this.psm_sequence = this.currentPsm.recommendPeptide.replace(re,"");
+            this.set_mods(this.currentPsm.recommendPepMods, this.currentPsm.recommendPeptide);
         }
         else {
             checkRecommButton.innerText = "Check Recommend Sequence";
             this.psm_sequence = this.currentPsm.peptideSequence;
+            this.set_mods(this.currentPsm.peptideMods, this.currentPsm.peptideSequence);
         }
         this.refreshViewer()
     }
@@ -176,5 +184,31 @@ export class SpectraComparerComponent implements OnChanges {
             peaks.push(apeak)
         }
         return peaks;
+    }
+
+        //todo psm should be considered here
+        // modification index = 14; modification mass = 16.0; modified residue = 'M'
+        // this.psm_varMods[0] = {index: 14, modMass: 16.0, aminoAcid: 'M'};
+        //todo: do we need to add this?
+        // mass to be added to the N-terminus
+        // this.psm_ntermMod = 164.07;
+    private set_mods(peptideMods: Modification[], peptideSeq: string) {
+        this.psm_ntermMod = 0;
+        this.psm_varMods.length = 0;
+        if(peptideMods == null) {
+            return;
+        }
+        for (var i = 0; i < peptideMods.length; i++) {
+            var j = 0;
+            let mod:Modification = peptideMods[i];
+            if (mod.location == 0){
+                this.psm_ntermMod = mod.deltaMass;
+            }else if (mod.location == peptideSeq.length + 1){
+                this.psm_ctermMod = mod.deltaMass;
+            }
+            else{
+                this.psm_varMods[j++] = {index: mod.location, modMass: mod.deltaMass, aminoAcid: mod.residue};
+            }
+        }
     }
 }

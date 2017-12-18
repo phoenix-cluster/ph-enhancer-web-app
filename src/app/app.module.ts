@@ -35,18 +35,17 @@ import {ClusterRatioChartComponent} from './components/low-conf-psms/cluster-rat
 import {ClusterSizeChartComponent} from './components/low-conf-psms/cluster-size-chart/cluster-size-chart.component';
 import {PsmTablesComponent} from './components/low-conf-psms/psm-tables/psm-tables.component';
 import {ClusterSpectraTableComponent} from './components/low-conf-psms/psm-tables/cluster-spectra-table/cluster-spectra-table.component';
+import {SpectraComparerComponent} from './components/low-conf-psms/psm-tables/spectra-comparer/spectra-comparer.component';
 
 // import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 // import { InMemoryDataService }  from './services/in-memory-data.service';
 import {PsmTableService} from "./services/psm-tabel.service";
 import {SpectraInClusterTableService} from "./services/spectra-in-cluster-tabel.service";
 import {ClusterService} from "./services/cluster.service";
-
-
-import {SpectraComparerComponent} from './components/low-conf-psms/psm-tables/spectra-comparer/spectra-comparer.component';
-import {Cluster} from "./models/cluster";
 import {SpectrumService} from "./services/spectrum.service";
 import {LocalStorageService} from "./services/local-storage.service";
+
+
 
 
 @NgModule({

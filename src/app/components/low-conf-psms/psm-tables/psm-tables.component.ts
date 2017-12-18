@@ -26,19 +26,18 @@ export class PsmTablesComponent implements OnInit {
     private pages:number[];
     private currentPsm:Psm;
     private currentSpectrumInProject:Spectrum;
-    private acceptanceListOfRecommPsm:Map<number, number>; //id, accept(1)/reject(-1)/default(0)
+    private cachedAcceptanceListOfRecommPsm:Map<number, number>; //id, accept(1)/reject(-1)/default(0), the ids which are not updated to server yet
     private defaultAcceptanceOfRecommPsm:boolean;//true means accept, false means reject
     // private defaultAcceptanceOfNegPsm:boolean;
     // private defaultAcceptanceOfPosPsm:boolean;
 
 
-    constructor(private psmTableService: PsmTableService, private spectrumService:SpectrumService) {
+    constructor(private psmTableService: PsmTableService,
+                private spectrumService:SpectrumService){
         this.currentPsm = new Psm("null_cluster_id");
         this.currentSpectrumInProject = new Spectrum("null_spectrum_title", null, null);
-        this.acceptanceListOfRecommPsm = new Map<number, number>();
+        this.cachedAcceptanceListOfRecommPsm = new Map<number, number>();
         this.defaultAcceptanceOfRecommPsm = null;//true means accept, false means reject
-        // this.defaultAcceptanceOfNegPsm = false;
-        // this.defaultAcceptanceOfPosPsm = true;
     }
 
     psms: Psm[];
@@ -69,7 +68,7 @@ export class PsmTablesComponent implements OnInit {
 
 
     getPSMsPage(page: number, size: number, sortField: string, sortDirection: string): void {
-        if(this.psmType == "neg_score") {
+        if(this.psmType == "negscore") {
             this.psmTableService.getNegPsmsPage(page, size, sortField, sortDirection).then(psms_page => {
                 this.afterDataRetrieving(psms_page);
             });
@@ -81,7 +80,7 @@ export class PsmTablesComponent implements OnInit {
             });
         }
 
-        if(this.psmType == "pos_score"){
+        if(this.psmType == "posscore"){
             console.log("here");
             this.psmTableService.getPosPsmsPage(page, size, sortField, sortDirection).then(psms_page => {
                 this.afterDataRetrieving(psms_page);
@@ -91,8 +90,8 @@ export class PsmTablesComponent implements OnInit {
     }
 
     ngOnInit() {
-        if(this.psmType == "neg_score") {this.currentSortDirection = "ASC"}
-        if(this.psmType == "pos_score") {this.currentSortDirection = "DESC"}
+        if(this.psmType == "negscore") {this.currentSortDirection = "ASC"}
+        if(this.psmType == "posscore") {this.currentSortDirection = "DESC"}
         if(this.psmType == "recomm") {this.currentSortDirection = "DESC"}
         this.getPSMsPage(this.currentPage, this.currentSize, this.currentSortField, this.currentSortDirection);
     }
@@ -117,7 +116,7 @@ export class PsmTablesComponent implements OnInit {
     onAcceptClick(index: number): void {
         let checkBoxId = 'psm_cb'+ this.psmTable[index]['id'];
         let checkBox: HTMLInputElement = <HTMLInputElement> document.getElementById(checkBoxId);
-        this.psmTable[index].acceptance = 1 + this.psmTable[index].acceptance ;
+        this.psmTable[index].acceptance = 1 + this.psmTable[index].acceptance;
         if(this.psmTable[index].acceptance == 2){
             this.psmTable[index].acceptance = -1;
         }
@@ -249,23 +248,25 @@ export class PsmTablesComponent implements OnInit {
     }
 
     private afterDataRetrieving(psms_page: PSMsPage) {
-                this.psmMap.clear();
-                for (let psm of psms_page.scoredPSMs) {
-                    psm.acceptance = this.acceptanceListOfRecommPsm.get(psm.id);
-                    if(psm.acceptance == null) {
-                        psm.acceptance = 0;
-                    }
-                    this.psmMap.set(psm['id'], psm);
-                }
-                this.totalElem = psms_page.totalElements;
-                this.totalPages = psms_page.totalPages;
-                this.setPages();
-                this.writePsmTable();
+        this.psmMap.clear();
+        for (let psm of psms_page.scoredPSMs) {
+                    // psm.acceptance = this.acceptanceListOfRecommPsm.get(psm.id);
+            if(psm.acceptance == null) {
+                psm.acceptance = 0;
+            }
+            this.psmMap.set(psm['id'], psm);
+        }
+        console.log(this.psmMap);
+        this.totalElem = psms_page.totalElements;
+        this.totalPages = psms_page.totalPages;
+        this.setPages();
+        this.writePsmTable();
     }
 
 
     private setAcceptanceForPsm(id:number, acceptanceStatus:number){
-        this.acceptanceListOfRecommPsm.set(id, acceptanceStatus);
+        this.cachedAcceptanceListOfRecommPsm.set(id, acceptanceStatus);
+        this.uploadUserAcceptance();
     }
 
     private isPsmSelected(id:number):boolean {
@@ -278,5 +279,13 @@ export class PsmTablesComponent implements OnInit {
         console.log('A error occurred', error);
     }
 
-
+    private uploadUserAcceptance(): void{
+        if(this.cachedAcceptanceListOfRecommPsm.size == 0) return;
+        this.psmTableService.uploadUserAcceptance(this.psmType, this.cachedAcceptanceListOfRecommPsm).then(
+            result=> {
+                this.cachedAcceptanceListOfRecommPsm.clear();
+            }
+        ).catch(error => console.log(error))
+        ;
+    }
 }

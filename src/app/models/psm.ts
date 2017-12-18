@@ -1,3 +1,4 @@
+import {Modification} from "./modification";
 export class Psm {
     static psmHeaders =
         [
@@ -9,7 +10,7 @@ export class Psm {
             {"headName": "clusterSize", "order": "True"},
             {"headName": "recommendPeptide", "order": "False"},
             {"headName": "spectraNum", "order": "False"},
-            {"headName": "acceptance", "order": "False"}
+            {"headName": "acceptance", "order": "True"}
         ];
 
 
@@ -19,11 +20,13 @@ export class Psm {
 
     id: number;
     peptideSequence: string;
+    peptideMods: Modification[];
     confidentScore: number;
     clusterId: string;
     clusterRatio: number;
     clusterSize: number;
     recommendPeptide: string;
+    recommendPepMods: Modification[];
     spectraNum: number;
     spectraTitles: string;
     acceptance: number;

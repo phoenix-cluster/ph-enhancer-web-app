@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Psm } from "../models/psm";
-import { Headers, Http } from "@angular/http";
+import {Headers, Http, Response, RequestOptions} from "@angular/http";
 
 import 'rxjs/add/operator/toPromise'
 import {PSMsPage} from "../models/psmsPage";
@@ -12,7 +11,7 @@ export class PsmTableService{
 
   private baseUrl = Config.baseUrl + "scoredpsms/";
   private psmTitleListUrl = 'api/psmTitleList';
-  private headers = new Headers({'Content-type': 'application/json'});
+  private headers = new Headers({'Content-type': 'application/json', "Access-Control-Allow-Origin": "*" });
 
   constructor(private http: Http){}
 
@@ -29,7 +28,7 @@ export class PsmTableService{
             + "&size=" + size
             + "&sortField=" + sortField
             + "&sortDirection=" + sortDirection;
-
+        console.log(psmsUrl);
         return this.http.get(psmsUrl)
             .toPromise()
             .then(response => response.json() as PSMsPage)
@@ -43,6 +42,7 @@ export class PsmTableService{
             + "&sortField=" + sortField
             + "&sortDirection=" + sortDirection;
 
+        console.log(psmsUrl);
         return this.http.get(psmsUrl)
             .toPromise()
             .then(response => response.json() as PSMsPage)
@@ -56,7 +56,7 @@ export class PsmTableService{
             + "&size=" + size
             + "&sortField=" + sortField
             + "&sortDirection=" + sortDirection;
-
+        console.log(psmsUrl);
         return this.http.get(psmsUrl)
             .toPromise()
             .then(response => response.json() as PSMsPage)
@@ -77,6 +77,25 @@ export class PsmTableService{
     //   .then(response => response.json().data as Psm)
     //   .catch(this.handleError);
     // }
+
+    public uploadUserAcceptance(psmType:string, acceptanceMap:Map<number, number>) {
+        let uploadUrl = this.baseUrl.concat("updateAcceptance?psmtype=" + psmType);
+        let options = new RequestOptions({headers: this.headers});
+        let mapKeys = acceptanceMap.keys();
+        let jsonStr = "{";
+        acceptanceMap.forEach((value:number, key:number)=>{
+            jsonStr += "\"" + key + "\": \"" + value + "\",";
+        });
+        jsonStr = jsonStr.substr(0, jsonStr.length - 1) + "}";
+        let body = jsonStr;
+        return this.http.put(uploadUrl, body, options)
+            .toPromise()
+            .then(response => {
+                return response.json();
+            })
+            .catch(this.handleError);
+    }
+
 
   private handleError(error: any): Promise<any> {
     console.log('A error occurred', error);
