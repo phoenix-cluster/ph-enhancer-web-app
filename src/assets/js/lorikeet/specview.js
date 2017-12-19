@@ -2498,7 +2498,7 @@ var ui = require('jquery-ui');
         $('ul.navbar-nav li').hover(function(event){
             $(this).addClass('active').siblings().removeClass('active');
         })
-       
+      
         
     
     })

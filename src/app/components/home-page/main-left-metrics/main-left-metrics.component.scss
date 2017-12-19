@@ -5,23 +5,17 @@
 
 .ml-2 {
   margin-top: 2em !important;
-  margin-left: 5%!important;
-  margin-right: 5%!important;
+  margin-left: 3%!important;
+  margin-right: 3%!important;
 }
-@media screen and (min-width: 1120px)and(max-width:1188px){
+@media screen and (min-width: 1060px)and(max-width:1188px){
   .ml-2{
     margin-right: 0px!important;
   }
   
 }
-@media screen and (min-width: 1024px)and(max-width:1120px){
-  .ml-2{
-    margin-left: 2%!important;
-    margin-right: 1%!important;
-  }
-  
-}
-@media screen and (max-width: 1024px){
+
+@media screen and (max-width: 1060px){
   .ml-2{
     margin-left: 25%!important;
     margin-right: 0%!important;

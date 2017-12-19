@@ -185,9 +185,9 @@ table.table-bordered.dataTable tbody td {
   width: 47.2% !important;
 }
 
-.nowrap {
+/*.nowrap {
   flex-wrap: nowrap;
-}
+}*/
 @media screen and (max-width:768px){
   #psm_table #example_length{
     border-right: 0px;
@@ -247,20 +247,12 @@ table.table-bordered.dataTable tbody td {
     padding-right: 15px;
     padding-left: 15px;
   }
-  .position {
-    width: 792px !important;
-  }
+  
 
 }
-
-@media screen and (min-width: 1035px) {
-
-  .position {
-    width: 792px !important;
-  }
-
+.position {
+  width: 990px !important;
 }
-
 .position_1 {
   width: 512px;
 }
@@ -285,12 +277,14 @@ table.table-bordered.dataTable tbody td {
     }
  
     .nowrap{
-      padding-left: 30px;
-      padding-right: 15px;
+      padding-left: 40px;
+      padding-right: 40px;
     }
     .new-col-md-8{
       margin-right: 30px;
     }
     #spectrum_table{
-      padding-left: 30px;
+      padding-left: 20px;
+      padding-top:40px;
     }
+
