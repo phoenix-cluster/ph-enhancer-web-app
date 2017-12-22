@@ -9,6 +9,11 @@ import {AppComponent} from './app.component';
 import {CommonModule}     from '@angular/common';
 import {FileUploadModule} from 'ng2-file-upload';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import {BrowserAnimationsModule} from '@angular/platform-browser-animations';
+import {NgxChartsModule} from '@swimlane/ngx-charts';
+// import { SidebarModule } from 'ng-sidebar';
+
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppHeaderComponent} from './components/app-header/app-header.component';
@@ -44,6 +49,10 @@ import {SpectraInClusterTableService} from "./services/spectra-in-cluster-tabel.
 import {ClusterService} from "./services/cluster.service";
 import {SpectrumService} from "./services/spectrum.service";
 import {LocalStorageService} from "./services/local-storage.service";
+import {TruncatePipe} from "./pipe/truncate";
+import {SpecTitle2ListPipe} from "./pipe/spectrum-titles2list";
+import {ShortNumberPipe} from "./pipe/short-number";
+import {TruncateClusterIdPipe} from "./pipe/truncate-clusterid";
 
 
 
@@ -74,6 +83,11 @@ import {LocalStorageService} from "./services/local-storage.service";
         PsmTablesComponent,
         ClusterSpectraTableComponent,
         SpectraComparerComponent,
+
+        TruncatePipe,
+        SpecTitle2ListPipe,
+        TruncateClusterIdPipe,
+        ShortNumberPipe,
     ],
     imports: [
         BrowserModule,
@@ -86,6 +100,9 @@ import {LocalStorageService} from "./services/local-storage.service";
         CommonModule,
         FileUploadModule,
         AppRoutingModule,
+        NgxDatatableModule,
+        // SidebarModule.forRoot(),
+        NgxChartsModule,
 
         // AgmCoreModule.forRoot({
         //   // https://developers.google.com/maps/documentation/javascript/get-api-key?hl=en#key

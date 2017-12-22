@@ -1,12 +1,16 @@
 <div style="display: block">
-    <canvas mdbChart
-            [chartType]="chartType"
-            [datasets]="chartDatasets"
-            [labels]="chartLabels"
-            [colors]="chartColors"
-            [options]="chartOptions"
-            [legend]="true"
-            (chartHover)="chartHovered($event)"
-            (chartClick)="chartClicked($event)">
-    </canvas>
+    <ngx-charts-bar-vertical
+            [view]="view"
+            [scheme]="colorScheme"
+            [results]="single"
+            [gradient]="gradient"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [legend]="showLegend"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel"
+            (select)="onSelect($event)">
+    </ngx-charts-bar-vertical>
 </div>

@@ -9,12 +9,12 @@ import "../../../../../assets/js/lorikeet/jquery.flot.selection.js";
 import "../../../../../assets/js/lorikeet/peptide.js";
 import "../../../../../assets/js/lorikeet/aminoacid.js";
 import "../../../../../assets/js/lorikeet/ion.js";
-import {Psm} from "../../../../models/psm";
+import {Psm} from "../../../../model/psm";
 import {ClusterService} from "../../../../services/cluster.service";
-import {Spectrum} from "../../../../models/spectrum";
-import {Cluster} from "../../../../models/cluster";
+import {Spectrum} from "../../../../model/spectrum";
+import {Cluster} from "../../../../model/cluster";
 import {LocalStorageService} from "../../../../services/local-storage.service";
-import {Modification} from "../../../../models/modification";
+import {Modification} from "../../../../model/modification";
 
 @Component({
     selector: 'app-spectra-comparer',
@@ -24,7 +24,7 @@ import {Modification} from "../../../../models/modification";
 
 })
 export class SpectraComparerComponent implements OnChanges {
-    @Input() currentPsm: Psm;
+    @Input() selectedPsm: Psm;
     @Input() spectrum: Spectrum;
     @Input() psmType: String;
     // @Input() currentCluster:Cluster;
@@ -50,7 +50,7 @@ export class SpectraComparerComponent implements OnChanges {
 
 
     ngOnChanges() {
-        this.currentClusterId = this.currentPsm.clusterId;
+        this.currentClusterId = this.selectedPsm.clusterId;
         this.currentSpectrumTitle = this.spectrum.title;
         if (this.currentClusterId != null && this.currentClusterId != "null_cluster_id"
             && this.spectrum != null && this.spectrum.title != "null_spectrum_title") {
@@ -60,13 +60,13 @@ export class SpectraComparerComponent implements OnChanges {
 
     private resetDataAndRefresh(): void {
 
-        // this.spectrumTableService.getSpectrum(this.currentPsmTitle).
-        // then(spectrum =>{this.currentPsm = spectrum});
+        // this.spectrumTableService.getSpectrum(this.selectedPsmTitle).
+        // then(spectrum =>{this.selectedPsm = spectrum});
 
-        this.psm_sequence = this.currentPsm.peptideSequence;
-        if (this.psm_sequence == null && this.currentPsm.recommendPeptide != null) {
+        this.psm_sequence = this.selectedPsm.peptideSequence;
+        if (this.psm_sequence == null && this.selectedPsm.recommendPeptide != null) {
             var re = /R_Better_|PRE_|R_NEW_/gi;
-            this.psm_sequence = this.currentPsm.recommendPeptide.replace(re,"");
+            this.psm_sequence = this.selectedPsm.recommendPeptide.replace(re,"");
         }
         //todo psm should be considered here
         // modification index = 14; modification mass = 16.0; modified residue = 'M'
@@ -75,9 +75,9 @@ export class SpectraComparerComponent implements OnChanges {
         // mass to be added to the N-terminus
         // this.psm_ntermMod = 164.07;
         if(this.psmType == "negscore" || this.psmType == "posscore")
-            this.set_mods(this.currentPsm.peptideMods, this.currentPsm.peptideSequence);
+            this.set_mods(this.selectedPsm.peptideMods, this.selectedPsm.peptideSequence);
         if(this.psmType == "recomm" )
-            this.set_mods(this.currentPsm.recommendPepMods, this.currentPsm.recommendPeptide);
+            this.set_mods(this.selectedPsm.recommendPepMods, this.selectedPsm.recommendPeptide);
         this.psm_charge = this.spectrum.charge;
         this.psm_title = this.spectrum.title;
 
@@ -125,13 +125,13 @@ export class SpectraComparerComponent implements OnChanges {
         if (checkRecommButton.innerText == "Check Recommend Sequence") {
             checkRecommButton.innerText = "Check Original Sequence";
             var re = /R_Better_|PRE_/gi;
-            this.psm_sequence = this.currentPsm.recommendPeptide.replace(re,"");
-            this.set_mods(this.currentPsm.recommendPepMods, this.currentPsm.recommendPeptide);
+            this.psm_sequence = this.selectedPsm.recommendPeptide.replace(re,"");
+            this.set_mods(this.selectedPsm.recommendPepMods, this.selectedPsm.recommendPeptide);
         }
         else {
             checkRecommButton.innerText = "Check Recommend Sequence";
-            this.psm_sequence = this.currentPsm.peptideSequence;
-            this.set_mods(this.currentPsm.peptideMods, this.currentPsm.peptideSequence);
+            this.psm_sequence = this.selectedPsm.peptideSequence;
+            this.set_mods(this.selectedPsm.peptideMods, this.selectedPsm.peptideSequence);
         }
         this.refreshViewer()
     }

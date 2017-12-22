@@ -1,10 +1,10 @@
 import {Injectable} from "@angular/core";
-import {Psm} from "../models/psm";
+import {Psm} from "../model/psm";
 import {Headers, Http} from "@angular/http";
 
 import 'rxjs/add/operator/toPromise'
-import {Cluster} from "../models/cluster";
-import {Config} from "../models/config";
+import {Cluster} from "../model/cluster";
+import {Config} from "../model/config";
 import {LocalStorageService} from "./local-storage.service";
 
 @Injectable()

@@ -2064,23 +2064,29 @@ var ui = require('jquery-ui');
 		    }
 		);
 
-		$(getElementSelector(container, elementIds.moveIonTable)).click(function() {
-			var ionTableDiv = $(getElementSelector(container, elementIds.ionTableDiv));
-			if(ionTableDiv.is(".moved")) {
-				ionTableDiv.removeClass("moved");
-				ionTableDiv.detach();
-				$(getElementSelector(container, elementIds.ionTableLoc1)).append(ionTableDiv);
-			}
-			else {
-				ionTableDiv.addClass("moved");
-				ionTableDiv.detach();
-				$(getElementSelector(container, elementIds.ionTableLoc2)).append(ionTableDiv);
-			}
 
-			if ( options.sizeChangeCallbackFunction ) {
-				options.sizeChangeCallbackFunction();
-			}
-		});
+        var ionTableDiv = $(getElementSelector(container, elementIds.ionTableDiv));
+        ionTableDiv.addClass("moved");
+        ionTableDiv.detach();
+        $(getElementSelector(container, elementIds.ionTableLoc2)).append(ionTableDiv);
+
+		// $(getElementSelector(container, elementIds.moveIonTable)).click(function() {
+		// 	var ionTableDiv = $(getElementSelector(container, elementIds.ionTableDiv));
+		// 	if(ionTableDiv.is(".moved")) {
+		// 		ionTableDiv.removeClass("moved");
+		// 		ionTableDiv.detach();
+		// 		$(getElementSelector(container, elementIds.ionTableLoc1)).append(ionTableDiv);
+		// 	}
+		// 	else {
+		// 		ionTableDiv.addClass("moved");
+		// 		ionTableDiv.detach();
+		// 		$(getElementSelector(container, elementIds.ionTableLoc2)).append(ionTableDiv);
+		// 	}
+        //
+			// if ( options.sizeChangeCallbackFunction ) {
+			// 	options.sizeChangeCallbackFunction();
+			// }
+		// });
 	}
 
 	//---------------------------------------------------------

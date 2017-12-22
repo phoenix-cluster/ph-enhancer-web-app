@@ -7,47 +7,31 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConfScoreChartComponent implements OnInit {
 
-  constructor() { }
-  public chartType:string = 'bar';
+  constructor() {
+    // Object.assign(this, {single})
+  }
+  single: any[];
+  multi: any[];
 
-  public chartDatasets:Array<any> = [
-    {data: [65, 59, 80, 81, 56, 55, 40], label: 'My First dataset'},
-    {data: [28, 48, 40, 19, 86, 27, 90], label: 'My Second dataset'}
-  ];
+  view: any[] = [700, 400];
 
-  public chartLabels:Array<any> = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'];
+  // options
+  showXAxis = true;
+  showYAxis = true;
+  gradient = false;
+  showLegend = true;
+  showXAxisLabel = true;
+  xAxisLabel = 'Country';
+  showYAxisLabel = true;
+  yAxisLabel = 'Population';
 
-  public chartColors:Array<any> = [
-    {
-      backgroundColor: 'rgba(220,220,220,0.2)',
-      borderColor: 'rgba(220,220,220,1)',
-      borderWidth: 2,
-      pointBackgroundColor: 'rgba(220,220,220,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(220,220,220,1)'
-    },
-    {
-      backgroundColor: 'rgba(151,187,205,0.2)',
-      borderColor: 'rgba(151,187,205,1)',
-      borderWidth: 2,
-      pointBackgroundColor: 'rgba(151,187,205,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(151,187,205,1)'
-    }
-  ];
-
-  public chartOptions:any = {
-    responsive: true
+  colorScheme = {
+    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
   };
 
-  public chartClicked(e: any): void {
 
-  }
-
-  public chartHovered(e: any): void {
-
+  onSelect(event) {
+    console.log(event);
   }
   ngOnInit() {
   }

@@ -2,8 +2,11 @@ import { Injectable } from "@angular/core";
 import {Headers, Http, Response, RequestOptions} from "@angular/http";
 
 import 'rxjs/add/operator/toPromise'
-import {PSMsPage} from "../models/psmsPage";
-import {Config} from "../models/config";
+import {PSMsPage} from "../model/psmsPage";
+import {Config} from "../model/config";
+import {Page} from "../model/page";
+import {PagedData} from "../model/paged-data";
+import {Psm} from "../model/psm";
 
 @Injectable()
 
@@ -22,12 +25,26 @@ export class PsmTableService{
      //  .catch(this.handleError);
 	// }
 
-    getNegPsmsPage(page:number, size:number, sortField:string, sortDirection:string): Promise<PSMsPage>{
+    getNegPsmsPage2(page:number, size:number, sortField:string, sortDirection:string): Promise<PSMsPage>{
         let psmsUrl = this.baseUrl + "negscore?"
             + "page=" + page
             + "&size=" + size
             + "&sortField=" + sortField
             + "&sortDirection=" + sortDirection;
+        console.log(psmsUrl);
+        return this.http.get(psmsUrl)
+            .toPromise()
+            .then(response => response.json() as PSMsPage)
+            .catch(this.handleError);
+    }
+
+    getNegPsmsPage(page:Page): Promise<PSMsPage>{
+        console.log(page);
+        let psmsUrl = this.baseUrl + "negscore?"
+            + "page=" + page.pageNumber
+            + "&size=" + page.size
+            + "&sortField=" + page.sortField
+            + "&sortDirection=" + page.sortDirection;
         console.log(psmsUrl);
         return this.http.get(psmsUrl)
             .toPromise()

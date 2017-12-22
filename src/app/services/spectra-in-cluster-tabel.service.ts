@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
-import {SpectrumInCluster} from "../models/spectrum-in-cluster";
+import {SpectrumInCluster} from "../model/spectrum-in-cluster";
 import {Headers, Http} from "@angular/http";
-import {Config} from "../models/config";
+import {Config} from "../model/config";
 import {LocalStorageService} from "./local-storage.service";
 
 // import 'rxjs/add/operator/toPromise';

@@ -9,7 +9,7 @@
 </div>
 <!--add new note-->
 
-<div *ngIf="currentPsm.recommendPeptide && currentPsm.recommendPeptide.startsWith('R_Better_')" style="margin-bottom:20px;">
+<div *ngIf="selectedPsm.recommendPeptide && selectedPsm.recommendPeptide.startsWith('R_Better_')" style="margin-bottom:20px;">
     <button id="checkRecommButton" (click)="onCheckRecommClick()" >Check Recommend Sequence</button>
 </div>
 <div id="lorikeet"></div>

@@ -1,9 +1,9 @@
 import {Component, Input, OnChanges, OnInit} from '@angular/core';
 
-import {SpectrumInCluster} from "../../../../models/spectrum-in-cluster";
+import {SpectrumInCluster} from "../../../../model/spectrum-in-cluster";
 import {SpectraInClusterTableService} from "../../../../services/spectra-in-cluster-tabel.service";
 import {ClusterService} from "../../../../services/cluster.service";
-import {Cluster} from "../../../../models/cluster";
+import {Cluster} from "../../../../model/cluster";
 import {map} from "rxjs/operator/map";
 import {SpectrumService} from "../../../../services/spectrum.service";
 import { LocalStorageService } from '../../../../services/local-storage.service';
