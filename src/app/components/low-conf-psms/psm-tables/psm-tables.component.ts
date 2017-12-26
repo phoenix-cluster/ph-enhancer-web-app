@@ -15,7 +15,7 @@ import {DatatableComponent} from "@swimlane/ngx-datatable";
 })
 export class PsmTablesComponent implements OnInit {
 
-    @Input() psmType:string;
+    @Input() psmType: string;
     // private psmHeaders = Psm.psmHeaders;
     // private spectrumHeaders = Spectrum.spectrumHeaders;
     // private currentPage:number = 1;
@@ -27,23 +27,24 @@ export class PsmTablesComponent implements OnInit {
     // private currentPsm:Psm;
     selected_psms = [];
     selected_specs = [];
-    selectedPsm:Psm;
+    selectedPsm: Psm;
     // private currentSpectrumInProject:Spectrum;
-    selectedSpectrum:Spectrum;
-    psm_rows : Array<Psm>;
-    spec_rows : Array<Spectrum>;
+    selectedSpectrum: Spectrum;
+    psm_rows: Array<Psm>;
+    spec_rows: Array<Spectrum>;
     // private cachedAcceptanceListOfRecommPsm:Map<number, number>; //id, accept(1)/reject(-1)/default(0), the ids which are not updated to server yet
-    private defaultAcceptanceOfRecommPsm:boolean;//true means accept, false means reject
+    private defaultAcceptanceOfRecommPsm: boolean;//true means accept, false means reject
     // private defaultAcceptanceOfNegPsm:boolean;
     // private defaultAcceptanceOfPosPsm:boolean;
 
     page = new Page();
     loading: boolean = false;
     isDefaultSort: boolean = true;
+    private activedHistItem: number;
 
 
     constructor(private psmTableService: PsmTableService,
-                private spectrumService:SpectrumService){
+                private spectrumService: SpectrumService) {
         this.selectedPsm = new Psm("null_cluster_id");
         this.selectedSpectrum = new Spectrum("null_spectrum_title", null, null);
         this.page = new Page();
@@ -69,36 +70,36 @@ export class PsmTablesComponent implements OnInit {
     //     return (acceptance == this.defaultAcceptanceOfRecommPsm);
     // }
 
-    /**
-     * Set the default acceptance status for psmType Psms, true for accept, false for reject
-     * @param defautAccpetance
-     */
-    setDefaultAcceptance(defautAccpetance:boolean){
-        this.defaultAcceptanceOfRecommPsm = defautAccpetance;
-    }
+    // /**
+    //  * Set the default acceptance status for psmType Psms, true for accept, false for reject
+    //  * @param defautAccpetance
+    //  */
+    // setDefaultAcceptance(defautAccpetance: boolean) {
+    //     this.defaultAcceptanceOfRecommPsm = defautAccpetance;
+    // }
 
 
-    getPSMsPage(page: number, size: number, sortField: string, sortDirection: string): void {
-        if(this.psmType == "negscore") {
-            // this.psmTableService.getNegPsmsPage2(page, size, sortField, sortDirection).then(psms_page => {
-            //     this.afterDataRetrieving(psms_page);
-            // });
-        }
-
-        if(this.psmType == "recomm"){
-            // this.psmTableService.getRecommIdPsmsPage(page, size, sortField, sortDirection).then(psms_page => {
-            //     this.afterDataRetrieving(psms_page);
-            // });
-        }
-
-        if(this.psmType == "posscore"){
-            // console.log("here");
-            // this.psmTableService.getPosPsmsPage(page, size, sortField, sortDirection).then(psms_page => {
-            //     this.afterDataRetrieving(psms_page);
-            // });
-        }
-
-    }
+    // getPSMsPage(page: number, size: number, sortField: string, sortDirection: string): void {
+    //     if (this.psmType == "negscore") {
+    //         // this.psmTableService.getNegPsmsPage2(page, size, sortField, sortDirection).then(psms_page => {
+    //         //     this.afterDataRetrieving(psms_page);
+    //         // });
+    //     }
+    //
+    //     if (this.psmType == "recomm") {
+    //         // this.psmTableService.getRecommIdPsmsPage(page, size, sortField, sortDirection).then(psms_page => {
+    //         //     this.afterDataRetrieving(psms_page);
+    //         // });
+    //     }
+    //
+    //     if (this.psmType == "posscore") {
+    //         // console.log("here");
+    //         // this.psmTableService.getPosPsmsPage(page, size, sortField, sortDirection).then(psms_page => {
+    //         //     this.afterDataRetrieving(psms_page);
+    //         // });
+    //     }
+    //
+    // }
 
     ngOnInit() {
         // if(this.psmType == "negscore") {this.currentSortDirection = "ASC"}
@@ -109,32 +110,32 @@ export class PsmTablesComponent implements OnInit {
         this.isDefaultSort = true;//make confidentscore show the default sort direction
     }
 
-    getClassByOrder(item): string {
-        switch (item.order) {
-            case 'False': {
-                return '';
-            }
-            case 'asc': {
-                return 'fa-sort-up';
-            }
-            case 'desc': {
-                return 'fa-sort-down';
-            }
-            case 'True': {
-                return 'fa-sort';
-            }
-        }
-    }
+    // getClassByOrder(item): string {
+    //     switch (item.order) {
+    //         case 'False': {
+    //             return '';
+    //         }
+    //         case 'asc': {
+    //             return 'fa-sort-up';
+    //         }
+    //         case 'desc': {
+    //             return 'fa-sort-down';
+    //         }
+    //         case 'True': {
+    //             return 'fa-sort';
+    //         }
+    //     }
+    // }
 
     onAcceptClick(row): void {
         row.acceptance = row.acceptance + 1;
-        if(row.acceptance == 2) {
+        if (row.acceptance == 2) {
             row.acceptance = -1;
         }
-        let accpetanceMap = new Map<number, number> ();
+        let accpetanceMap = new Map<number, number>();
         accpetanceMap.set(row.id, row.acceptance);
         this.psmTableService.uploadUserAcceptance(this.psmType, accpetanceMap).then(
-            result=> {
+            result => {
             }
         ).catch(error => console.log(error))
     }
@@ -165,16 +166,19 @@ export class PsmTablesComponent implements OnInit {
         // this.writeSpectrumTable(this.currentPsm['spectraTitles']);
     }
 
-    setSpectrumTable(spectraTitles:string[]) :void{
-        this.spec_rows= [];
-        for(var i=0; i<spectraTitles.length; i+=100) {
+    setSpectrumTable(spectraTitles: string[]): void {
+        this.spec_rows = [];
+        for (var i = 0; i < spectraTitles.length; i += 100) {
             var endIndex = i + 100;
-            if (endIndex>spectraTitles.length) endIndex = spectraTitles.length;
+            if (endIndex > spectraTitles.length) endIndex = spectraTitles.length;
             var tempSpectraTitlesStr = spectraTitles.slice(i, endIndex).join("||");
             this.spectrumService.getSpectra(tempSpectraTitlesStr)
                 .then(spectra => {
-                        this.spec_rows = this.spec_rows.concat( spectra);
+                        this.spec_rows = this.spec_rows.concat(spectra);
                         this.selectedSpectrum = this.spec_rows[0];
+                        this.selected_specs = [];
+                        this.selected_specs.push(this.selectedSpectrum);
+
                     }
                 ).catch(this.handleError);
         }
@@ -262,21 +266,23 @@ export class PsmTablesComponent implements OnInit {
     //
     // }
 
-    // private afterDataRetrieving(psms_page: PSMsPage) {
-    //     this.psmMap.clear();
-    //     for (let psm of psms_page.scoredPSMs) {
-    //                 // psm.acceptance = this.acceptanceListOfRecommPsm.get(psm.id);
-    //         if(psm.acceptance == null) {
-    //             psm.acceptance = 0;
-    //         }
-    //         this.psmMap.set(psm['id'], psm);
-    //     }
-    //     console.log(this.psmMap);
-    //     this.totalElem = psms_page.totalElements;
-    //     this.totalPages = psms_page.totalPages;
-    //     this.setPages();
-    //     this.writePsmTable();
-    // }
+    private afterDataRetrieving(psmPage: PSMsPage) {
+
+
+        //     this.psmMap.clear();
+        //     for (let psm of psms_page.scoredPSMs) {
+        //                 // psm.acceptance = this.acceptanceListOfRecommPsm.get(psm.id);
+        //         if(psm.acceptance == null) {
+        //             psm.acceptance = 0;
+        //         }
+        //         this.psmMap.set(psm['id'], psm);
+        //     }
+        //     console.log(this.psmMap);
+        //     this.totalElem = psms_page.totalElements;
+        //     this.totalPages = psms_page.totalPages;
+        //     this.setPages();
+        //     this.writePsmTable();
+    }
 
 
     // private setAcceptanceForPsm(id:number, acceptanceStatus:number){
@@ -305,20 +311,22 @@ export class PsmTablesComponent implements OnInit {
     // }
 
 
-    setPage(event){
+    setPage(event) {
         this.page.pageNumber = event.offset + 1;
         this.setPageData(this.page);
     }
 
-    setPageData(page:Page){
+    setPageData(page: Page) {
         this.loading = true;
-        this.psmTableService.getNegPsmsPage(page).then(psmPage =>{
+        this.psmTableService.getPsmsPage(this.psmType, page).then(psmPage => {
             this.page.totalElements = psmPage.totalElements;
             this.page.totalPages = psmPage.totalPages;
             this.psm_rows = psmPage.scoredPSMs;
             this.selectedPsm = this.psm_rows[0];
-            this.setSpectrumTable(this.psm_rows[0].spectraTitles);
+            this.selected_psms = [];
+            this.selected_psms.push(this.selectedPsm);
             this.loading = false;
+            this.setSpectrumTable(this.psm_rows[0].spectraTitles);
         });
     }
 
@@ -338,16 +346,18 @@ export class PsmTablesComponent implements OnInit {
     //
     //     );
     // }
-    onSelectPsm({ selected }) {
-        this.selectedPsm= selected[0];
+    onSelectPsm({selected}) {
+        this.selectedPsm = selected[0];
+        this.selected_psms = selected;
         this.setSpectrumTable(this.selectedPsm.spectraTitles);
+        this.activedHistItem = Math.floor(Math.random() * 10);
     }
 
     onActivatePsm(event) {
         // console.log('Activate Event', event);
     }
 
-    onSelectSpec({ selected}) {
+    onSelectSpec({selected}) {
         this.selectedSpectrum = selected[0];
         // console.log('Select Event', selected_psms, this.selectedPsm);
     }
@@ -355,6 +365,7 @@ export class PsmTablesComponent implements OnInit {
     onActivateSpec(event) {
         // console.log('Activate Event', event);
     }
+
     //for select limit of page
     // @ViewChild(DatatableComponent) private datatable: DatatableComponent;
     // public currentPageLimit: number = 0;
@@ -376,16 +387,16 @@ export class PsmTablesComponent implements OnInit {
     //     this.currentPageLimit = parseInt(limit, 10);
     // }
 
-    getAcceptClass(acceptance:number){
-        switch(acceptance){
+    getAcceptClass(acceptance: number) {
+        switch (acceptance) {
             case -1 :
-                return  "fa fa-ban mannual_acceptance";
+                return "fa fa-ban mannual_acceptance";
 
             case 0 :
-                return  "fa fa-circle-o default_acceptance";
+                return "fa fa-circle-o default_acceptance";
 
             case 1 :
-                return  "fa fa-check-circle-o mannual_acceptance";
+                return "fa fa-check-circle-o mannual_acceptance";
         }
 
     }

@@ -2,7 +2,8 @@
     <ngx-charts-bar-vertical
             [view]="view"
             [scheme]="colorScheme"
-            [results]="single"
+            [customColors]="customColors"
+            [results]="histBins"
             [gradient]="gradient"
             [xAxis]="showXAxis"
             [yAxis]="showYAxis"
@@ -11,6 +12,9 @@
             [showYAxisLabel]="showYAxisLabel"
             [xAxisLabel]="xAxisLabel"
             [yAxisLabel]="yAxisLabel"
-            (select)="onSelect($event)">
+            [barPadding]="barPadding"
+            [activeEntries]="activeEntries"
+            (select)="onSelect($event)"
+            (activate)="onActivate($event)">
     </ngx-charts-bar-vertical>
 </div>

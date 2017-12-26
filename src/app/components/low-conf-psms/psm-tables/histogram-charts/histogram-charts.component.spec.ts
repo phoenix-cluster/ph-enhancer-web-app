@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ClusterRatioChartComponent } from './cluster-ratio-chart.component';
+import { HistogramChartsComponent } from './histogram-charts.component';
 
-describe('ClusterRatioChartComponent', () => {
-  let component: ClusterRatioChartComponent;
-  let fixture: ComponentFixture<ClusterRatioChartComponent>;
+describe('HistogramChartsComponent', () => {
+  let component: HistogramChartsComponent;
+  let fixture: ComponentFixture<HistogramChartsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ClusterRatioChartComponent ]
+      declarations: [ HistogramChartsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ClusterRatioChartComponent);
+    fixture = TestBed.createComponent(HistogramChartsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

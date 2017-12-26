@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ConfScoreChartComponent } from './conf-score-chart.component';
+import { HistogramChartComponent } from './histogram-chart.component';
 
-describe('ConfScoreChartComponent', () => {
-  let component: ConfScoreChartComponent;
-  let fixture: ComponentFixture<ConfScoreChartComponent>;
+describe('HistogramChartComponent', () => {
+  let component: HistogramChartComponent;
+  let fixture: ComponentFixture<HistogramChartComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ConfScoreChartComponent ]
+      declarations: [ HistogramChartComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ConfScoreChartComponent);
+    fixture = TestBed.createComponent(HistogramChartComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

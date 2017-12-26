@@ -1,0 +1,13 @@
+<div>
+<div class="row">
+    <div class="col-md-4 ">
+        <app-histogram-chart [activedBinRank]="activedConfScoreBin" [histBins]="confScoreHistArray" [dataName]="'ConfidentScore'"></app-histogram-chart>
+    </div>
+    <div class="col-md-4 ">
+        <app-histogram-chart [activedBinRank]="activedClusterRatioBin" [histBins]="clusterRatioHistArray" [dataName]="'ClusterRatio'"></app-histogram-chart>
+    </div>
+    <div class="col-md-4 ">
+        <app-histogram-chart [activedBinRank]="activedClusterSizeBin" [histBins]="clusterSizeHistArray" [dataName]="'ClusterSize'"></app-histogram-chart>
+    </div>
+</div>
+</div>

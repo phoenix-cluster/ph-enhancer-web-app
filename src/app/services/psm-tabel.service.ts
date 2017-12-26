@@ -25,22 +25,9 @@ export class PsmTableService{
      //  .catch(this.handleError);
 	// }
 
-    getNegPsmsPage2(page:number, size:number, sortField:string, sortDirection:string): Promise<PSMsPage>{
-        let psmsUrl = this.baseUrl + "negscore?"
-            + "page=" + page
-            + "&size=" + size
-            + "&sortField=" + sortField
-            + "&sortDirection=" + sortDirection;
-        console.log(psmsUrl);
-        return this.http.get(psmsUrl)
-            .toPromise()
-            .then(response => response.json() as PSMsPage)
-            .catch(this.handleError);
-    }
-
-    getNegPsmsPage(page:Page): Promise<PSMsPage>{
+    getPsmsPage(psmType:string, page:Page): Promise<PSMsPage>{
         console.log(page);
-        let psmsUrl = this.baseUrl + "negscore?"
+        let psmsUrl = this.baseUrl + psmType + "?"
             + "page=" + page.pageNumber
             + "&size=" + page.size
             + "&sortField=" + page.sortField
@@ -52,33 +39,48 @@ export class PsmTableService{
             .catch(this.handleError);
     }
 
-    getRecommIdPsmsPage(page:number, size:number, sortField:string, sortDirection:string): Promise<PSMsPage>{
-        let psmsUrl = this.baseUrl + "recomm?"
-            + "page=" + page
-            + "&size=" + size
-            + "&sortField=" + sortField
-            + "&sortDirection=" + sortDirection;
-
-        console.log(psmsUrl);
-        return this.http.get(psmsUrl)
-            .toPromise()
-            .then(response => response.json() as PSMsPage)
-            .catch(this.handleError);
-    }
-
-
-    getPosPsmsPage(page:number, size:number, sortField:string, sortDirection:string): Promise<PSMsPage>{
-        let psmsUrl = this.baseUrl + "posscore?"
-            + "page=" + page
-            + "&size=" + size
-            + "&sortField=" + sortField
-            + "&sortDirection=" + sortDirection;
-        console.log(psmsUrl);
-        return this.http.get(psmsUrl)
-            .toPromise()
-            .then(response => response.json() as PSMsPage)
-            .catch(this.handleError);
-    }
+    //
+    // getNegPsmsPage(page:Page): Promise<PSMsPage>{
+    //     console.log(page);
+    //     let psmsUrl = this.baseUrl + "negscore?"
+    //         + "page=" + page.pageNumber
+    //         + "&size=" + page.size
+    //         + "&sortField=" + page.sortField
+    //         + "&sortDirection=" + page.sortDirection;
+    //     console.log(psmsUrl);
+    //     return this.http.get(psmsUrl)
+    //         .toPromise()
+    //         .then(response => response.json() as PSMsPage)
+    //         .catch(this.handleError);
+    // }
+    //
+    // getRecommIdPsmsPage(page:number, size:number, sortField:string, sortDirection:string): Promise<PSMsPage>{
+    //     let psmsUrl = this.baseUrl + "recomm?"
+    //         + "page=" + page
+    //         + "&size=" + size
+    //         + "&sortField=" + sortField
+    //         + "&sortDirection=" + sortDirection;
+    //
+    //     console.log(psmsUrl);
+    //     return this.http.get(psmsUrl)
+    //         .toPromise()
+    //         .then(response => response.json() as PSMsPage)
+    //         .catch(this.handleError);
+    // }
+    //
+    //
+    // getPosPsmsPage(page:number, size:number, sortField:string, sortDirection:string): Promise<PSMsPage>{
+    //     let psmsUrl = this.baseUrl + "posscore?"
+    //         + "page=" + page
+    //         + "&size=" + size
+    //         + "&sortField=" + sortField
+    //         + "&sortDirection=" + sortDirection;
+    //     console.log(psmsUrl);
+    //     return this.http.get(psmsUrl)
+    //         .toPromise()
+    //         .then(response => response.json() as PSMsPage)
+    //         .catch(this.handleError);
+    // }
 
 
     getPsmTitleList(listLen:number): Promise<string[]>{

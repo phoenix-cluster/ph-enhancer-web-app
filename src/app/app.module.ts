@@ -10,7 +10,6 @@ import {CommonModule}     from '@angular/common';
 import {FileUploadModule} from 'ng2-file-upload';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import {BrowserAnimationsModule} from '@angular/platform-browser-animations';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 // import { SidebarModule } from 'ng-sidebar';
 
@@ -35,7 +34,7 @@ import {DoAnalysisComponent} from './components/home-page/main-right-analysis/do
 import {LowConfPsmsComponent} from './components/low-conf-psms/low-conf-psms.component';
 import {HighConfPsmsComponent} from './components/high-conf-psms/high-conf-psms.component';
 import {NewIdentifiedComponent} from './components/new-identified/new-identified.component';
-import {ConfScoreChartComponent} from './components/low-conf-psms/conf-score-chart/conf-score-chart.component';
+import {HistogramChartComponent} from './components/low-conf-psms/psm-tables/histogram-charts/histogram-chart/histogram-chart.component';
 import {ClusterRatioChartComponent} from './components/low-conf-psms/cluster-ratio-chart/cluster-ratio-chart.component';
 import {ClusterSizeChartComponent} from './components/low-conf-psms/cluster-size-chart/cluster-size-chart.component';
 import {PsmTablesComponent} from './components/low-conf-psms/psm-tables/psm-tables.component';
@@ -49,10 +48,12 @@ import {SpectraInClusterTableService} from "./services/spectra-in-cluster-tabel.
 import {ClusterService} from "./services/cluster.service";
 import {SpectrumService} from "./services/spectrum.service";
 import {LocalStorageService} from "./services/local-storage.service";
+import {HistogramChartService} from "./services/histogram-chart.service";
 import {TruncatePipe} from "./pipe/truncate";
 import {SpecTitle2ListPipe} from "./pipe/spectrum-titles2list";
 import {ShortNumberPipe} from "./pipe/short-number";
 import {TruncateClusterIdPipe} from "./pipe/truncate-clusterid";
+import { HistogramChartsComponent } from './components/low-conf-psms/psm-tables/histogram-charts/histogram-charts.component';
 
 
 
@@ -77,7 +78,7 @@ import {TruncateClusterIdPipe} from "./pipe/truncate-clusterid";
         LowConfPsmsComponent,
         HighConfPsmsComponent,
         NewIdentifiedComponent,
-        ConfScoreChartComponent,
+        HistogramChartComponent,
         ClusterRatioChartComponent,
         ClusterSizeChartComponent,
         PsmTablesComponent,
@@ -88,6 +89,7 @@ import {TruncateClusterIdPipe} from "./pipe/truncate-clusterid";
         SpecTitle2ListPipe,
         TruncateClusterIdPipe,
         ShortNumberPipe,
+        HistogramChartsComponent,
     ],
     imports: [
         BrowserModule,
@@ -115,6 +117,7 @@ import {TruncateClusterIdPipe} from "./pipe/truncate-clusterid";
         ClusterService,
         SpectrumService,
         LocalStorageService,
+        HistogramChartService,
         // ConfigService,
         // ConfigModule.init(),
     ],
