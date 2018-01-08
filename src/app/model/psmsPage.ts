@@ -2,7 +2,6 @@ import {Psm} from "./psm";
 import {Page} from "./page";
 
 export class PSMsPage{
-    page2: Page;
     pageSize:number;
     page:number;
     totalElements:number;

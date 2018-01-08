@@ -36,6 +36,7 @@
     "core-js": "2.4.x",
     "d3": "^4.12.0",
     "easy-pie-chart": "2.1.x",
+    "file-saver": "^1.3.3",
     "font-awesome": "^4.7.0",
     "hammerjs": "2.0.x",
     "jquery": "^3.2.1",

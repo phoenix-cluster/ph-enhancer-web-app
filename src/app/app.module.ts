@@ -35,8 +35,6 @@ import {LowConfPsmsComponent} from './components/low-conf-psms/low-conf-psms.com
 import {HighConfPsmsComponent} from './components/high-conf-psms/high-conf-psms.component';
 import {NewIdentifiedComponent} from './components/new-identified/new-identified.component';
 import {HistogramChartComponent} from './components/low-conf-psms/psm-tables/histogram-charts/histogram-chart/histogram-chart.component';
-import {ClusterRatioChartComponent} from './components/low-conf-psms/cluster-ratio-chart/cluster-ratio-chart.component';
-import {ClusterSizeChartComponent} from './components/low-conf-psms/cluster-size-chart/cluster-size-chart.component';
 import {PsmTablesComponent} from './components/low-conf-psms/psm-tables/psm-tables.component';
 import {ClusterSpectraTableComponent} from './components/low-conf-psms/psm-tables/cluster-spectra-table/cluster-spectra-table.component';
 import {SpectraComparerComponent} from './components/low-conf-psms/psm-tables/spectra-comparer/spectra-comparer.component';
@@ -79,8 +77,6 @@ import { HistogramChartsComponent } from './components/low-conf-psms/psm-tables/
         HighConfPsmsComponent,
         NewIdentifiedComponent,
         HistogramChartComponent,
-        ClusterRatioChartComponent,
-        ClusterSizeChartComponent,
         PsmTablesComponent,
         ClusterSpectraTableComponent,
         SpectraComparerComponent,

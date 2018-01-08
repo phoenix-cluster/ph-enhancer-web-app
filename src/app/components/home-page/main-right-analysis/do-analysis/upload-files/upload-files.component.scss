@@ -40,3 +40,10 @@ table.table th, table.table td{
   color: #45526E;
   font-weight: 500;
 }
+
+.right-fixed{
+  right:1px !important;
+
+  position: absolute !important;
+  //right: 50px;
+}

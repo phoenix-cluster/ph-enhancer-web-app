@@ -10,7 +10,8 @@
 <!--</option>-->
 <!--</select>-->
 
-<div class="material-like" style="box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);">
+<div class="material-like"
+     style="box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);">
     <app-histogram-charts [activedPsm]="selectedPsm" [psmType]="psmType"></app-histogram-charts>
 </div>
 
@@ -45,7 +46,7 @@
             </ng-template>
         </ngx-datatable-column>
 
-        <ngx-datatable-column name="peptideSequence" [sortable]="false" >
+        <ngx-datatable-column name="peptideSequence" [sortable]="false">
             <ng-template ngx-datatable-header-template>
                 Peptide<br>Sequence
             </ng-template>
@@ -55,14 +56,16 @@
             </ng-template>
         </ngx-datatable-column>
 
-        <ngx-datatable-column name="confidentScore" [sortable]="true"  >
+        <ngx-datatable-column name="confidentScore" [sortable]="true">
             <ng-template ngx-datatable-header-template let-sort="sortFn" class="sort-btn">
-             <a (click)="sort()">
-            Confident<br>Score
-                 <span *ngIf="page.sortField != 'confidentScore'" data-icon="c" class="icon" ></span>
-                 <span *ngIf="page.sortField == 'confidentScore' && page.sortDirection == 'asc' && isDefaultSort == true" data-icon="e" class="icon" ></span>
-                 <span *ngIf="page.sortField == 'confidentScore' && page.sortDirection == 'desc' && isDefaultSort == true" data-icon="f" class="icon" ></span>
-             </a>
+                <a (click)="sort()">
+                    Confident<br>Score
+                    <span *ngIf="page.sortField != 'confidentScore'" data-icon="c" class="icon"></span>
+                    <span *ngIf="page.sortField == 'confidentScore' && page.sortDirection == 'asc' && isDefaultSort == true"
+                          data-icon="e" class="icon"></span>
+                    <span *ngIf="page.sortField == 'confidentScore' && page.sortDirection == 'desc' && isDefaultSort == true"
+                          data-icon="f" class="icon"></span>
+                </a>
             </ng-template>
             <ng-template let-value="value" ngx-datatable-cell-template>
                 {{value | number:'1.2-2'}}
@@ -80,10 +83,10 @@
 
         <ngx-datatable-column name="clusterRatio" [sortable]="true">
             <ng-template ngx-datatable-header-template let-sort="sortFn">
-             <a (click)="sort()">
-            Cluster<br>Ratio
-                 <span *ngIf="page.sortField != 'clusterRatio'" data-icon="c" class="icon" ></span>
-             </a>
+                <a (click)="sort()">
+                    Cluster<br>Ratio
+                    <span *ngIf="page.sortField != 'clusterRatio'" data-icon="c" class="icon"></span>
+                </a>
             </ng-template>
             <ng-template let-value="value" ngx-datatable-cell-template>
                 {{value | number:'1.2-2'}}
@@ -92,10 +95,10 @@
 
         <ngx-datatable-column name="clusterSize" [sortable]="true">
             <ng-template ngx-datatable-header-template let-sort="sortFn">
-             <a (click)="sort()">
-            Cluster<br>Size
-                 <span *ngIf="page.sortField != 'clusterSize'" data-icon="c" class="icon" ></span>
-             </a>
+                <a (click)="sort()">
+                    Cluster<br>Size
+                    <span *ngIf="page.sortField != 'clusterSize'" data-icon="c" class="icon"></span>
+                </a>
             </ng-template>
             <ng-template let-value="value" ngx-datatable-cell-template>
                 {{value | shortnumber}}
@@ -122,335 +125,229 @@
 
         <ngx-datatable-column name="acceptance" [sortable]="true">
             <ng-template ngx-datatable-header-template let-sort="sortFn">
-             <a (click)="sort()">
-            Acceptance
-                 <span *ngIf="page.sortField != 'acceptance'" data-icon="c" class="icon" ></span>
-             </a>
+                <a (click)="sort()">
+                    Acceptance
+                    <span *ngIf="page.sortField != 'acceptance'" data-icon="c" class="icon"></span>
+                </a>
             </ng-template>
             <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
-                <a  [ngClass]="getAcceptClass(value)" (click)="onAcceptClick(row)"></a>
+                <a [ngClass]="getAcceptClass(value)" (click)="onAcceptClick(row)"></a>
             </ng-template>
         </ngx-datatable-column>
 
 
-        <!--<ngx-datatable-column name="acceptance" >-->
-        <!--<template let-column="column" ngx-datatable-header-template>-->
-        <!--actions-->
-        <!--</template>-->
-        <!--<template let-row="row" let-value="value" ngx-datatable-cell-template>-->
-        <!--<i class="pb-icon icon-edit" ></i>-->
-        <!--<i *ngIf="row.canDelete == true" class="pb-icon icon-garbage" (click)="delete(row)"></i>-->
-        <!--<i *ngIf="row.canSend== true" class="pb-icon icon-send" (click)="send(row)"></i>-->
-        <!--</template>-->
-        <!--</ngx-datatable-column>-->
-        <!--<ngx-datatable-footer>-->
-        <!--<ng-template-->
-        <!--ngx-datatable-footer-template-->
-        <!--let-rowCount="rowCount"-->
-        <!--let-pageSize="pageSize"-->
-        <!--let-selectedCount="selectedCount"-->
-        <!--let-curPage="curPage"-->
-        <!--let-offset="offset"-->
-        <!--&gt;-->
-        <!--<div class="datatable-footer_pagination">-->
-        <!--<datatable-pager-->
-        <!--[page]="curPage"-->
-        <!--[size]="pageSize"-->
-        <!--[count]="rowCount"-->
-        <!--[hidden]="false"-->
-        <!--(change)="table.onFooterPage($event)">-->
-        <!--</datatable-pager>-->
-        <!--<div class="page-limit-container">-->
-        <!--<select (change)="onLimitChange($event.target.value)" class="page-limit">-->
-        <!--<option-->
-        <!--*ngFor="let option of pageLimitOptions"-->
-        <!--[value]="option.value"-->
-        <!--[selected]="option.value == currentPageLimit"-->
-        <!--&gt;-->
-        <!--{{option.value}} per page-->
-        <!--</option>-->
-        <!--</select>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</ng-template>-->
-        <!--</ngx-datatable-footer>-->
+        <ngx-datatable-footer>
+            <ng-template
+                    ngx-datatable-footer-template
+                    let-rowCount="rowCount"
+                    let-pageSize="pageSize"
+                    let-selectedCount="selectedCount"
+                    let-curPage="curPage"
+                    let-offset="offset"
+            >
+
+                <div>
+                    Rows: [{{offset*pageSize + 1}}-{{offset*pageSize + pageSize}}] in {{rowCount}} |
+                    Size: {{pageSize}} |
+                    Current: {{curPage}}
+                    <!--Offset: {{offset}}-->
+                </div>
+                <div class="datatable-footer_pagination">
+                    <datatable-pager
+                            [pagerLeftArrowIcon]="'datatable-icon-left'"
+                            [pagerRightArrowIcon]="'datatable-icon-right'"
+                            [pagerPreviousIcon]="'datatable-icon-prev'"
+                            [pagerNextIcon]="'datatable-icon-skip'"
+                            [page]="curPage"
+                            [size]="pageSize"
+                            [count]="rowCount"
+                            [hidden]="!((rowCount / pageSize) > 1)"
+                            (change)="datatable.onFooterPage($event)">
+                    </datatable-pager>
+                </div>
+
+                <!--<button class="right material-like">Export-->
+                <!--</button>-->
+                <button class="btn btn-sm btn-outline-primary outline right" data-toggle="modal"
+                        data-target="#basicExampleright" (click)="fluid.show()" mdbRippleRadius>
+                    Export to File
+                </button>
+
+            </ng-template>
+        </ngx-datatable-footer>
 
     </ngx-datatable>
-<span class="sortable sort-btn datatable-icon-ready"></span>
+    <span class="sortable sort-btn datatable-icon-ready"></span>
 
 </div>
 
 <div class="row" style="padding-top:15px;">
-        <div  class="col-sm-5 col-md-5 col-lg-5">
-            <ngx-datatable id="spectrum_table"
-                    class="material"
-                    [rows]="spec_rows"
-                    columnMode="force"
-                    [headerHeight]="50"
-                    [footerHeight]="0"
-                    [rowHeight]="40"
-                    [scrollbarV]="true"
-                    [selected]="selected_specs"
-                    [selectionType]="'single'"
-                    (activate)="onActivateSpec($event)"
-                    (select)='onSelectSpec($event)'>
+    <div class="col-sm-5 col-md-5 col-lg-5">
+        <ngx-datatable id="spectrum_table"
+                       class="material"
+                       [rows]="spec_rows"
+                       columnMode="force"
+                       [headerHeight]="50"
+                       [footerHeight]="0"
+                       [rowHeight]="40"
+                       [scrollbarV]="true"
+                       [selected]="selected_specs"
+                       [selectionType]="'single'"
+                       (activate)="onActivateSpec($event)"
+                       (select)='onSelectSpec($event)'>
             >
-                <ngx-datatable-column name="title" [width]="300"></ngx-datatable-column>
-                <ngx-datatable-column name="charge"></ngx-datatable-column>
-                <ngx-datatable-column name="precursorMz"></ngx-datatable-column>
-            </ngx-datatable>
+            <ngx-datatable-column name="title" [width]="300"></ngx-datatable-column>
+            <ngx-datatable-column name="charge"></ngx-datatable-column>
+            <ngx-datatable-column name="precursorMz"></ngx-datatable-column>
+        </ngx-datatable>
 
-            <!--[scrollbarV]="true"-->
-            <!--[scrollbarH]="true">-->
-
-            <!--[limit]="10"-->
-            <!--<table id="spectra-in-psm2"-->
-                   <!--class="table table-striped table-bordered table-responsive dataTable table-hover position_1 "-->
-                   <!--cellspacing="0" role="grid" aria-describedby="example_info">-->
-                <!--<thead>-->
-                <!--<tr role="row">-->
-                    <!--<th *ngFor="let headItem of spectrumHeaders" class="">{{headItem.headName}}-->
-                        <!--<i class="fa fa-2x float-right unactived-sort-icon" [ngClass]="getClassByOrder(headItem)"-->
-                           <!--(click)="onClickReSort(headItem)"></i>-->
-                        <!--<i class="fa fa-2x float-right unactived-sort-icon"></i>-->
-                    <!--</th>-->
-                <!--</thead>-->
-                <!--<tbody style="height:647px;">-->
-                <!--<tr *ngFor="let spectrum of spectrumTable; let i=index" role="row form" class="odd"-->
-                    <!--(click)="onSpectrumRowClick(spectrum)">-->
-                    <!--<ng-container *ngFor="let headItem of spectrumHeaders; let j=index">-->
-                        <!--<td class="" *ngIf="j<spectrumHeaders.length"-->
-                            <!--[ngClass]="{'selected-row':isSpectrumSelected(spectrum['title'])}">-->
-                            <!--{{spectrum[headItem.headName]}}-->
-                        <!--</td>-->
-                        <!--<td class="form-check form-check-inline abc-checkbox" *ngIf="j==spectrumHeaders.length-1">-->
-                            <!--{{psm[headItem.headName]}}-->
-                            <!--<input class="form-check-input invisible" type="checkbox" [id]="'psm_cb'+psm['id']" (click)="onAcceptClick('psm_cb'+psm['id'])">-->
-                            <!--<label class="form-check-label" [for]="'psm_cb'+psm['id']" ></label>-->
-                        <!--</td>-->
-                    <!--</ng-container>-->
-                <!--</tr>-->
-<!---->
-                <!--</tbody>-->
-                <!--<tfoot>-->
-                <!--<tr>-->
-                    <!--<th *ngFor="let headItem of spectrumHeaders" class="">{{headItem.headName}}-->
-                    <!--</th>-->
-                <!--</tr>-->
-                <!--</tfoot>-->
-            <!--</table>-->
-        </div>
-        <div class="col-md-7 material-like">
-            <app-spectra-comparer [selectedPsm]="selectedPsm" [spectrum]="selectedSpectrum"
-                                  [psmType]="psmType"></app-spectra-comparer>
-        </div>
+    </div>
+    <div class="col-md-7 material-like">
+        <app-spectra-comparer [selectedPsm]="selectedPsm" [spectrum]="selectedSpectrum"
+                              [psmType]="psmType"></app-spectra-comparer>
+    </div>
 </div>
 
 
+<div mdbModal #fluid="mdb-modal" class="modal fade right" id="fullHeightModalRight" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-full-height modal-bottom  modal-center" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title w-100" id="myModalLabel">Export results to file</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="fluid.hide()">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 pd_1">
+                        <div class="dataTables_length" id="example_length">
+                            <label>Please Choose PSM types&nbsp;
+                            </label>
+                        </div>
+                    </div>
+                </div>
 
 
-<!--[columns]="[{name:'id'},{name:'Gender'},{name:'Company'}]"-->
+                <div class="row">
+                    <div class="col-2 form-check abc-checkbox">
+                        <input class="form-check-input invisible" id="checkbox_better" type="checkbox" (click)="onCheckClick('checkbox_better')"
+                            [(ngModel)]="export.recommBetter">
+                        <label class="form-check-label" for="checkbox_better">
+                            Recommend Better PSMs
+                        </label>
+                    </div>
+                    <div class="col-2">
+                        <p>Confident Score From</p>
+                    </div>
+                    <div class="col-1">
+                        <input class="export_input" [(ngModel)]="export.recommBetterStart"  type="number" step="0.01" id="input_better_from">
+                    </div>
+                    {{export.recommBetterStart}}
+                    <div class="col-1">
+                        <p>To</p>
+                    </div>
+                    <div class="col-1">
+                        <input class="export_input" [(ngModel)]="export.recommBetterEnd" type="number" step="0.01" id="input_better_to">
+                    </div>
+                </div>
 
-<!--<head>-->
-    <!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css"/>-->
-    <!--<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>-->
-    <!--<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>-->
-<!--</head>-->
-<!--<ul class="nav md-pills nav-justified pills-secondary">-->
-    <!--<li class="nav-item">-->
-        <!--<a class="nav-link active" data-toggle="tab" role="tab" aria-expanded="true">All</a>-->
-    <!--</li>-->
-    <!--<li class="nav-item">-->
-        <!--<a class="nav-link" data-toggle="tab" role="tab" aria-expanded="false">Accepted</a>-->
-    <!--</li>-->
-    <!--<li class="nav-item">-->
-        <!--<a class="nav-link" data-toggle="tab" role="tab" aria-expanded="false">Rejected</a>-->
-    <!--</li>-->
-<!--</ul>-->
+                <div class="row">
+                    <div class="col-2 form-check abc-checkbox">
 
+                        <input class="form-check-input invisible" id="checkbox_newId" type="checkbox"
+                        [(ngModel)]="export.newIdent">
+                        <label class="form-check-label" for="checkbox_newId">
+                            New Identifying PSMs
+                        </label>
+                    </div>
+                    <div class="col-2">
+                        <p>Confident Score From</p>
+                    </div>
+                    <div class="col-1 ">
+                        <input class="export_input" [(ngModel)]="export.newIdentStart"  type="number" step="0.01" id="input_new_from">
+                    </div>
+                    <div class="col-1">
+                        <p>To</p>
+                    </div>
+                    <div class="col-1 ">
+                        <input class="export_input" [(ngModel)]="export.newIdentEnd" type="number" step="0.01" id="input_new_to">
+                    </div>
+                </div>
 
-<!--<script>-->
-<!--$(document).ready(function () {-->
-<!--$('#example').DataTable();-->
-<!--$('select').addClass('mdb-select');-->
-<!--$('.mdb-select').material_select();-->
-<!--});-->
-<!--</script>-->
+                <div class="row">
+                    <div class="col-2 form-check abc-checkbox">
+                        <input class="form-check-input invisible" id="checkbox_highConf" type="checkbox"
+                        [(ngModel)]="export.highConf">
+                        <label class="form-check-label" for="checkbox_highConf">
+                            High Confident PSMs
+                        </label>
+                    </div>
+                    <div class="col-2">
+                        <p>Confident Score From</p>
+                    </div>
+                    <div class="col-1 ">
+                        <input class="export_input" [(ngModel)]="export.highConfStart" type="number" step="0.01" id="input_conf_from">
+                    </div>
+                    <div class="col-1">
+                        <p>To</p>
+                    </div>
+                    <div class="col-1">
+                        <input class="export_input" [(ngModel)]="export.highConfEnd" type="number" step="0.01" id="input_conf_to">
+                    </div>
+                </div>
+                <div>
+                    <br>
+                </div>
 
-<!--<section class="pt-5  pd_1">&lt;!&ndash;col-md-12 &ndash;&gt;-->
-
-    <!--<div id="psm_spectrum_table" class="dataTables_wrapper container-fluid dt-bootstrap4 ">-->
-
-        <!--<div class="row nowrap">-->
-
-            <!--<div id="psm_table" class="new-col-md-8">&lt;!&ndash;col-md-8 &ndash;&gt;-->
-                <!--<div class="col-sm-12 col-md-6" style="padding-left:0px;">-->
-                    <!--<div class="dataTables_length" id="example_length">-->
-                        <!--<label>Show:&nbsp;-->
-                            <!--<div class="select-wrapper form-control form-control-sm mdb-select"-->
-                                 <!--style="margin-top: 0em;margin-bottom:0px;">-->
-                                <!--<select name="example_length" aria-controls="example" #psmTablePageSize-->
-                                        <!--class="form-control form-control-sm mdb-select initialized"-->
-                                        <!--(change)="onPageSizeChange(psmTablePageSize.value)">-->
-                                    <!--<option value="10">10</option>-->
-                                    <!--<option value="25">25</option>-->
-                                    <!--<option value="50">50</option>-->
-                                    <!--<option value="100">100</option>-->
-                                <!--</select>-->
-                            <!--</div>-->
-                            <!--entries-->
-                        <!--</label>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="col-sm-12 col-md-6" style="padding-left:0px;">-->
-                    <!--<div class="dataTables_length" id="set_default_acceptance">-->
-                        <!--<label>Set:&nbsp;-->
-                            <!--<div class="select-wrapper form-control form-control-sm mdb-select"-->
-                                 <!--style="margin-top: 0em;margin-bottom:0px;">-->
-                                <!--<select name="example_length" aria-controls="example" #psmTableDefaultAccept-->
-                                        <!--class="form-control form-control-sm mdb-select initialized"-->
-                                        <!--(change)="onDefaultAcceptChange(psmTableDefaultAccept.value)">-->
-                                    <!--<option value="accept">Accept all</option>-->
-                                    <!--<option value="reject">Reject all</option>-->
-                                <!--</select>-->
-                            <!--</div>-->
-                            <!--as default-->
-                        <!--</label>-->
-                    <!--</div>-->
-                <!--</div>-->
-
-                <!--<table id="example"-->
-                       <!--class="table table-striped table-bordered table-responsive dataTable table-hover position "-->
-                       <!--cellspacing="0" role="grid" aria-describedby="example_info">-->
-                    <!--<thead>-->
-                    <!--<tr role="row">-->
-                        <!--<th *ngFor="let headItem of psmHeaders" class="">{{headItem.headName}}-->
-                            <!--<i class="fa fa-2x float-right unactived-sort-icon" [ngClass]="getClassByOrder(headItem)"-->
-                               <!--(click)="onClickReSort(headItem)"></i>-->
-                            <!--<i class="fa fa-2x float-right unactived-sort-icon"></i>-->
-                        <!--</th>-->
-                    <!--</thead>-->
-                    <!--<tbody>-->
-                    <!--<tr *ngFor="let psm of psmTable; let i=index" role="row form" class="odd"-->
-                        <!--[ngClass]="{'selected-row':isPsmSelected(psm['id'])}">-->
-                        <!--<ng-container *ngFor="let headItem of psmHeaders; let j=index">-->
-                            <!--<td class="" *ngIf="j<psmHeaders.length-1" (click)="onRowClick(psm)">-->
-                                <!--{{psm[headItem.headName]}}-->
-                            <!--</td>-->
-                            <!--<td class="form-check form-check-inline abc-checkbox" *ngIf="j==psmHeaders.length-1">-->
-                                <!--<a class="fa fa-circle-o fa-2x default_acceptance" (click)="onAcceptClick(i)"-->
-                                   <!--*ngIf="psm['acceptance']==0"></a>-->
-                                <!--<a class="fa fa-check-circle-o fa-2x mannual_acceptance" (click)="onAcceptClick(i)"-->
-                                   <!--*ngIf="psm['acceptance']==1"></a>-->
-                                <!--<a class="fa fa-ban fa-2x mannual_acceptance" (click)="onAcceptClick(i)"-->
-                                   <!--*ngIf="psm['acceptance']==-1"></a>-->
-                            <!--</td>-->
-                            <!--&lt;!&ndash;<i class="fa fa-ban fa-5x"></i>&ndash;&gt;-->
-                        <!--</ng-container>-->
-                    <!--</tr>-->
-
-                    <!--</tbody>-->
-                    <!--<tfoot>-->
-                    <!--<tr>-->
-                        <!--<th *ngFor="let headItem of psmHeaders" class="">{{headItem.headName}}-->
-                        <!--</th>-->
-                    <!--</tr>-->
-                    <!--</tfoot>-->
-                <!--</table>-->
-
-                <!--<div id="psm_table_pagination" class="row page">-->
-                    <!--<div class="col-sm-6 ">-->
-                        <!--<div class="dataTables_info" id="example_info" role="status" aria-live="polite">Showing-->
-                            <!--{{elemStart}} to {{elemEnd}} of {{totalElem}}-->
-                            <!--entries-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <!--<div class="col-sm-6">-->
-                        <!--<div class="dataTables_paginate paging_simple_numbers" id="example_paginate">-->
-                            <!--<ul class="pagination">-->
-                                <!--<li class="paginate_button page-item previous" id="example_previous"-->
-                                    <!--[ngClass]="{'disabled':currentPage==1}"-->
-                                    <!--(click)="onPageChange(currentPage-1)">-->
-                                    <!--<a-->
-                                            <!--aria-controls="example"-->
-                                            <!--data-dt-idx="0"-->
-                                            <!--tabindex="0"-->
-                                            <!--class="page-link">Previous-->
-                                    <!--</a>-->
-                                <!--</li>-->
-
-                                <!--<li *ngFor="let pageNo of pages" class="page-item "-->
-                                    <!--[ngClass]="{'active':pageNo==currentPage}" (click)="onPageChange(pageNo)"><a-->
-                                        <!--aria-controls="example" data-dt-idx="1"-->
-                                        <!--tabindex="0" class="page-link ">{{pageNo}}</a></li>-->
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 pd_1">
+                        <div class="dataTables_length" id="example_length2">
+                            <label>Please Choose Acceptance types&nbsp;
+                            </label>
+                        </div>
+                    </div>
+                </div>
 
 
-                                <!--<li class="paginate_button page-item next" id="example_next"-->
-                                    <!--[ngClass]="{'disabled':currentPage==totalPages}"-->
-                                    <!--(click)="onPageChange(currentPage+1)">-->
-                                    <!--<a aria-controls="example"-->
-                                       <!--data-dt-idx="7" tabindex="0"-->
-                                       <!--class="page-link">Next-->
-                                    <!--</a>-->
-                                <!--</li>-->
-                            <!--</ul>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
+                <div class="form-check abc-checkbox">
+                    <input class="form-check-input invisible" id="checkbox_mannuallyChecked" type="checkbox">
+                    <label [{ngModel}]="export.hasAccepted" class="form-check-label" for="checkbox_mannuallyChecked">
+                        Mannually Checked
+                    </label>
+                </div>
+                <div class="form-check abc-checkbox">
 
-            <!--<div class="new-col-md-4">&lt;!&ndash;col-md-4 &ndash;&gt;-->
-                <!--<app-cluster-spectra-table [currentClusterId]="currentPsm['clusterId']"></app-cluster-spectra-table>-->
-            <!--</div>-->
-        <!--</div>-->
+                    <input class="form-check-input invisible" [(ngModel)]="export.defaultAccpetType" id="checkbox_setDefault" type="checkbox">
+                    <label class="form-check-label" for="checkbox_setDefault">
+                        Accept Default as
+                    </label>
+                    <select class="mb-2 mr-sm-2 mb-sm-0" id="defaultAs" placeholder="Accept">
+                        <option value="accept">Accept</option>
+                        <option value="reject">Reject</option>
+                        <option value="node">None</option>
+                    </select>
+                </div>
+                <div class="form-check abc-checkbox">
+                    <input [{ngModel}]="export.hasRejected" class="form-check-input invisible" id="checkbox_rejected" type="checkbox">
+                    <label class="form-check-label" for="checkbox_rejected">
+                        Rejected
+                    </label>
+                </div>
+            </div>
 
-    <!--</div>-->
+            <div class="modal-footer justify-content-center">
+                <a class="btn btn-clear btn-secondary waves-light" title="Export to JSON File" (click)="saveFile()">Export
+                    to JSON</a>
+                <button type="button" class="btn btn-secondary waves-light" data-dismiss="modal" (click)="fluid.hide()"
+                        mdbRippleRadius>Close
+                </button>
+                <!--<button type="button" class="btn btn-primary waves-light" mdbRippleRadius>Save changes</button>-->
+            </div>
+        </div>
+    </div>
 
 
-    <!--<div class="row" style="padding-right:15px;padding-left:15px;">-->
-        <!--<div id="spectrum_table" class="col-sm-5 col-md-5 col-lg-5">-->
-
-            <!--<table id="spectra-in-psm"-->
-                   <!--class="table table-striped table-bordered table-responsive dataTable table-hover position_1 "-->
-                   <!--cellspacing="0" role="grid" aria-describedby="example_info">-->
-                <!--<thead>-->
-                <!--<tr role="row">-->
-                    <!--<th *ngFor="let headItem of spectrumHeaders" class="">{{headItem.headName}}-->
-                        <!--<i class="fa fa-2x float-right unactived-sort-icon" [ngClass]="getClassByOrder(headItem)"-->
-                           <!--(click)="onClickReSort(headItem)"></i>-->
-                        <!--<i class="fa fa-2x float-right unactived-sort-icon"></i>-->
-                    <!--</th>-->
-                <!--</thead>-->
-                <!--<tbody style="height:647px;">-->
-                <!--<tr *ngFor="let spectrum of spectrumTable; let i=index" role="row form" class="odd"-->
-                    <!--(click)="onSpectrumRowClick(spectrum)">-->
-                    <!--<ng-container *ngFor="let headItem of spectrumHeaders; let j=index">-->
-                        <!--<td class="" *ngIf="j<spectrumHeaders.length"-->
-                            <!--[ngClass]="{'selected-row':isSpectrumSelected(spectrum['title'])}">-->
-                            <!--{{spectrum[headItem.headName]}}-->
-                        <!--</td>-->
-                        <!--<td class="form-check form-check-inline abc-checkbox" *ngIf="j==spectrumHeaders.length-1">-->
-                            <!--&lt;!&ndash;{{psm[headItem.headName]}}&ndash;&gt;-->
-                            <!--&lt;!&ndash;<input class="form-check-input invisible" type="checkbox" [id]="'psm_cb'+psm['id']" (click)="onAcceptClick('psm_cb'+psm['id'])">&ndash;&gt;-->
-                            <!--&lt;!&ndash;<label class="form-check-label" [for]="'psm_cb'+psm['id']" ></label>&ndash;&gt;-->
-                        <!--</td>-->
-                    <!--</ng-container>-->
-                <!--</tr>-->
-
-                <!--</tbody>-->
-                <!--<tfoot>-->
-                <!--<tr>-->
-                    <!--<th *ngFor="let headItem of spectrumHeaders" class="">{{headItem.headName}}-->
-                    <!--</th>-->
-                <!--</tr>-->
-                <!--</tfoot>-->
-            <!--</table>-->
-        <!--</div>-->
-        <!--<div class="col-md-6 new-col-md-6">-->
-            <!--<app-spectra-comparer [currentPsm]="currentPsm" [spectrum]="currentSpectrumInProject"-->
-                                  <!--[psmType]="psmType"></app-spectra-comparer>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</section>-->
-
+</div>
 

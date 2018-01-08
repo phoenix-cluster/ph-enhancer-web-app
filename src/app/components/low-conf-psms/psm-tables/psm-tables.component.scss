@@ -283,3 +283,100 @@
   box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
 }
 
+.right {
+  position: absolute;
+  right: 50px;
+  //width: 50px;
+  //border: 3px solid #73AD21;
+  //padding: 10px;
+}
+.modal-center{
+  margin-left:auto;margin-right:auto;
+  width:100%;
+}
+
+.outline{
+  border: 2px solid #45526E;
+  color: #9e9e9e!important;
+  border-radius: 4px;
+}
+
+[type=radio]+label, [type=checkbox]+label {
+  position: relative;
+  padding-left: 35px;
+  cursor: pointer;
+  display: inline-block;
+  height: 25px;
+  line-height: 25px;
+  font-size: 1rem;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -ms-user-select: none;
+}
+
+[role=button], a, area, button, input, label, select, summary, textarea {
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+}
+
+[type=checkbox]+label:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 17px;
+  height: 17px;
+  z-index: 0;
+  border: 1.5px solid #8a8a8a;
+  border-radius: 1px;
+  margin-top: 2px;
+  -webkit-transition: .2s;
+  transition: .2s;
+}
+
+[type=checkbox]:checked+label:before {
+  top: -4px;
+  left: -3px;
+  width: 12px;
+  height: 22px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: transparent #4285F4 #4285F4 transparent;
+  -webkit-transform: rotate(40deg);
+  -ms-transform: rotate(40deg);
+  transform: rotate(40deg);
+  -webkit-backface-visibility: hidden;
+  -webkit-transform-origin: 100% 100%;
+  -ms-transform-origin: 100% 100%;
+  transform-origin: 100% 100%;
+}
+form{
+  padding-left: 10px;
+}
+.outline{
+  border: 2px solid #45526E;
+  color: #9e9e9e!important;
+  border-radius: 4px;
+}
+#minSize{
+  width: 160px;
+}
+@media screen and (max-width:1270px){
+  #minSize{
+    margin-left: 35px;
+    margin-top: 10px;
+  }
+}
+
+.export_input{
+  height: 20px;
+  width:50px;
+}
+
+.row .dataTables_length label{
+    border-left: 10px solid #45526e;
+    vertical-align: middle;
+    line-height: 37px;
+    padding-left: 10px;
+  }
