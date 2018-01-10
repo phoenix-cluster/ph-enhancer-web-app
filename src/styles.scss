@@ -31,3 +31,51 @@
     bottom: 0;
     left: 0;
 }
+
+
+venntooltip.venn {
+  float: right;
+}
+
+.venntooltip {
+  position: absolute !important;
+  text-align: center;
+  width: 228px;
+  height: 22px;
+  background: #333;
+  color: #ddd;
+  border: 0px;
+  border-radius: 8px;
+  opacity: 0;
+}
+
+svg {
+  font-family: 'Roboto';
+  font-weight: 300;
+  font-size: 12px;
+}
+
+.footer {
+  clear: both;
+}
+
+#venn {
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  display: flex;
+  box-sizing: border-box;
+  padding: 30px;
+  background-color: #e6e9eb;
+}
+g.venn-area-part {
+  cursor: pointer;
+}
+g.venn-area-part path {
+  fill: #ffffff;
+  stroke: #009fdf;
+  stroke-width: 3px;
+  stroke-opacity: 1;
+}

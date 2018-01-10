@@ -47,6 +47,7 @@
     "rxjs": "5.4.x",
     "screenfull": "3.3.x",
     "smoothscroll-polyfill": "0.3.x",
+    "venn.js": "^0.2.18",
     "web-animations-js": "2.3.x",
     "zone.js": "0.8.x"
   },

@@ -7,31 +7,113 @@ import { Component, OnInit } from '@angular/core';
 })
 export class Chart3Component implements OnInit {
 
-  constructor() { }
-  public chartType:string = 'pie';
+  multi: any[];
 
-  public chartData:Array<any> = [300, 50, 100, 40, 120];
+  view: any[] = [400, 500];
 
-  public chartLabels:Array<any> = ['Red', 'Green', 'Yellow', 'Grey', 'Dark Grey'];
+  // options
+  showXAxis = true;
+  showYAxis = true;
+  gradient = false;
+  showLegend = false;
+  showXAxisLabel = true;
+  xAxisLabel = 'Projects';
+  showYAxisLabel = true;
+  yAxisLabel = 'PSMs';
 
-  public chartColors:Array<any> = [{
-    hoverBorderColor: ['rgba(0, 0, 0, 0.1)', 'rgba(0, 0, 0, 0.1)', 'rgba(0, 0, 0, 0.1)', 'rgba(0, 0, 0, 0.1)', 'rgba(0, 0, 0, 0.1)'],
-    hoverBorderWidth: 0,
-    backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360"],
-    hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5","#616774"]
-  }];
-
-  public chartOptions:any = {
-    responsive: true
+  colorScheme = {
+    domain: ['#172e5a', '#A10A28', '#C7B42C', '#10c008']
   };
 
-  public chartClicked(e: any): void {
-
+  constructor() {
+    this.multi = [
+      {
+        "name": "PXD000021",
+        "series": [
+          {
+            "name": "NonMatched",
+            "value": 730
+          },
+          {
+            "name": "Doubt PSMs",
+            "value": 894
+          },
+          {
+            "name": "Confident PSMs",
+            "value": 940
+          },
+          {
+            "name": "New PSMs",
+            "value": 240
+          }
+        ]
+      },
+      {
+        "name": "PXD000024",
+        "series": [
+          {
+            "name": "NonMatched",
+            "value": 730
+          },
+          {
+            "name": "Doubt PSMs",
+            "value": 894
+          },
+          {
+            "name": "Confident PSMs",
+            "value": 940
+          },
+          {
+            "name": "New PSMs",
+            "value": 240
+          }
+        ]
+      },
+      {
+        "name": "PXD000025",
+        "series": [
+          {
+            "name": "NonMatched",
+            "value": 730
+          },
+          {
+            "name": "Doubt PSMs",
+            "value": 894
+          },
+          {
+            "name": "Confident PSMs",
+            "value": 940
+          },
+          {
+            "name": "New PSMs",
+            "value": 240
+          }
+        ]
+      },
+      {
+        "name": "PXD000026",
+        "series": [
+          {
+            "name": "NonMatched",
+            "value": 730
+          },
+          {
+            "name": "Doubt PSMs",
+            "value": 894
+          },
+          {
+            "name": "Confident PSMs",
+            "value": 940
+          },
+          {
+            "name": "New PSMs",
+            "value": 240
+          }
+        ]
+      },
+    ];
   }
 
-  public chartHovered(e: any): void {
-
-  }
   ngOnInit() {
   }
 
