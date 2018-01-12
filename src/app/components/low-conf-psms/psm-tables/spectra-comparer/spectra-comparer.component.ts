@@ -76,7 +76,7 @@ export class SpectraComparerComponent implements OnChanges {
         // this.psm_ntermMod = 164.07;
         if(this.psmType == "negscore" || this.psmType == "posscore")
             this.set_mods(this.selectedPsm.peptideMods, this.selectedPsm.peptideSequence);
-        if(this.psmType == "recomm" )
+        if(this.psmType == "newid" )
             this.set_mods(this.selectedPsm.recommendPepMods, this.selectedPsm.recommendPeptide);
         this.psm_charge = this.spectrum.charge;
         this.psm_title = this.spectrum.title;

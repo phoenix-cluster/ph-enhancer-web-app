@@ -22,6 +22,7 @@ export class Psm {
     peptideSequence: string;
     peptideMods: Modification[];
     confidentScore: number;
+    recommConfidentScore: number;
     clusterId: string;
     clusterRatio: number;
     clusterSize: number;

@@ -27,6 +27,10 @@ export class PsmTableService{
 
     getPsmsPage(psmType:string, page:Page): Promise<PSMsPage>{
         console.log(page);
+        if(psmType == "newid" && page.sortField == "confidentScore"){
+            page.sortField = "recommConfidentScore";
+        }
+
         let psmsUrl = this.baseUrl + psmType + "?"
             + "page=" + page.pageNumber
             + "&size=" + page.size

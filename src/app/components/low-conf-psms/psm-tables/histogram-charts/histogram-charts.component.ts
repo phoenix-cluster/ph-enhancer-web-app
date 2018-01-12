@@ -26,9 +26,14 @@ export class HistogramChartsComponent implements OnChanges {
     }
 
     ngOnChanges(): void {
-        if (this.confScoreHistArray.length < 1) {
-             this.histogramChartService.getHistData(this.psmType, "confScore").then(bins=>{this.confScoreHistArray = bins;} );
+        if (this.psmType == "newid" && this.confScoreHistArray.length < 1) {
+            this.histogramChartService.getHistData(this.psmType, "recommConfScore").then(bins=>{this.confScoreHistArray = bins;} );
         }
+
+        if (this.psmType != "newid" && this.confScoreHistArray.length < 1) {
+            this.histogramChartService.getHistData(this.psmType, "confScore").then(bins=>{this.confScoreHistArray = bins;} );
+        }
+
         if (this.clusterRatioHistArray.length < 1) {
             this.histogramChartService.getHistData(this.psmType, "clusterRatio").then(bins=>{this.clusterRatioHistArray = bins});
         }
