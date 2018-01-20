@@ -35,3 +35,36 @@
   }
   
 }
+.layout{
+  padding-left:40px;
+  padding-right:40px;
+  padding-top:40px;
+  margin:0 auto;
+  margin-top:10px;
+  margin-bottom:20px;
+}
+.modify{
+    background-color: aliceblue;
+    padding-left: 20px;
+}
+p{
+  width:100%;
+  font-size:30px;
+  border-bottom:2px solid #e6e9eb;
+  font-weight:bold;
+  color:#45526E;
+  padding-bottom:5px;
+  margin-bottom:0px;
+    margin-top:10px;
+}
+p>span{
+   padding-left: 10px;
+    border-left: 6px solid #45526E;
+}
+@media screen and (max-width: 991px){
+  .layout{
+  margin:0 auto;
+  margin-top:10px;
+}
+  
+}

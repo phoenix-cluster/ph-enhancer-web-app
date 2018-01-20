@@ -18,7 +18,9 @@ div.lorikeet {
     margin: 0;
     padding: 0;
 }
-
+div.lorikeet table{
+	margin: 0 auto!important;
+}
 div.lorikeet div.bar {
 	background-color:#F5F5DC;
     color:black; 
@@ -151,3 +153,6 @@ font-weight: normal/*{fwDefault}*/; color: #555555/*{fcDefault}*/; }
 .ui-widget .ui-widget { }
 .ui-widget-content { border: 1px solid #888888/*{borderColorContent}*/; background: #CFCFCF/*{bgColorContent}*/ ; color: #111111/*{fcContent}*/; }
 .ui-widget-content a { color: #000000/*{fcContent}*/; }
+#ionTableDiv_1{
+	display: none;
+}

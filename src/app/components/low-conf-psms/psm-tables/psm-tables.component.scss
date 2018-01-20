@@ -271,8 +271,7 @@
 //  color: palevioletred;
 //}
 
-
-#spectrum_table{ height: 1200px; }
+#spectrum_table{ height:772px;  overflow: auto;}
 
 :host /deep/ .datatable-body-row.active .datatable-row-group {
   background-color: lightblue!important;
@@ -281,8 +280,15 @@
 .material-like {
   background: #FFF;
   box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  height:772px;
+  position:relative;
+  z-index:100;
+  overflow:hidden;
 }
-
+.meterial-cur{
+  height:auto;
+  overflow:visible;
+}
 .right {
   position: absolute;
   right: 50px;
@@ -294,7 +300,12 @@
   margin-left:auto;margin-right:auto;
   width:100%;
 }
-
+.modal.fade{
+   left:50px;
+   position:fixed;
+   bottom:20px;
+   top:20px;
+}
 .outline{
   border: 2px solid #45526E;
   color: #9e9e9e!important;
@@ -358,6 +369,7 @@ form{
   border: 2px solid #45526E;
   color: #9e9e9e!important;
   border-radius: 4px;
+  margin-top: 0px;
 }
 #minSize{
   width: 160px;
@@ -380,3 +392,63 @@ form{
     line-height: 37px;
     padding-left: 10px;
   }
+  .modal_button{
+    border-radius: 4px;
+    font-size: 12px;
+    text-align: center;
+    line-height: 20px;
+    margin-left: 5px;
+    background-color: #ec7f7a;
+    color: white;
+    border: 1px solid #ec7f7a;
+
+  }
+  .detail{
+      // position: fixed;
+      // z-index: 9999;
+       //top: 30px;
+      padding-left: 0px;
+       //margin: 0 auto;
+       //right: 50%; 
+      // padding: 0px;
+      //width: 642px;
+     // opacity:1;
+      //display:none; 
+     // margin-top: 190px;
+      //float:right;
+
+  }
+  .cur{
+  display:block;
+  }
+  .offPage{
+     background-color:white;
+     position:relative;
+  }
+  .offPage>button{
+      border-radius:50%;
+      z-index: 9999;
+      right: 0px;
+      top: 5px;
+      position:absolute;
+      border:1px solid red;
+      background-color:white;
+}
+p{
+  width:100%;
+  font-size:30px;
+  border-bottom:2px solid #e6e9eb;
+  font-weight:bold;
+  color:#45526E;
+  padding-bottom:5px;
+  margin-bottom:20px;
+    margin-top:10px;
+}
+p>span{
+   padding-left: 10px;
+    border-left: 6px solid #45526E;
+}
+#material-like:hover{
+  overflow:visible;
+  
+}

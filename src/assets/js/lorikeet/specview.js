@@ -2484,7 +2484,7 @@ var ui = require('jquery-ui');
         $(window).scroll(function(event){
             event.stopPropagation();
             var s=$(window).scrollTop();
-            if(s>100){
+            if(s>=10){
                 
             $(".mdb-color").addClass('slide-btn');
             $(".header").addClass('position');
@@ -2504,10 +2504,10 @@ var ui = require('jquery-ui');
         $('ul.navbar-nav li').hover(function(event){
             $(this).addClass('active').siblings().removeClass('active');
         })
-       
         
     
-    })
+    });
 
+   
 
 })(jQuery);

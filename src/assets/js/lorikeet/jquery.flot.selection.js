@@ -359,4 +359,5 @@ var jQuery = require('jquery');
         name: 'selection',
         version: '1.1'
     });
+    
 })(jQuery);

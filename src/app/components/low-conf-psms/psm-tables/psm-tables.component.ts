@@ -166,6 +166,9 @@ export class PsmTablesComponent implements OnInit {
         saveAs(blob, filename);
     }
 
+    
+   
+   
     // onCheckClick(id:string){
     //     var checkButton = <HTMLInputElement> document.getElementById(id);
     //     alert(this.export.recommBetter);

@@ -1,0 +1,9 @@
+.mdb-color{
+	min-width:1280px;
+}
+@media screen and (max-width: 991px){
+  .mdb-color{
+    min-width:auto;
+  }
+  
+}
