@@ -153,19 +153,6 @@ table.table-bordered.dataTable th,table.table-bordered.dataTable td{
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 table.dataTable thead .sorting:before, table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:before, table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:before, table.dataTable thead .sorting_desc:after {
   padding: 5px;
 }
@@ -300,7 +287,7 @@ div.dataTables_wrapper div.dataTables_info {
 
 thead, tbody ,tfoot{ display: block; }
 tbody {
-  height: 800px;       /* Just for the demo          */
+  height: 600px;       /* Just for the demo          */
   overflow-y: auto;    /* Trigger vertical scroll    */
   overflow-x: hidden;  /* Hide the horizontal scroll */
 }
@@ -376,7 +363,7 @@ table.table-bordered.dataTable th{
   border: 1px solid #e9ecef;
 }
 }
-@media screen and (max-width: 1030px){}
+
 table.table-bordered.dataTable[_ngcontent-c8] th[_ngcontent-c8], table.table-bordered.dataTable[_ngcontent-c8] td[_ngcontent-c8] {
     min-width: 132px;
     border: 1px solid #e9ecef;
@@ -384,4 +371,11 @@ table.table-bordered.dataTable[_ngcontent-c8] th[_ngcontent-c8], table.table-bor
 .new-col-5{
   padding-left: 0px;
   padding-right: 0px;
+}
+
+@media screen and (min-width: 585px){
+
+  .pd{
+    padding-left: 0px;
+  }
 }
