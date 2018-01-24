@@ -200,19 +200,38 @@
 
 <div class="row" style="padding-top:15px;">
     <div class="col-sm-5 col-md-5 col-lg-5">
-        <ngx-datatable id="spectrum_table"
-                       class="material"
-                       [rows]="spec_rows"
-                       columnMode="force"
-                       [headerHeight]="50"
-                       [footerHeight]="0"
-                       [rowHeight]="40"
-                       [scrollbarV]="true"
-                       [selected]="selected_specs"
-                       [selectionType]="'single'"
-                       (activate)="onActivateSpec($event)"
-                       (select)='onSelectSpec($event)'>
-            >
+        <!--<ngx-datatable id="spectrum_table"-->
+                       <!--class="material"-->
+                       <!--[rows]="spec_rows"-->
+                       <!--columnMode="force"-->
+                       <!--[headerHeight]="50"-->
+                       <!--[footerHeight]="0"-->
+                       <!--[rowHeight]="40"-->
+                       <!--[selected]="selected_specs"-->
+                       <!--[selectionType]="'single'"-->
+                       <!--[limit]="10"-->
+                       <!--(activate)="onActivateSpec($event)"-->
+                       <!--(select)='onSelectSpec($event)'-->
+            <!--&gt;-->
+            <!--&lt;!&ndash;[scrollbarV]="true"&ndash;&gt;-->
+            <!--<ngx-datatable-column name="title" [width]="300"></ngx-datatable-column>-->
+            <!--<ngx-datatable-column name="charge"></ngx-datatable-column>-->
+            <!--<ngx-datatable-column name="precursorMz"></ngx-datatable-column>-->
+        <!--</ngx-datatable>-->
+
+        <!--[columns]="[{name:'title'},{name:'charge'},{name:'precursorMz'}]"-->
+        <ngx-datatable
+            class="material"
+            [rows]="spec_rows"
+            [columnMode]="'force'"
+            [headerHeight]="50"
+            [footerHeight]="50"
+            [rowHeight]="40"
+            [selectionType]="'single'"
+            [limit]="10"
+            (activate)="onActivateSpec($event)"
+            (select)='onSelectSpec($event)'
+        >
             <ngx-datatable-column name="title" [width]="300"></ngx-datatable-column>
             <ngx-datatable-column name="charge"></ngx-datatable-column>
             <ngx-datatable-column name="precursorMz"></ngx-datatable-column>
@@ -223,6 +242,10 @@
         <app-spectra-comparer [selectedPsm]="selectedPsm" [spectrum]="selectedSpectrum"
                               [psmType]="psmType"></app-spectra-comparer>
     </div>
+</div>
+
+<div>
+
 </div>
 
 
