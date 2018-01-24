@@ -115,7 +115,8 @@ var ui = require('jquery-ui');
             seqinfo: "seqinfo",
             peakDetect: "peakDetect",
             immoniumIons: "immoniumIons",
-            reporterIons: "reporterIons"
+            reporterIons: "reporterIons",
+            showIonTable: "showIonTable"
 	};
 
     function getElementId(container, elementId){
@@ -1899,7 +1900,7 @@ var ui = require('jquery-ui');
             // placeholder for the ion table
             parentTable += '<td rowspan="'+rowspan+'" valign="top" id="'+getElementId(container, elementIds.ionTableLoc1)+'" > ';
             parentTable += '<div id="'+getElementId(container, elementIds.ionTableDiv)+'">';
-            parentTable += '<span id="'+getElementId(container, elementIds.moveIonTable)+'" class="font_small link">[Click]</span> <span class="font_small">to move table</span>';
+            // parentTable += '<span id="'+getElementId(container, elementIds.moveIonTable)+'" class="font_small link">[Click]</span> <span class="font_small">to move table</span>';
             // placeholder for modifications
             parentTable += '<div id="'+getElementId(container, elementIds.modInfo)+'" style="margin-top:5px;"></div> ';
             parentTable += '</div> ';
@@ -2067,8 +2068,19 @@ var ui = require('jquery-ui');
 
         var ionTableDiv = $(getElementSelector(container, elementIds.ionTableDiv));
         ionTableDiv.addClass("moved");
+        ionTableDiv.addClass("hideIonTable");
         ionTableDiv.detach();
         $(getElementSelector(container, elementIds.ionTableLoc2)).append(ionTableDiv);
+
+        //add the click event to show ion table button
+        $(getElementSelector(container, elementIds.showIonTable)).click(function() {
+            	var ionTableDiv = $(getElementSelector(container, elementIds.ionTableDiv));
+            	if(ionTableDiv.is(".hideIonTable")){
+                    ionTableDiv.removeClass("hideIonTable");
+                }else {
+                    ionTableDiv.addClass("hideIonTable");
+                }
+        });
 
 		// $(getElementSelector(container, elementIds.moveIonTable)).click(function() {
 		// 	var ionTableDiv = $(getElementSelector(container, elementIds.ionTableDiv));
@@ -2276,6 +2288,7 @@ var ui = require('jquery-ui');
 		myContent += '&nbsp;Y:<input id="'+getElementId(container, elementIds.zoom_y)+'" type="checkbox" value="Y" /> ';
 		myContent += '&nbsp;<input id="'+getElementId(container, elementIds.resetZoom)+'" type="button" value="Zoom Out" /> ';
 		myContent += '&nbsp;<input id="'+getElementId(container, elementIds.printLink)+'" type="button" value="Print" /> ';
+        myContent += '&nbsp;<input id="'+getElementId(container, elementIds.showIonTable)+'" type="button" value="Show Ion Table" /> ';
 		myContent += '</nobr> ';
 
 		myContent += '&nbsp;&nbsp;';
@@ -2448,12 +2461,12 @@ var ui = require('jquery-ui');
 		myTable += '</td> </tr> ';
 
 		// sliders to change plot size
-		myTable += '<tr><td class="optionCell"> ';
-		myTable += '<div>Width: <span id="'+getElementId(container, elementIds.slider_width_val)+'">'+options.width+'</span></div> ';
-		myTable += '<div id="'+getElementId(container, elementIds.slider_width)+'" style="margin-bottom:15px;"></div> ';
-		myTable += '<div>Height: <span id="' + getElementId(container, elementIds.slider_height_val) + '">' + options.height + '</span></div> ';
-		myTable += '<div id="'+getElementId(container, elementIds.slider_height)+'"></div> ';
-		myTable += '</td> </tr> ';
+		// myTable += '<tr><td class="optionCell"> ';
+		// myTable += '<div>Width: <span id="'+getElementId(container, elementIds.slider_width_val)+'">'+options.width+'</span></div> ';
+		// myTable += '<div id="'+getElementId(container, elementIds.slider_width)+'" style="margin-bottom:15px;"></div> ';
+		// myTable += '<div>Height: <span id="' + getElementId(container, elementIds.slider_height_val) + '">' + options.height + '</span></div> ';
+		// myTable += '<div id="'+getElementId(container, elementIds.slider_height)+'"></div> ';
+		// myTable += '</td> </tr> ';
 
 		myTable += '</tbody>';
 		myTable += '</table>';
