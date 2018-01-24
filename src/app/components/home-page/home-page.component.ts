@@ -6,8 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home-page.component.scss']
 })
 export class HomePageComponent implements OnInit {
-
-  constructor() { }
+  private projectId:string;
+  constructor() {
+    this.projectId = "PXD001464";
+  }
 
   ngOnInit() {
   }

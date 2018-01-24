@@ -70,7 +70,7 @@ export class HistogramChartComponent implements OnChanges{
         if(this.histBins == null || this.histBins.length <1 || this.activedBinRank == null || this.activedBinRank <0){
             return ;
         }
-
+        console.log(this.histBins);
         this.xAxisLabel = this.dataName;
         console.log(this.xAxisLabel);
         if (this.activedBinRank >=0 && this.histBins != null) {

@@ -1,6 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import * as d3 from 'd3';
 import * as venn from 'venn.js/venn.js';
+import {StatisticsService} from "../../../../services/statistics.service";
+import {VennData} from "../../../../model/vennData";
 
 
 @Component({
@@ -9,52 +11,110 @@ import * as venn from 'venn.js/venn.js';
     styleUrls: ['./chart1.component.scss']
 })
 export class Chart1Component implements OnInit {
+    @Input() projectId: string;
+    private sets = null;
+    private vennData : VennData;
 
-    constructor() {
+    projects = ["PXD001464","PXD000021"
+    ];
+    selectedProject = null;
+
+    constructor(private statisticsService: StatisticsService) {
+        this.sets = [
+            {"sets": [0], "label": "Original Identified", "size": 500, "addInfo": ", 400 unmatched"},
+            {"sets": [1], "label": "Cluster Matched", "size": 400, "addInfo": ", 300 new identified"},
+            {"sets": [2], "label": "Low Confident", "size": 30},
+
+            {"sets": [0, 1], "size": 100},
+            {"sets": [0, 2], "size": 30},
+            {"sets": [1, 2], "size": 30},
+            {"sets": [0, 1, 2], "size": 30},
+        ]
     }
 
-    public chartType: string = 'radar';
+    ngOnInit() {
+        this.getVennDataAndDraw()
+    }
 
-    public chartDatasets: Array<any> = [
-        {data: [65, 59, 80, 81, 56, 55, 40], label: 'My First dataset'},
-        {data: [28, 48, 40, 19, 86, 27, 90], label: 'My Second dataset'}
-    ];
 
-    public chartLabels: Array<any> = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'];
-
-    public chartColors: Array<any> = [
-        {
-            backgroundColor: 'rgba(220,220,220,0.2)',
-            borderColor: 'rgba(220,220,220,1)',
-            borderWidth: 2,
-            pointBackgroundColor: 'rgba(220,220,220,1)',
-            pointBorderColor: '#fff',
-            pointHoverBackgroundColor: '#fff',
-            pointHoverBorderColor: 'rgba(220,220,220,1)'
-        },
-        {
-            backgroundColor: 'rgba(151,187,205,0.2)',
-            borderColor: 'rgba(151,187,205,1)',
-            borderWidth: 2,
-            pointBackgroundColor: 'rgba(151,187,205,1)',
-            pointBorderColor: '#fff',
-            pointHoverBackgroundColor: '#fff',
-            pointHoverBorderColor: 'rgba(151,187,205,1)'
+    getVennDataAndDraw() {
+        if(this.projectId == null){
+            this.projectId ="PXD001464";
         }
-    ];
-
-    public chartOptions: any = {
-        responsive: true
-    };
-
-    public chartClicked(e: any): void {
-
+        this.statisticsService.getVennData(this.projectId)
+            .then( vennData => {this.vennData = vennData;
+                this.setDataset();
+                this.drawVennDiagram();
+            }).catch(this.handleError);
     }
 
-    public chartHovered(e: any): void {
+    setDataset(){
+        this.sets = [
+            {"sets": [0], "label": "Original Identified", "size": this.vennData.prePSM_no, "addInfo": ", " + this.vennData.prePSM_not_matched_no + " unmatched"},
+            {"sets": [1], "label": "Cluster Matched", "size": this.vennData.matched_spec_no, "addInfo": ", " + this.vennData.new_PSM_no + "new identified"},
+            // {"sets": [2], "label": "Low Confident", "size": this.vennData.prePSM_low_conf_no},
 
+            {"sets": [0, 1], "size": this.vennData.matched_id_spec_no},
+            // {"sets": [0, 2], "size": this.vennData.better_PSM_no},
+            // {"sets": [1, 2], "size": this.vennData.better_PSM_no},
+            // {"sets": [0, 1, 2], "size": this.vennData.better_PSM_no},
+        ]
+        console.log(this.sets);
     }
 
+    drawVennDiagram(){
+        var chart = venn.VennDiagram()
+            .width(400)
+            .height(500);
+
+        var div = d3.select("#venn")
+        div.datum(this.sets).call(chart);
+
+        var tooltip = d3.select("body").append("div")
+            .attr("class", "venntooltip");
+
+        div.selectAll("path")
+            .style("stroke-opacity", 0)
+            .style("stroke", "#fff")
+            .style("stroke-width", 3)
+
+        div.selectAll("g")
+            .on("mouseover", function (d, i) {
+                // sort all the areas relative to the current item
+                venn.sortAreas(div, d);
+
+                // Display a tooltip with the current size
+                tooltip.transition().duration(400).style("opacity", .9);
+                tooltip.text(d.size + " spectra");
+                if (d.addInfo) {
+                    tooltip.text(d.size + " spectra, " + d.addInfo);//show the complement set info
+                }
+
+                // highlight the current path
+                var selection = d3.select(this).transition("tooltip").duration(400);
+                selection.select("path")
+                    .style("fill-opacity", d.sets.length == 1 ? .4 : .1)
+                    .style("stroke-opacity", 1);
+            })
+
+            .on("mousemove", function () {
+                tooltip.style("left", (d3.event.pageX) + "px")
+                    .style("top", (d3.event.pageY - 28) + "px");
+            })
+
+            .on("mouseout", function (d, i) {
+                tooltip.transition().duration(400).style("opacity", 0);
+                var selection = d3.select(this).transition("tooltip").duration(400);
+                selection.select("path")
+                    .style("fill-opacity", d.sets.length == 1 ? .25 : .0)
+                    .style("stroke-opacity", 0);
+            });
+    }
+
+    onChange(value){
+        // this.selectedProject = value;
+        console.log(this.selectedProject);
+    }
     /* can not show each intersection's number, don't use it
     ngOnInit() {
         var sets = [
@@ -209,66 +269,8 @@ export class Chart1Component implements OnInit {
         removeOriginalVennAreas();
     }*/
 
-    ngOnInit() {
-
-        var sets = [
-            {"sets": [0], "label": "Original Identified", "size": 500, "addInfo": ", 400 unmatched"},
-            {"sets": [1], "label": "Cluster Matched", "size": 400, "addInfo": ", 300 new identified"},
-            {"sets": [2], "label": "Low Confident", "size": 30},
-
-            {"sets": [0, 1], "size": 100},
-            {"sets": [0, 2], "size": 30},
-            {"sets": [1, 2], "size": 30},
-            {"sets": [0, 1, 2], "size": 30},
-        ]
-
-        var chart = venn.VennDiagram()
-            .width(400)
-            .height(500);
-
-        var div = d3.select("#venn")
-        div.datum(sets).call(chart);
-
-        var tooltip = d3.select("body").append("div")
-            .attr("class", "venntooltip");
-
-        div.selectAll("path")
-            .style("stroke-opacity", 0)
-            .style("stroke", "#fff")
-            .style("stroke-width", 3)
-
-        div.selectAll("g")
-            .on("mouseover", function (d, i) {
-                // sort all the areas relative to the current item
-                venn.sortAreas(div, d);
-
-                // Display a tooltip with the current size
-                tooltip.transition().duration(400).style("opacity", .9);
-                tooltip.text(d.size + " spectra");
-                if (d.addInfo) {
-                    tooltip.text(d.size + " spectra, " + d.addInfo);//show the complement set info
-                }
-
-                // highlight the current path
-                var selection = d3.select(this).transition("tooltip").duration(400);
-                selection.select("path")
-                    .style("fill-opacity", d.sets.length == 1 ? .4 : .1)
-                    .style("stroke-opacity", 1);
-            })
-
-            .on("mousemove", function () {
-                tooltip.style("left", (d3.event.pageX) + "px")
-                    .style("top", (d3.event.pageY - 28) + "px");
-            })
-
-            .on("mouseout", function (d, i) {
-                tooltip.transition().duration(400).style("opacity", 0);
-                var selection = d3.select(this).transition("tooltip").duration(400);
-                selection.select("path")
-                    .style("fill-opacity", d.sets.length == 1 ? .25 : .0)
-                    .style("stroke-opacity", 0);
-            });
+    private handleError(error: any): void {
+        console.log('A error occurred', error);
     }
-
 
 }

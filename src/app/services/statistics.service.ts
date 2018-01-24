@@ -2,12 +2,14 @@ import {Injectable} from "@angular/core";
 import {Headers, Http} from "@angular/http";
 import {Config} from "../model/config"
 import {HistgramBin} from "../model/histogram-bin";
+import {VennData} from "../model/vennData";
+import {Thresholds} from "../model/thresholds";
 
 // import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 
-export class HistogramChartService {
+export class StatisticsService {
 
     private baseUrl = Config.baseUrl;
     private headers = new Headers({'Content-type': 'application/json'});
@@ -27,7 +29,7 @@ export class HistogramChartService {
                 .then(response => {
                     var histBins : HistgramBin[] = response.json() as HistgramBin[];
                     for(var i=0; i<histBins.length; i++) {
-                       if(fieldType === "confScore" || fieldType === "clusterRatio") {
+                       if(fieldType === "confScore" || fieldType === "recommConfScore"|| fieldType === "clusterRatio") {
                             histBins[i].name = Number(histBins[i].lowerBound).toFixed(3) + " - " + Number(histBins[i].upperBound).toFixed(3);
                         }else {
                            histBins[i].name = histBins[i].lowerBound + " - " + histBins[i].upperBound;
@@ -38,6 +40,29 @@ export class HistogramChartService {
                 .catch(this.handleError);
     }
 
+    public getThresholds(projectId: string): Promise<Thresholds> {
+        let dataUrl = this.baseUrl + "statistics/thresholds?" +
+            "projectId=" + projectId ;
+        return this.http.get(dataUrl)
+            .toPromise()
+            .then(response => {
+                var thresholds: Thresholds = response.json() as Thresholds;
+                return thresholds;
+            })
+            .catch(this.handleError);
+    }
+
+    public getVennData(projectId: string): Promise<VennData> {
+        let dataUrl = this.baseUrl + "statistics/venndata?" +
+            "projectId=" + projectId ;
+        return this.http.get(dataUrl)
+            .toPromise()
+            .then(response => {
+                var vennData: VennData = response.json() as VennData;
+                return vennData;
+            })
+            .catch(this.handleError);
+    }
 
     private handleError(error: any): Promise<any> {
         console.log('A error occurred', error);

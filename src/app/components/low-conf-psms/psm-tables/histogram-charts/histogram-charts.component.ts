@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges} from '@angular/core';
-import {HistogramChartService} from "../../../../services/histogram-chart.service";
 import {HistgramBin} from "../../../../model/histogram-bin";
 import {Psm} from "../../../../model/psm";
+import {StatisticsService} from "../../../../services/statistics.service";
 
 @Component({
     selector: 'app-histogram-charts',
@@ -21,24 +21,24 @@ export class HistogramChartsComponent implements OnChanges {
     private activedClusterSizeBin = -1;
     private activedClusterRatioBin = -1;
 
-    constructor(private histogramChartService: HistogramChartService) {
+    constructor(private statisticsService: StatisticsService) {
         this.activedPsm = new Psm("null");
     }
 
     ngOnChanges(): void {
         if (this.psmType == "newid" && this.confScoreHistArray.length < 1) {
-            this.histogramChartService.getHistData(this.psmType, "recommConfScore").then(bins=>{this.confScoreHistArray = bins;} );
+            this.statisticsService.getHistData(this.psmType, "recommConfScore").then(bins=>{this.confScoreHistArray = bins;} );
         }
 
         if (this.psmType != "newid" && this.confScoreHistArray.length < 1) {
-            this.histogramChartService.getHistData(this.psmType, "confScore").then(bins=>{this.confScoreHistArray = bins;} );
+            this.statisticsService.getHistData(this.psmType, "confScore").then(bins=>{this.confScoreHistArray = bins;} );
         }
 
         if (this.clusterRatioHistArray.length < 1) {
-            this.histogramChartService.getHistData(this.psmType, "clusterRatio").then(bins=>{this.clusterRatioHistArray = bins});
+            this.statisticsService.getHistData(this.psmType, "clusterRatio").then(bins=>{this.clusterRatioHistArray = bins});
         }
         if (this.clusterSizeHistArray.length < 1) {
-            this.histogramChartService.getHistData(this.psmType, "clusterSize").then(bins=>{this.clusterSizeHistArray = bins});
+            this.statisticsService.getHistData(this.psmType, "clusterSize").then(bins=>{this.clusterSizeHistArray = bins});
         }
         if(this.activedPsm) {
             this.activedConfScoreBin = this.getBinRank(this.confScoreHistArray, this.activedPsm.confidentScore);
@@ -55,6 +55,7 @@ export class HistogramChartsComponent implements OnChanges {
             // console.log(this.clusterSizeHistArray);
 
         }
+        console.log(this.confScoreHistArray);
     }
 
     getBinRank(histogramArray:any[], score:number):number{

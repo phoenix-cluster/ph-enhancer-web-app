@@ -16,9 +16,9 @@ import { NewIdentifiedComponent } from './components/new-identified/new-identifi
 const routes: Routes = [
     {path: '', redirectTo: '/index', pathMatch: 'full'},
     {path: 'index', component: HomePageComponent},
-    {path: 'low_conf', component: LowConfPsmsComponent},
-    {path: 'high_conf', component: HighConfPsmsComponent},
-    {path: 'new_id', component: NewIdentifiedComponent},
+    {path: 'low_conf/:project', component: LowConfPsmsComponent},
+    {path: 'high_conf/:project', component: HighConfPsmsComponent},
+    {path: 'new_id/:project', component: NewIdentifiedComponent},
 ];
 
 @NgModule({

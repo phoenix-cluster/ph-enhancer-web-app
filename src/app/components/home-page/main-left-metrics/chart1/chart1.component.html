@@ -1,5 +1,7 @@
 <div style="display: block">
     <div id="venn">
-
     </div>
+    <select id="selectProject" [(ngModel)]="selectedProject" (change)="onChange()">
+        <option *ngFor="let p of projects" [ngValue]="p" >{{p}}</option>
+    </select>
 </div>

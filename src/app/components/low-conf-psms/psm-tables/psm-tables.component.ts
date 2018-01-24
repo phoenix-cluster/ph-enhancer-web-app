@@ -18,6 +18,7 @@ import {ExportConfig} from "../../../model/export-config";
 export class PsmTablesComponent implements OnInit {
 
     @Input() psmType: string;
+    @Input() projectId: string;
     selected_psms = [];
     selected_specs = [];
     selectedPsm: Psm;
@@ -97,7 +98,7 @@ export class PsmTablesComponent implements OnInit {
 
     setPageData(page: Page) {
         this.loading = true;
-        this.psmTableService.getPsmsPage(this.psmType, page).then(psmPage => {
+        this.psmTableService.getPsmsPage("PXD001464", this.psmType, page).then(psmPage => {
             this.page.totalElements = psmPage.totalElements;
             this.page.totalPages = psmPage.totalPages;
             this.psm_rows = psmPage.scoredPSMs;
@@ -155,7 +156,7 @@ export class PsmTablesComponent implements OnInit {
     }
 
     saveFile() {
-        this.psmTableService.getPsmsPage(this.psmType, new Page())
+        this.psmTableService.getPsmsPage("PXD001464", this.psmType, new Page())
             .then(psmPage => this.saveToFileSystem(psmPage));
     }
 

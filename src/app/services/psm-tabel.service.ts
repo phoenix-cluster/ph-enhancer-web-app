@@ -25,14 +25,15 @@ export class PsmTableService{
      //  .catch(this.handleError);
 	// }
 
-    getPsmsPage(psmType:string, page:Page): Promise<PSMsPage>{
+    getPsmsPage(projectId:string, psmType:string, page:Page): Promise<PSMsPage>{
         console.log(page);
         if(psmType == "newid" && page.sortField == "confidentScore"){
             page.sortField = "recommConfidentScore";
         }
 
         let psmsUrl = this.baseUrl + psmType + "?"
-            + "page=" + page.pageNumber
+            + "projectId=" + projectId
+            + "&page=" + page.pageNumber
             + "&size=" + page.size
             + "&sortField=" + page.sortField
             + "&sortDirection=" + page.sortDirection;

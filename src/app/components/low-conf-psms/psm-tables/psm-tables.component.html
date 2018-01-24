@@ -56,22 +56,7 @@
             </ng-template>
         </ngx-datatable-column>
 
-        <ngx-datatable-column name="recommConfidentScore" [sortable]="true">
-            <ng-template ngx-datatable-header-template let-sort="sortFn" class="sort-btn">
-                <a (click)="sort()">
-                    Confident<br>Score
-                    <span *ngIf="page.sortField != 'recommConfidentScore'" data-icon="c" class="icon"></span>
-                    <span *ngIf="page.sortField == 'recommConfidentScore' && page.sortDirection == 'asc' && isDefaultSort == true"
-                          data-icon="e" class="icon"></span>
-                    <span *ngIf="page.sortField == 'recommConfidentScore' && page.sortDirection == 'desc' && isDefaultSort == true"
-                          data-icon="f" class="icon"></span>
-                </a>
-            </ng-template>
-            <ng-template let-value="value" ngx-datatable-cell-template>
-                {{value | number:'1.2-2'}}
-            </ng-template>
-        </ngx-datatable-column>
-                <ngx-datatable-column name="confidentScore" [sortable]="true">
+        <ngx-datatable-column *ngIf="psmType=='negscore' || psmType=='posscore' " name="confidentScore" [sortable]="true">
             <ng-template ngx-datatable-header-template let-sort="sortFn" class="sort-btn">
                 <a (click)="sort()">
                     Confident<br>Score
@@ -83,8 +68,23 @@
                 </a>
             </ng-template>
             <ng-template let-value="value" ngx-datatable-cell-template>
-                <!--{{value | number:'1.2-2'}}-->
-                {{value }}
+                {{value | number:'1.2-2'}}
+            </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column *ngIf="psmType=='negscore'|| psmType=='newid'" name="recommConfidentScore" [sortable]="true">
+            <ng-template ngx-datatable-header-template let-sort="sortFn" class="sort-btn">
+                <a (click)="sort()">
+                    Recommend Confident<br>Score
+                    <span *ngIf="page.sortField != 'recommConfidentScore'" data-icon="c" class="icon"></span>
+                    <span *ngIf="page.sortField == 'recommConfidentScore' && page.sortDirection == 'asc' && isDefaultSort == true"
+                          data-icon="e" class="icon"></span>
+                    <span *ngIf="page.sortField == 'recommConfidentScore' && page.sortDirection == 'desc' && isDefaultSort == true"
+                          data-icon="f" class="icon"></span>
+                </a>
+            </ng-template>
+            <ng-template let-value="value" ngx-datatable-cell-template>
+                {{value | number:'1.2-2'}}
             </ng-template>
         </ngx-datatable-column>
 

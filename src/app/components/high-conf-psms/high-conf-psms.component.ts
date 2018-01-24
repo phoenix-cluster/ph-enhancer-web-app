@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-high-conf-psms',
@@ -7,9 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HighConfPsmsComponent implements OnInit {
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+    constructor(private route: ActivatedRoute) { }
+    public project : string;
+    ngOnInit() {
+        this.project = this.route.snapshot.paramMap.get('project');
+    }
 }

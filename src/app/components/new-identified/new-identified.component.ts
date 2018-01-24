@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-new-identified',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NewIdentifiedComponent implements OnInit {
 
-  constructor() { }
-
-  ngOnInit() {
-  }
+    constructor(private route: ActivatedRoute) { }
+    public project : string;
+    ngOnInit() {
+        this.project = this.route.snapshot.paramMap.get('project');
+    }
 
 }

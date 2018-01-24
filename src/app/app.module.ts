@@ -46,7 +46,7 @@ import {SpectraInClusterTableService} from "./services/spectra-in-cluster-tabel.
 import {ClusterService} from "./services/cluster.service";
 import {SpectrumService} from "./services/spectrum.service";
 import {LocalStorageService} from "./services/local-storage.service";
-import {HistogramChartService} from "./services/histogram-chart.service";
+import {StatisticsService} from "./services/statistics.service";
 import {TruncatePipe} from "./pipe/truncate";
 import {SpecTitle2ListPipe} from "./pipe/spectrum-titles2list";
 import {ShortNumberPipe} from "./pipe/short-number";
@@ -113,7 +113,7 @@ import { HistogramChartsComponent } from './components/low-conf-psms/psm-tables/
         ClusterService,
         SpectrumService,
         LocalStorageService,
-        HistogramChartService,
+        StatisticsService,
         // ConfigService,
         // ConfigModule.init(),
     ],
