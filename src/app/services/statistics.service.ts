@@ -64,6 +64,30 @@ export class StatisticsService {
             .catch(this.handleError);
     }
 
+    public getVennDataList(): Promise<VennData[]> {
+        let dataUrl = this.baseUrl + "statistics/venndatalist"
+        return this.http.get(dataUrl)
+            .toPromise()
+            .then(response => {
+                var vennDataList: VennData[] = response.json() as VennData[];
+                return vennDataList;
+            })
+            .catch(this.handleError);
+    }
+
+
+    public getProjects(): Promise<string[]> {
+        let dataUrl = this.baseUrl + "statistics/projects";
+        return this.http.get(dataUrl)
+            .toPromise()
+            .then(response => {
+                var projects: string[] = response.json() as string[];
+                return projects;
+            })
+            .catch(this.handleError);
+    }
+
+
     private handleError(error: any): Promise<any> {
         console.log('A error occurred', error);
         return Promise.reject(error.message || error);

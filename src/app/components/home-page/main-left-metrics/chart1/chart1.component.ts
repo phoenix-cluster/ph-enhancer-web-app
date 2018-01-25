@@ -3,6 +3,7 @@ import * as d3 from 'd3';
 import * as venn from 'venn.js/venn.js';
 import {StatisticsService} from "../../../../services/statistics.service";
 import {VennData} from "../../../../model/vennData";
+import {Config} from "../../../../model/config";
 
 
 @Component({
@@ -11,13 +12,11 @@ import {VennData} from "../../../../model/vennData";
     styleUrls: ['./chart1.component.scss']
 })
 export class Chart1Component implements OnInit {
-    @Input() projectId: string;
     private sets = null;
     private vennData : VennData;
 
-    projects = ["PXD001464","PXD000021"
-    ];
-    selectedProject = null;
+    projects = [Config.defaultProject];
+    selectedProject = Config.defaultProject;
 
     constructor(private statisticsService: StatisticsService) {
         this.sets = [
@@ -33,15 +32,16 @@ export class Chart1Component implements OnInit {
     }
 
     ngOnInit() {
-        this.getVennDataAndDraw()
+        this.getAndSetProjects();
+        this.getVennDataAndDraw();
     }
 
 
     getVennDataAndDraw() {
-        if(this.projectId == null){
-            this.projectId ="PXD001464";
+        if(this.selectedProject== null){
+            this.selectedProject = Config.defaultProject;
         }
-        this.statisticsService.getVennData(this.projectId)
+        this.statisticsService.getVennData(this.selectedProject)
             .then( vennData => {this.vennData = vennData;
                 this.setDataset();
                 this.drawVennDiagram();
@@ -52,12 +52,12 @@ export class Chart1Component implements OnInit {
         this.sets = [
             {"sets": [0], "label": "Original Identified", "size": this.vennData.prePSM_no, "addInfo": ", " + this.vennData.prePSM_not_matched_no + " unmatched"},
             {"sets": [1], "label": "Cluster Matched", "size": this.vennData.matched_spec_no, "addInfo": ", " + this.vennData.new_PSM_no + "new identified"},
-            // {"sets": [2], "label": "Low Confident", "size": this.vennData.prePSM_low_conf_no},
+            {"sets": [2], "label": "Low Confident", "size": this.vennData.prePSM_low_conf_no},
 
             {"sets": [0, 1], "size": this.vennData.matched_id_spec_no},
-            // {"sets": [0, 2], "size": this.vennData.better_PSM_no},
-            // {"sets": [1, 2], "size": this.vennData.better_PSM_no},
-            // {"sets": [0, 1, 2], "size": this.vennData.better_PSM_no},
+            {"sets": [0, 2], "size": this.vennData.prePSM_low_conf_no},
+            {"sets": [1, 2], "size": this.vennData.prePSM_low_conf_no},
+            {"sets": [0, 1, 2], "size": this.vennData.prePSM_low_conf_no, "addInfo":", " + this.vennData.better_PSM_no + " got new recommend"},
         ]
         console.log(this.sets);
     }
@@ -112,8 +112,7 @@ export class Chart1Component implements OnInit {
     }
 
     onChange(value){
-        // this.selectedProject = value;
-        console.log(this.selectedProject);
+        this.getVennDataAndDraw()
     }
     /* can not show each intersection's number, don't use it
     ngOnInit() {
@@ -273,4 +272,9 @@ export class Chart1Component implements OnInit {
         console.log('A error occurred', error);
     }
 
+    private getAndSetProjects() {
+        this.statisticsService.getProjects()
+            .then( projects=> {this.projects = projects;
+            }).catch(this.handleError);
+    }
 }

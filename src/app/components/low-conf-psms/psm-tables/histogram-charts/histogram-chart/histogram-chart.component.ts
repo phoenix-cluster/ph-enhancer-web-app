@@ -47,7 +47,7 @@ export class HistogramChartComponent implements OnChanges{
 
 
     onSelect(event) {
-        console.log(event);
+        // console.log(event);
     }
 
     onActivate(event): void {
@@ -70,12 +70,12 @@ export class HistogramChartComponent implements OnChanges{
         if(this.histBins == null || this.histBins.length <1 || this.activedBinRank == null || this.activedBinRank <0){
             return ;
         }
-        console.log(this.histBins);
+        // console.log(this.histBins);
         this.xAxisLabel = this.dataName;
-        console.log(this.xAxisLabel);
+        // console.log(this.xAxisLabel);
         if (this.activedBinRank >=0 && this.histBins != null) {
             let binName = this.histBins[this.activedBinRank - 1].name;
-            console.log(binName);
+            // console.log(binName);
             if(binName) {
                 this.customColors = [
                     {
@@ -85,7 +85,7 @@ export class HistogramChartComponent implements OnChanges{
                 ];
             }
         }
-        console.log(this.customColors);
+        // console.log(this.customColors);
         this.histData = this.histBins;
     }
 }

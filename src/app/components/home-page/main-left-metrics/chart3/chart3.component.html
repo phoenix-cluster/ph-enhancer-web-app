@@ -2,6 +2,7 @@
     <ngx-charts-bar-vertical-stacked
             [view]="view"
             [scheme]="colorScheme"
+
             [results]="multi"
             [gradient]="gradient"
             [xAxis]="showXAxis"
@@ -11,7 +12,9 @@
             [showYAxisLabel]="showYAxisLabel"
             [xAxisLabel]="xAxisLabel"
             [yAxisLabel]="yAxisLabel"
-            (select)="onSelect($event)">
+            (select)="onSelect($event)"
+    >
+        <!--(click)="onClick($event)"-->
     </ngx-charts-bar-vertical-stacked>
 </div>
 
