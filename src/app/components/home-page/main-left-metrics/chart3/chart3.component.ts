@@ -88,20 +88,17 @@ export class Chart3Component implements OnChanges{
         switch (vennDataType){
             case "New Id for Matched UnId" :{
                 psmTableType = "new_id";
-                alert(psmTableType);
                 break;
             }
 
             case "Better Id":
             case "Other LowConf Id":{
                 psmTableType = "low_conf";
-                alert(psmTableType);
                 break;
             }
 
             case "Other Matched Id":{
                 psmTableType = "high_conf";
-                alert(psmTableType);
                 break;
             }
 

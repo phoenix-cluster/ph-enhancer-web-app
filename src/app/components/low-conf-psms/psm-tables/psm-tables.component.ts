@@ -65,7 +65,7 @@ export class PsmTablesComponent implements OnInit {
         }
         let accpetanceMap = new Map<number, number>();
         accpetanceMap.set(row.id, row.acceptance);
-        this.psmTableService.uploadUserAcceptance(this.psmType, accpetanceMap).then(
+        this.psmTableService.uploadUserAcceptance(this.projectId, this.psmType, accpetanceMap).then(
             result => {
             }
         ).catch(error => console.log(error))

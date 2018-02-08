@@ -102,8 +102,8 @@ export class PsmTableService{
     //   .catch(this.handleError);
     // }
 
-    public uploadUserAcceptance(psmType:string, acceptanceMap:Map<number, number>) {
-        let uploadUrl = this.baseUrl.concat("updateAcceptance?psmtype=" + psmType);
+    public uploadUserAcceptance(projectId:string, psmType:string, acceptanceMap:Map<number, number>) {
+        let uploadUrl = this.baseUrl.concat("updateAcceptance?projectId=" + projectId + "&psmtype=" + psmType);
         let options = new RequestOptions({headers: this.headers});
         let mapKeys = acceptanceMap.keys();
         let jsonStr = "{";
