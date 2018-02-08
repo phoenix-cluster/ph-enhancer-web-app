@@ -9,22 +9,22 @@
       </a>
    </logo>
    <links>
-      <nav>
-         <ul class="navbar-nav">
-         <li class="nav-item active">
-            <a class="nav-link waves-light" mdbRippleRadius routerLink="/index" >Home <span class="sr-only">(current)</span></a>
+      <div class="nav">
+         <ul >
+         <li class=""   >
+            <a class="" [ngClass]="getClass('index')" routerLink="/index" >Home <span class="sr-only">(current)</span></a>
          </li>
-         <li class="nav-item">
-            <a class="nav-link waves-light" mdbRippleRadius routerLink="/low_conf/{{projectId}}">Low Confident</a>
+         <li class=""   >
+            <a class="" [ngClass]="getClass('low_conf')" routerLink="/low_conf/{{projectId}}">Low Confident</a>
          </li>
-         <li class="nav-item">
-            <a class="nav-link waves-light" mdbRippleRadius routerLink="/high_conf/{{projectId}}">High Confident</a>
+         <li class=""   >
+            <a class="" [ngClass]="getClass('high_conf')" routerLink="/high_conf/{{projectId}}">High Confident</a>
          </li>
-         <li class="nav-item">
-            <a class="nav-link waves-light" mdbRippleRadius routerLink="/new_id/{{projectId}}">New Identified</a>
+         <li class=""   >
+            <a class="" [ngClass]="getClass('new_id')" routerLink="/new_id/{{projectId}}">New Identified</a>
          </li>
       </ul>
-      </nav>
+      </div>
 
    </links>
 </mdb-navbar>

@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ModalDismissReasons, NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {FileUploader} from "ng2-file-upload";
+import {Config} from "../../../../../model/config"
 
-const URL = 'http://localhost:8090/upload/files';
 
 @Component({
   selector: 'app-upload-files',
@@ -12,10 +12,11 @@ const URL = 'http://localhost:8090/upload/files';
 export class UploadFilesComponent implements OnInit {
 
   closeResult: string;
+  uploadUrl = Config.baseUrl + "file/upload";
 
   constructor(private modalService: NgbModal) {}
 
-  public uploader:FileUploader = new FileUploader({url: URL, isHTML5:true, maxFileSize:1000*1000*1000});
+  public uploader:FileUploader = new FileUploader({url: this.uploadUrl, isHTML5:true, maxFileSize:1000*1000*1000});
   public hasBaseDropZoneOver:boolean = false;
   public hasAnotherDropZoneOver:boolean = false;
 

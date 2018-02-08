@@ -44,6 +44,7 @@
     "ng-html-util": "1.0.x",
     "ng-sidebar": "^6.0.4",
     "ng2-file-upload": "^1.3.0",
+    "ngx-bootstrap": "^2.0.2",
     "rxjs": "5.4.x",
     "screenfull": "3.3.x",
     "smoothscroll-polyfill": "0.3.x",

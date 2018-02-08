@@ -11,6 +11,7 @@ import {FileUploadModule} from 'ng2-file-upload';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
+import { PopoverModule } from 'ngx-bootstrap/popover';
 // import { SidebarModule } from 'ng-sidebar';
 
 
@@ -47,6 +48,7 @@ import {ClusterService} from "./services/cluster.service";
 import {SpectrumService} from "./services/spectrum.service";
 import {LocalStorageService} from "./services/local-storage.service";
 import {StatisticsService} from "./services/statistics.service";
+import {ExportService} from "./services/export.service";
 import {TruncatePipe} from "./pipe/truncate";
 import {SpecTitle2ListPipe} from "./pipe/spectrum-titles2list";
 import {ShortNumberPipe} from "./pipe/short-number";
@@ -101,6 +103,7 @@ import { HistogramChartsComponent } from './components/low-conf-psms/psm-tables/
         NgxDatatableModule,
         // SidebarModule.forRoot(),
         NgxChartsModule,
+        PopoverModule.forRoot(),
 
         // AgmCoreModule.forRoot({
         //   // https://developers.google.com/maps/documentation/javascript/get-api-key?hl=en#key
@@ -114,6 +117,7 @@ import { HistogramChartsComponent } from './components/low-conf-psms/psm-tables/
         SpectrumService,
         LocalStorageService,
         StatisticsService,
+        ExportService,
         // ConfigService,
         // ConfigModule.init(),
     ],

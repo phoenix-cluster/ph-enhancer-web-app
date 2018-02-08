@@ -25,6 +25,7 @@ export class Psm {
     recommConfidentScore: number;
     clusterId: string;
     clusterRatio: number;
+    clusterRatioStr: string;
     clusterSize: number;
     recommendPeptide: string;
     recommendPepMods: Modification[];

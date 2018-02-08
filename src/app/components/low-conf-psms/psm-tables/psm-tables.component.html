@@ -93,8 +93,16 @@
             <ng-template ngx-datatable-header-template>
                 Cluster<br>Id
             </ng-template>
-            <ng-template let-value="value" ngx-datatable-cell-template>
-                {{value | truncate_clusterid}}
+            <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                <a [popover]="popTemplate" popoverTitle="Sequences in Cluster" triggers="mouseenter:mouseleave"  container="body"
+                   placement="right">
+                    {{value | truncate_clusterid}}
+                </a>
+                <ng-template #popTemplate>{{row.clusterRatioStr}}<div [innerHtml]="html"></div></ng-template>
+                <!--<button type="button" class="btn btn-success"-->
+                        <!--[popover]="popTemplate" popoverTitle="Dynamic html inside">-->
+                    <!--Show me popover with html-->
+                <!--</button>-->
             </ng-template>
         </ngx-datatable-column>
 
@@ -228,7 +236,7 @@
             [footerHeight]="50"
             [rowHeight]="40"
             [selectionType]="'single'"
-            [limit]="10"
+            [limit]="15"
             (activate)="onActivateSpec($event)"
             (select)='onSelectSpec($event)'
         >
@@ -358,23 +366,24 @@
                     </label>
                 </div>
                 <div class="form-check abc-checkbox">
+                    <input [{ngModel}]="export.hasRejected" class="form-check-input invisible" id="checkbox_rejected" type="checkbox">
+                    <label class="form-check-label" for="checkbox_rejected">
+                        Mannually Rejected
+                    </label>
+                </div>
+                <div class="form-check abc-checkbox">
 
-                    <input class="form-check-input invisible" [(ngModel)]="export.defaultAccpetType" id="checkbox_setDefault" type="checkbox">
+                    <input class="form-check-input invisible" id="checkbox_setDefault" type="checkbox" value="checked">
                     <label class="form-check-label" for="checkbox_setDefault">
                         Accept Default as
                     </label>
-                    <select class="mb-2 mr-sm-2 mb-sm-0" id="defaultAs" placeholder="Accept">
+                    <select class="mb-2 mr-sm-2 mb-sm-0" id="defaultAs" placeholder="Accept" [(ngModel)]="export.defaultAccpetType">
                         <option value="accept">Accept</option>
                         <option value="reject">Reject</option>
-                        <option value="node">None</option>
+                        <option value="none">None</option>
                     </select>
                 </div>
-                <div class="form-check abc-checkbox">
-                    <input [{ngModel}]="export.hasRejected" class="form-check-input invisible" id="checkbox_rejected" type="checkbox">
-                    <label class="form-check-label" for="checkbox_rejected">
-                        Rejected
-                    </label>
-                </div>
+
             </div>
 
             <div class="modal-footer justify-content-center">

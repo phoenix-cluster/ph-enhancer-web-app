@@ -2,6 +2,7 @@ import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {Psm} from '../../../model/psm'
 import {PsmTableService} from '../../../services/psm-tabel.service'
 import {SpectrumService} from '../../../services/spectrum.service'
+import {ExportService} from '../../../services/export.service'
 import {Spectrum} from "../../../model/spectrum";
 import {Page} from "../../../model/page";
 import 'rxjs/add/operator/toPromise';
@@ -9,6 +10,7 @@ import { saveAs } from 'file-saver/FileSaver';
 import {Http} from "@angular/http";
 import {PSMsPage} from "../../../model/psmsPage";
 import {ExportConfig} from "../../../model/export-config";
+
 
 @Component({
     selector: 'app-psm-tables',
@@ -38,6 +40,7 @@ export class PsmTablesComponent implements OnInit {
 
     constructor(private psmTableService: PsmTableService,
                 private spectrumService: SpectrumService,
+                private exportService: ExportService,
                 private http: Http,
                 ) {
         this.selectedPsm = new Psm("null_cluster_id");
@@ -98,7 +101,7 @@ export class PsmTablesComponent implements OnInit {
 
     setPageData(page: Page) {
         this.loading = true;
-        this.psmTableService.getPsmsPage("PXD001464", this.psmType, page).then(psmPage => {
+        this.psmTableService.getPsmsPage(this.projectId, this.psmType, page).then(psmPage => {
             this.page.totalElements = psmPage.totalElements;
             this.page.totalPages = psmPage.totalPages;
             this.psm_rows = psmPage.scoredPSMs;
@@ -156,21 +159,16 @@ export class PsmTablesComponent implements OnInit {
     }
 
     saveFile() {
-        this.psmTableService.getPsmsPage("PXD001464", this.psmType, new Page())
-            .then(psmPage => this.saveToFileSystem(psmPage));
+        this.exportService.setExport(this.projectId,this.export)
+            .then(response => this.downloadfile(response.toString()));
     }
 
-    private saveToFileSystem(psmPage:PSMsPage) {
-        const filename = 'test.json';
-        var jsonse = JSON.stringify(psmPage);
-        const blob = new Blob([jsonse], { type: 'text/plain' });
-        saveAs(blob, filename);
+    downloadfile(filepath: string){
+        this.exportService.downloadfile(filepath)
+            .subscribe(data => window.open(window.URL.createObjectURL(data)),
+                error => console.log("Error downloading the file."),
+                () => console.log('Completed file download.'));
     }
-
-    // onCheckClick(id:string){
-    //     var checkButton = <HTMLInputElement> document.getElementById(id);
-    //     alert(this.export.recommBetter);
-    // }
 
 
 
