@@ -55,7 +55,6 @@ export class HistogramChartsComponent implements OnChanges {
             // console.log(this.clusterSizeHistArray);
 
         }
-        console.log(this.confScoreHistArray);
     }
 
     getBinRank(histogramArray:any[], score:number):number{
