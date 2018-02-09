@@ -49,8 +49,9 @@ export class ExportService {
     downloadfile(filepath: string){
         var headers = new Headers();
         headers.append('responseType', 'json');
-        return this.http.get( filepath)
-            .map(res => new Blob([res],{ type: 'application/json' }));
+        window.location.href = filepath;
+        // return this.http.get( filepath)
+        //     .map(res => new Blob([res],{ type: 'application/json' }));
     }
 
     private handleError(error: any): Promise<any> {

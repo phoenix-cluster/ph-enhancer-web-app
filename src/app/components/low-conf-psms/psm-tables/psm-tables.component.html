@@ -96,7 +96,8 @@
             <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
                 <a [popover]="popTemplate" popoverTitle="Sequences in Cluster" triggers="mouseenter:mouseleave"  container="body"
                    placement="right">
-                    {{value | truncate_clusterid}}
+                    <!--{{value | truncate_clusterid}}-->
+                    {{value }}
                 </a>
                 <ng-template #popTemplate>{{row.clusterRatioStr}}<div [innerHtml]="html"></div></ng-template>
                 <!--<button type="button" class="btn btn-success"-->

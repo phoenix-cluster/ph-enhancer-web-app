@@ -164,10 +164,10 @@ export class PsmTablesComponent implements OnInit {
     }
 
     downloadfile(filepath: string){
-        this.exportService.downloadfile(filepath)
-            .subscribe(data => window.open(window.URL.createObjectURL(data)),
-                error => console.log("Error downloading the file."),
-                () => console.log('Completed file download.'));
+        this.exportService.downloadfile(filepath);
+            // .subscribe(data => window.open(window.URL.createObjectURL(data)),
+            //     error => console.log("Error downloading the file."),
+            //     () => console.log('Completed file download.'));
     }
 
 
