@@ -614,10 +614,14 @@ tbody.collapse.show{display:table-row-group}
 .navbar-expand-lg .navbar-nav .dropdown-menu{position:absolute}
 .navbar-expand-lg .navbar-nav .dropdown-menu-right{right:0;left:auto}
 .navbar-expand-lg .navbar-nav .nav-link{padding-right:.5rem;padding-left:.5rem}
-.navbar-expand-lg>.container,.navbar-expand-lg>.container-fluid{-ms-flex-wrap:nowrap;-webkit-flex-wrap:nowrap;flex-wrap:nowrap}
 .navbar-expand-lg .navbar-collapse{display:-ms-flexbox!important;display:-webkit-box!important;display:-webkit-flex!important;display:flex!important}
 .navbar-expand-lg .navbar-toggler{display:none}
 }
+/*add*/
+@media (min-width:1061px){
+	.navbar-expand-lg>.container,.navbar-expand-lg>.container-fluid{-ms-flex-wrap:nowrap;-webkit-flex-wrap:nowrap;flex-wrap:nowrap}
+}
+/*add*/
 @media (max-width:1199px){.navbar-expand-xl>.container,.navbar-expand-xl>.container-fluid{padding-right:0;padding-left:0}
 }
 @media (min-width:1200px){.navbar-expand-xl,.navbar-expand-xl .navbar-nav{-webkit-box-orient:horizontal;-webkit-box-direction:normal}

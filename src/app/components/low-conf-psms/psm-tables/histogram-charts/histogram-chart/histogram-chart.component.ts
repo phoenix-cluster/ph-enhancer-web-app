@@ -26,7 +26,7 @@ export class HistogramChartComponent implements OnChanges{
         ];
     }
 
-    view: any[] = [500, 400];
+    view: any[] = [400, 400];
 
     // options
     showXAxis = true;

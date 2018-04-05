@@ -65,7 +65,6 @@ export class MainLeftMetricsComponent implements OnInit {
         this.statisticsService.getVennDataList()
             .then(vennDataList => {
                 this.vennDataList = vennDataList;
-                console.log(this.vennDataList);
             }).catch(this.handleError);
     }
 
@@ -73,4 +72,6 @@ export class MainLeftMetricsComponent implements OnInit {
         console.log('A error occurred', error);
     }
 
+   
 }
+

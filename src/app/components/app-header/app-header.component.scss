@@ -1,10 +1,13 @@
 .slide-btn{
     position: fixed;
-    left: 15px;
-    right: 15px;
     z-index: 999;
     top: 0px;
+    width:100%;
 
+
+}
+.slide-btn mdb-navbar{
+	display:none;
 }
 .position{
     padding-left: 20%!important;
@@ -14,10 +17,10 @@
 .activePage{
     color:lightcoral!important;
 }
-.deactivePage {
+/*.deactivePage {
     color:white!important;
 }
-
+*/
 .nav ul {
     list-style: none;
     //background-color: #282d31;
@@ -25,6 +28,7 @@
     padding: 0;
     margin: 0;
 }
+/*
 .nav li {
     font-family: "Open Sans", sans-serif;
     font-size: 0.5em;
@@ -49,8 +53,8 @@
     color:red;
     cursor: default;
 }
-
-/* Because Codepin haha */
+*/
+/* Because Codepin haha
 @media screen and (min-width: 900px) {
     .nav li {
         width: 130px;
@@ -64,5 +68,68 @@
         display: inline-block;
         margin-right: -4px;
     }
+ */
+.mdb-color{
+	min-width:1280px;
+	background-color:#5d6576!important;
+}
+.navbar-brand{
+	display: inline-flex;
+}
+mdb-navbar{
+	line-height:80px;
+}
+.nav{
+	
+	width: 100%;
+    margin: 0 auto;
+    background-color: #f7f7f7;
+    height: 39px;
+    border-bottom: 2px solid #45526E;
+    position: relative;
+    z-index: 999 !important;
 
 }
+nav,navbar-nav,links{
+	width:100%;
+}
+ul{
+	display:block;
+	width: 1280px;
+    margin: 0 auto;
+}
+.nav ul li{
+	float: left;
+    text-align: center;
+    padding: 0;
+    min-width: 120px;
+    margin-left: 120px;
+    border-top: none;
+}
+.nav ul li a{
+    height:37px;
+    line-height:37px; 
+	width:100%;
+	display: inline-block;
+    transition: 300ms;
+     color:#333;
+     font-weight:400;
+}
+.activePage a{
+	background-color:#45526E;
+	
+}
+.nav a:hover {
+    background-color: #45526E;
+    color:lightcoral!important;
+}
+
+@media screen and (max-width: 991px){
+  .mdb-color{
+    min-width:620px;
+  } 
+  .nav ul li{
+      margin-left: 30px;
+  }
+}
+ 

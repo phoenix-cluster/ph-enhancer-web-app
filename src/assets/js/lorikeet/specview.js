@@ -2497,7 +2497,7 @@ var ui = require('jquery-ui');
         $(window).scroll(function(event){
             event.stopPropagation();
             var s=$(window).scrollTop();
-            if(s>100){
+            if(s>=10){
                 
             $(".mdb-color").addClass('slide-btn');
             $(".header").addClass('position');
@@ -2514,13 +2514,25 @@ var ui = require('jquery-ui');
     })()
     /* nav selected*/ 
     $(function(){
-        $('ul.navbar-nav li').hover(function(event){
-            $(this).addClass('active').siblings().removeClass('active');
+        $('.nav li').click(function(event){
+            $(this).addClass('activePage').siblings().removeClass('activePage');
         })
-       
         
     
-    })
+    });
+/*为交互venn图增加标识*/
+    $(function(){
 
+        $("g[ng-reflect-type='stacked']").addClass('data-type');
+        $(".x .tick").click(function(){
+           $(this).addClass('projectId').siblings().removeClass('projectId');
+
+        })
+    })
+        
+    
+   
+
+   
 
 })(jQuery);

@@ -68,7 +68,6 @@ svg {
   display: flex;
   box-sizing: border-box;
   padding: 30px;
-  background-color: #e6e9eb;
 }
 g.venn-area-part {
   cursor: pointer;
@@ -81,6 +80,18 @@ g.venn-area-part path {
 }
 
 .hideIonTable{
-    visibility: hidden;
+    display: none;
     height: 0px;
+  }
+  #Spectra-comparer .datatable-footer-inner{
+    display: block;
+  }
+  #Spectra-comparer .datatable-pager{
+    text-align: left;
+  }
+  .veenShow{
+    display: none;
+  }
+  .projectId{
+    font-weight: 600;
   }
