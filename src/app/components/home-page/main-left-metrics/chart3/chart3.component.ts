@@ -4,6 +4,7 @@ import {Config} from "../../../../model/config";
 import {VennData} from "../../../../model/vennData";
 import {Router} from '@angular/router'
 import { colorSets, id } from '../../../../../../node_modules/_@swimlane_ngx-charts@6.1.0@@swimlane/ngx-charts/release/utils';
+import { AfterContentInit, AfterViewInit } from '../../../../../../node_modules/_@angular_core@4.4.6@@angular/core/src/metadata/lifecycle_hooks';
 
 
 @Component({
@@ -14,15 +15,14 @@ import { colorSets, id } from '../../../../../../node_modules/_@swimlane_ngx-cha
 export class Chart3Component implements OnChanges,OnInit{
 
     @Input() vennDataList: VennData[];
-   vennDataList1:any[]=this.vennDataList;
+
     multi: any[] = [];
     maxValue: any[] = [];
     yMulti:any[] = [];
     view: any[] = [400, 500];
     nodes:any;
     tip="("+" The project of overing the clicked project is hided,clicking the below project to show the whole project "+")";
-
-
+  
     // options
     showXAxis = true;
     showYAxis = true;
@@ -44,18 +44,24 @@ export class Chart3Component implements OnChanges,OnInit{
     constructor(private router: Router) {
     }
     ngOnInit():void{
-        this.setDataForChart();
+        this.ngOnChanges();
+        this.setDataForChart(0);
         this.yMulti=[...this.yMulti];
 
     }
+   
     ngOnChanges(): void {
-        this.setDataForChart();
+        this.setDataForChart(0);
         this.multi = [...this.multi];
         this.maxValue=[...this.maxValue];
     }
-    setDataForChart() {
-       
-        this.vennDataList.forEach(
+
+    setDataForChart(index) {
+      let  subVennDataList=JSON.parse(JSON.stringify(this.vennDataList));
+      let limit=index+10;
+      let subMulit=[];
+      let  vennDataList1=subVennDataList.slice(index,10+index);
+        vennDataList1.forEach(
             vennData => {
                 let anObject = new Object;
                 let value=0;
@@ -102,6 +108,7 @@ export class Chart3Component implements OnChanges,OnInit{
                 valueCount.push({
                     "name": vennData.projectId,
                     "value":value,
+                    "param":limit
                 })
                  //存放全部项目的ID和总值 
                 this.maxValue.push(valueCount);
@@ -109,7 +116,19 @@ export class Chart3Component implements OnChanges,OnInit{
                 this.yMulti.push(anObject);        
             }
         );
-       
+
+       this.maxValue.sort(this.sortbyValue);
+        this.maxValue.forEach(project=>{
+            this.multi.forEach(item=>{
+                if(project[0].name.search(item.name)!=-1){
+                     subMulit.push(item);
+                }
+   
+           })
+
+        })
+        this.multi=JSON.parse(JSON.stringify(subMulit));
+        this.yMulti=JSON.parse(JSON.stringify(subMulit));   
     }
     
     onSelect(event){
@@ -232,6 +251,70 @@ export class Chart3Component implements OnChanges,OnInit{
   
     }
 
+    leftOnclick(event){
+        document.getElementsByClassName("right")[0].classList.remove("ven_cur");
+        let currenIndex=this.maxValue[0][0].param;
+        if(currenIndex==10){
+            event.currentTarget.classList.add("ven_cur");
+        }else{
+            event.currentTarget.classList.remove("ven_cur");
+            currenIndex=currenIndex-20;
+            this.yMulti=[];
+            this.multi=[];
+            this.maxValue=[];
+            this.setDataForChart(currenIndex);
+        }
+    }
+    rightOnclick(event){
+        document.getElementsByClassName("left")[0].classList.remove("ven_cur");
+        let currenIndex=this.maxValue[0][0].param;
+        if(currenIndex>=this.vennDataList.length){
+            event.currentTarget.classList.add("ven_cur");
+        }
+        else{
+            event.currentTarget.classList.remove("ven_cur");
+            this.yMulti=[];
+            this.multi=[];
+            this.maxValue=[];
+            this.setDataForChart(currenIndex);
+        }
+       
+      
+    }
+    upClick(event){ 
+        document.getElementsByClassName("down")[0].classList.remove("sort_cur");
+        document.getElementsByClassName("up")[0].classList.add("sort_cur");  
+        this.sortbyValue=function(x, y,param1=1,param2=-1){
+           return x[0].value > y[0].value ? param1:param2
    
+         }
+         let currenIndex=this.maxValue[0][0].param;
+         this.yMulti=[];
+         this.multi=[];
+         this.maxValue=[];
+         this.setDataForChart(currenIndex-10);
+       
+       }
+       downClick(event){
+        document.getElementsByClassName("up")[0].classList.remove("sort_cur");
+        document.getElementsByClassName("down")[0].classList.add("sort_cur");  
+           this.sortbyValue=function(x, y,param1=-1,param2=1){
+             return x[0].value > y[0].value ? param1:param2
+   
+           }
+           let currenIndex=this.maxValue[0][0].param;
+           this.yMulti=[];
+           this.multi=[];
+           this.maxValue=[];
+           this.setDataForChart(currenIndex-10);
+       
+       }
+    sortbyValue(x, y,param1=-1,param2=1){
+        return x[0].value > y[0].value ? param1:param2
+    }
+
+  
+  
+  
 }
 

@@ -99,3 +99,6 @@ g.venn-area-part path {
   .showStyle{
     font-weight: 600;
   }
+  .x .tick text{
+    transform: rotate(-90deg)
+  }
