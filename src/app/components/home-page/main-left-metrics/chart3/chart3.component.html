@@ -1,8 +1,7 @@
-<div style="display: block">
+<div style="display: block;position:relative;height:100%">
     <ngx-charts-bar-vertical-stacked
             [view]="view"
             [scheme]="colorScheme"
-
             [results]="multi"
             [gradient]="gradient"
             [xAxis]="showXAxis"
@@ -12,10 +11,13 @@
             [showYAxisLabel]="showYAxisLabel"
             [xAxisLabel]="xAxisLabel"
             [yAxisLabel]="yAxisLabel"
+            [yScaleMax]="yScaleMax"
             (select)="onSelect($event)"
             (click)="onClick($event)"
     >
-        <!--(click)="onClick($event)"-->
     </ngx-charts-bar-vertical-stacked>
+    <div class="sort"><button class="up" (click)="upClick($event)">Up</button><button class="down" (click)="downClick($event)">Down</button></div>
+    <div class="left" (click)="leftOnclick($event)"></div>
+    <div class="right" (click)="rightOnclick($event)"></div>
 </div>
 

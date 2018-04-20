@@ -1,0 +1,63 @@
+.left,.right{
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.36), 0 2px 10px 0 rgba(0, 0, 0, 0.36);
+    position: absolute;
+   top:40%;
+   background: #eceaea url("../../../../../assets/img/lorikeet/icon_index.png")
+}
+.left{
+
+    width: 52px;
+    height: 34px;
+    left: -110px;
+    display: inline-block;
+    background-position: 10px -6px;
+    background-repeat: no-repeat;
+  
+    
+}
+.right{
+    width: 52px;
+    height: 34px;
+    right: -130px;
+    display: inline-block;
+    background-position: -30px -6px;
+    background-repeat: no-repeat;
+    
+}
+.ven_cur{
+    cursor: not-allowed;
+}
+.right:hover,.left:hover{
+    background-color: #acaaaa;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.36), 0 2px 10px 0 rgba(0, 0, 0, 0.36);
+   
+}
+.sort{
+    position: absolute;
+    top: -32px;
+    font-size: 14px;
+    left: -15px;
+}
+.sort button{
+    text-transform: none;
+    margin-right: 10px;
+    border: 0px;
+    background-color: #93a0a4;
+    color: white;
+    border-radius: 3px;
+    width:50px;
+}
+button.up::after{
+    content: '↑',
+    
+}
+button.down::after{
+    content: '↓',
+    
+}
+.sort button:hover{
+   color: lightcoral;
+}
+.sort_cur{
+    color: lightcoral!important;
+}

@@ -2519,20 +2519,6 @@ var ui = require('jquery-ui');
         })
         
     
-    });
-/*为交互venn图增加标识*/
-    $(function(){
-
-        $("g[ng-reflect-type='stacked']").addClass('data-type');
-        $(".x .tick").click(function(){
-           $(this).addClass('projectId').siblings().removeClass('projectId');
-
-        })
-    })
-        
+    });  
     
-   
-
-   
-
 })(jQuery);

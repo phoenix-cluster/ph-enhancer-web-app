@@ -92,6 +92,13 @@ g.venn-area-part path {
   .veenShow{
     display: none;
   }
-  .projectId{
+  
+  .tick{
+    cursor: pointer;
+  }
+  .showStyle{
     font-weight: 600;
+  }
+  .x .tick text{
+    transform: rotate(-90deg)
   }
