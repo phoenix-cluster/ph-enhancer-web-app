@@ -3,8 +3,10 @@ import {StatisticsService} from "../../../../services/statistics.service";
 import {Config} from "../../../../model/config";
 import {VennData} from "../../../../model/vennData";
 import {Router} from '@angular/router'
+
 import { colorSets, id } from '../../../../../../node_modules/_@swimlane_ngx-charts@6.1.0@@swimlane/ngx-charts/release/utils';
 import { AfterContentInit, AfterViewInit } from '../../../../../../node_modules/_@angular_core@4.4.6@@angular/core/src/metadata/lifecycle_hooks';
+
 
 
 @Component({
