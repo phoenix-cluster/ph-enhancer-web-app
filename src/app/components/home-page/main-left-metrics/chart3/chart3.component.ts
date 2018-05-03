@@ -290,7 +290,6 @@ export class Chart3Component implements OnChanges,OnInit{
                 }
             };
         },0)
-       
     }
     onClick(event){
         //联动chart1的饼图
