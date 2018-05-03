@@ -54,8 +54,7 @@ export class Chart3Component implements OnChanges,OnInit{
         this.yMulti=[...this.yMulti];
     }
    
-    ngOnChanges(changes: SimpleChanges): void {
-        
+    ngOnChanges(changes: SimpleChanges): void {      
         if(this.changeProject.selectedProject){
            this.multi=[];
            this.setProjectValue(this.changeProject.selectedProject);
@@ -270,6 +269,7 @@ export class Chart3Component implements OnChanges,OnInit{
     }
     //获取chart1选择项目对应chart3的Dom节点
     setProjectValue(value){
+        let me=this;
         let subVennDataList=JSON.parse(JSON.stringify(this.vennDataList));
         let projectId=[];
         subVennDataList.forEach(element => {
@@ -279,14 +279,18 @@ export class Chart3Component implements OnChanges,OnInit{
         let projectIdIndex=projectId.indexOf(value);
         this.multi=[];
         this.setDataForChart(Math.trunc(projectIdIndex/10)*10);
-        let projects=document.getElementsByClassName('tick');
-        projects=Array.from(projects);
-        for(let element of projects){
-          if (element.innerHTML.search(value)!=-1){
-                this.linkChart3(element,value);
-                break;
-            }
-        };
+        //联动时，处理chart3图表切换时事务的问题，强制渲染结束
+        setTimeout(function(){
+            let projects=document.getElementsByClassName('tick');
+            projects=Array.from(projects);
+            for(let element of projects){
+              if (element.innerHTML.search(value)!=-1){
+                    me.linkChart3(element,value);
+                    break;
+                }
+            };
+        },0)
+       
     }
     onClick(event){
         //联动chart1的饼图
