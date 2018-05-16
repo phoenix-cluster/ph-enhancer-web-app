@@ -132,9 +132,12 @@ export class Chart3Component implements OnChanges,OnInit{
                 this.yMulti.push(anObject);        
             }
         );
-
        this.maxValue.sort(this.sortbyValue);
-       this.maxValue.forEach(project=>{
+       let maxValues=JSON.parse(JSON.stringify(this.maxValue));
+       maxValues.sort(this.sortbyDefaultValue);
+       maxValues=maxValues.slice(index,limit);
+       maxValues.sort(this.sortbyValue);
+       maxValues.forEach(project=>{
             this.multi.forEach(item=>{
                 if(project[0].name.search(item.name)!=-1){
                      subMulit.push(item);
@@ -143,8 +146,8 @@ export class Chart3Component implements OnChanges,OnInit{
            })
 
         })
-        this.multi=JSON.parse(JSON.stringify(subMulit)).slice(index,limit);
-        this.yMulti=JSON.parse(JSON.stringify(subMulit)).slice(index,limit);
+        this.multi=JSON.parse(JSON.stringify(subMulit));
+        this.yMulti=JSON.parse(JSON.stringify(subMulit));
     }
     
     onSelect(event){
@@ -245,7 +248,7 @@ export class Chart3Component implements OnChanges,OnInit{
             this.yScaleMax=yValue[yValue.length-1];
         }
     }
-    
+
     rightOnclick(event){
         document.getElementsByClassName("left")[0].classList.remove("ven_cur");
         let currenIndex=this.maxValue[0][0].param;
@@ -270,6 +273,9 @@ export class Chart3Component implements OnChanges,OnInit{
       
     }
     upClick(event){ 
+        if(undefined!=document.getElementsByClassName('showStyle')[0]){
+            document.getElementsByClassName('showStyle')[0].classList.remove('showStyle');
+       }
         document.getElementsByClassName("down")[0].classList.remove("sort_cur");
         document.getElementsByClassName("up")[0].classList.add("sort_cur");  
         this.sortbyValue=function(x, y,param1=1,param2=-1){
@@ -290,6 +296,9 @@ export class Chart3Component implements OnChanges,OnInit{
         this.yScaleMax=yValue[yValue.length-1];
        }
        downClick(event){
+        if(undefined!=document.getElementsByClassName('showStyle')[0]){
+            document.getElementsByClassName('showStyle')[0].classList.remove('showStyle');
+       }
         document.getElementsByClassName("up")[0].classList.remove("sort_cur");
         document.getElementsByClassName("down")[0].classList.add("sort_cur");  
            this.sortbyValue=function(x, y,param1=-1,param2=1){
@@ -312,7 +321,9 @@ export class Chart3Component implements OnChanges,OnInit{
     sortbyValue(x, y,param1=-1,param2=1){
         return x[0].value > y[0].value ? param1:param2
     }
-
+    sortbyDefaultValue(x, y,param1=-1,param2=1){
+        return x[0].value > y[0].value ? param1:param2
+    }
   
   dynamics(projectId){
     this.multi=[];
