@@ -134,6 +134,7 @@ export class Chart3Component implements OnChanges,OnInit{
         );
        this.maxValue.sort(this.sortbyValue);
        let maxValues=JSON.parse(JSON.stringify(this.maxValue));
+       //处理当选择升降序排序，联动出现找不到projectId的问题
        maxValues.sort(this.sortbyDefaultValue);
        maxValues=maxValues.slice(index,limit);
        maxValues.sort(this.sortbyValue);
@@ -199,6 +200,16 @@ export class Chart3Component implements OnChanges,OnInit{
         //判断是否chart1选择项目是否处理chart3当前的页面
         let projectIdIndex=projectId.indexOf(value);
         this.multi=[];
+         //处理当选择升降序排序，联动出现找不到projectId的问题
+        if(undefined!= document.getElementsByClassName("val_sort_cur")[0]){
+            this.sortbyDefaultValue= this.sortbyValue=function(x, y,param1=1,param2=-1){
+                return x[0].value > y[0].value ? param1:param2 
+              }
+        }else{
+            this.sortbyDefaultValue= this.sortbyValue=function(x, y,param1=-1,param2=1){
+                return x[0].value > y[0].value ? param1:param2 
+            }
+        }
         this.setDataForChart(Math.trunc(projectIdIndex/10)*10);
         //联动时，处理chart3图表切换时事务的问题，强制渲染结束
         setTimeout(function(){
@@ -277,7 +288,8 @@ export class Chart3Component implements OnChanges,OnInit{
             document.getElementsByClassName('showStyle')[0].classList.remove('showStyle');
        }
         document.getElementsByClassName("down")[0].classList.remove("sort_cur");
-        document.getElementsByClassName("up")[0].classList.add("sort_cur");  
+        document.getElementsByClassName("up")[0].classList.add("sort_cur"); 
+        document.getElementsByClassName("up")[0].classList.add("val_sort_cur"); 
         this.sortbyValue=function(x, y,param1=1,param2=-1){
            return x[0].value > y[0].value ? param1:param2
    
@@ -299,6 +311,7 @@ export class Chart3Component implements OnChanges,OnInit{
         if(undefined!=document.getElementsByClassName('showStyle')[0]){
             document.getElementsByClassName('showStyle')[0].classList.remove('showStyle');
        }
+        document.getElementsByClassName("up")[0].classList.remove("val_sort_cur");
         document.getElementsByClassName("up")[0].classList.remove("sort_cur");
         document.getElementsByClassName("down")[0].classList.add("sort_cur");  
            this.sortbyValue=function(x, y,param1=-1,param2=1){
