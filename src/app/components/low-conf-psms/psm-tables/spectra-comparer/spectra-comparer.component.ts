@@ -1,20 +1,12 @@
 import {Component, Input, OnChanges, OnInit} from '@angular/core';
 
-import jQuery from 'jquery';
-import $ from 'jquery';
-
-import "../../../../../assets/js/lorikeet/specview.js";
-import "../../../../../assets/js/lorikeet/jquery.flot.js";
-import "../../../../../assets/js/lorikeet/jquery.flot.selection.js";
-import "../../../../../assets/js/lorikeet/peptide.js";
-import "../../../../../assets/js/lorikeet/aminoacid.js";
-import "../../../../../assets/js/lorikeet/ion.js";
 import {Psm} from "../../../../model/psm";
 import {ClusterService} from "../../../../services/cluster.service";
 import {Spectrum} from "../../../../model/spectrum";
 import {Cluster} from "../../../../model/cluster";
 import {LocalStorageService} from "../../../../services/local-storage.service";
 import {Modification} from "../../../../model/modification";
+import {Specview} from "../../../../utils/specview/specview";
 
 @Component({
     selector: 'app-spectra-comparer',
@@ -105,7 +97,7 @@ export class SpectraComparerComponent implements OnChanges {
             return;
         }
 
-        $("#lorikeet").specview({
+        let opt = {
             sequence: this.psm_sequence,
             // scanNum: 2441,
             charge: this.psm_charge,
@@ -117,7 +109,10 @@ export class SpectraComparerComponent implements OnChanges {
             ctermMod: this.psm_ctermMod,
             peaks: this.psm_peaks,
             peaks2: this.cluster_peaks
-        });
+        };
+
+        let specView = new Specview("#lorikeet", opt);
+        specView.refresh();
     }
 
     private onCheckRecommClick() {

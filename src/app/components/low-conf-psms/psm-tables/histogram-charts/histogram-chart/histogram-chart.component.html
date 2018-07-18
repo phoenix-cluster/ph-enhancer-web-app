@@ -1,9 +1,9 @@
-<div style="display: block">
-    <ngx-charts-bar-vertical
+<div *ngIf="showHis" style="display: block">
+    <ngx-charts-bar-vertical-stacked
             [view]="view"
             [scheme]="colorScheme"
             [customColors]="customColors"
-            [results]="histBins"
+            [results]="histBinsResolved"
             [gradient]="gradient"
             [xAxis]="showXAxis"
             [yAxis]="showYAxis"
@@ -16,5 +16,9 @@
             [activeEntries]="activeEntries"
             (select)="onSelect($event)"
             (activate)="onActivate($event)">
-    </ngx-charts-bar-vertical>
+        <ng-template #tooltipTemplate let-model="model">
+            <p style="margin:1px 0 0 0;">{{model.name}}</p>
+            <p style="margin:1px 0 0 0;">{{model.value}}</p>
+            </ng-template>
+    </ngx-charts-bar-vertical-stacked>
 </div>
