@@ -65,6 +65,16 @@ export class SpectrumService {
         }
     }
 
+    getPeptide(title : string) : Promise<string>{
+        let peptideUrl = this.baseUrl.concat("spectrum/peptide/",encodeURIComponent(title));
+        return this.http.get(peptideUrl)
+                .toPromise()
+                .then(response => {
+                    let peptide : string = response.json().peptide_sequence;
+                    return peptide;
+                }).catch(this.handleError);
+    }
+
     private handleError(error: any): Promise<any> {
         console.log('A error occurred', error);
         return Promise.reject(error.message || error);

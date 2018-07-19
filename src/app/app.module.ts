@@ -56,7 +56,10 @@ import {SpecTitle2ListPipe} from "./pipe/spectrum-titles2list";
 import {ShortNumberPipe} from "./pipe/short-number";
 import {TruncateClusterIdPipe} from "./pipe/truncate-clusterid";
 import { HistogramChartsComponent } from './components/low-conf-psms/psm-tables/histogram-charts/histogram-charts.component';
-
+import { ClusterDetailsComponent } from './components/cluster-details/cluster-details.component';
+import { SequencesPieChartComponent } from './components/cluster-details/sequences-pie-chart/sequences-pie-chart.component';
+import { ProjectsPieChartComponent } from './components/cluster-details/projects-pie-chart/projects-pie-chart.component';
+import { ClusterSpecCompareComponent } from './components/cluster-details/cluster-spec-compare/cluster-spec-compare.component';
 
 
 
@@ -92,6 +95,10 @@ import { HistogramChartsComponent } from './components/low-conf-psms/psm-tables/
         TruncateClusterIdPipe,
         ShortNumberPipe,
         HistogramChartsComponent,
+        ClusterDetailsComponent,
+        SequencesPieChartComponent,
+        ProjectsPieChartComponent,
+        ClusterSpecCompareComponent,
     ],
     imports: [
         BrowserModule,

@@ -96,11 +96,18 @@
             </ng-template>
             <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
                 <a [popover]="popTemplate" popoverTitle="Sequences in Cluster" triggers="mouseenter:mouseleave"  container="body"
-                   placement="right">
+                   placement="right" html="true" (click)="gotoClusterDetails(value)">
                     <!--{{value | truncate_clusterid}}-->
                     {{value }}
                 </a>
-                <ng-template #popTemplate>{{row.clusterRatioStr}}<div [innerHtml]="html"></div></ng-template>
+                <ng-template #popTemplate>
+                        <html>  
+                            <body>  
+                                <app-sequences-pie-chart  [ratioStr]="row.clusterRatioStr"></app-sequences-pie-chart>
+                            </body>
+                        </html>
+                <!--div [innerHtml]="html"></div-->
+                </ng-template>
                 <!--<button type="button" class="btn btn-success"-->
                         <!--[popover]="popTemplate" popoverTitle="Dynamic html inside">-->
                     <!--Show me popover with html-->

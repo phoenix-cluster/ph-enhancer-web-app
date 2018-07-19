@@ -1,4 +1,5 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Router} from '@angular/router';
 import {Psm} from '../../../model/psm'
 import {PsmTableService} from '../../../services/psm-tabel.service'
 import {SpectrumService} from '../../../services/spectrum.service'
@@ -49,6 +50,7 @@ export class PsmTablesComponent implements OnInit {
                 private spectrumService: SpectrumService,
                 private exportService: ExportService,
                 private http: Http,
+                private router: Router,
                 ) {
         this.selectedPsm = new Psm("null_cluster_id");
         this.selectedSpectrum = new Spectrum("null_spectrum_title", null, null);
@@ -190,6 +192,10 @@ export class PsmTablesComponent implements OnInit {
           clusterSize: row.clusterSize
         })
       })
+    }
+
+    gotoClusterDetails(value: string) {
+        this.router.navigateByUrl(`/cluster_details/${value}`);
     }
 
 }
