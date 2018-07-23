@@ -5,5 +5,5 @@
     "USER": "api/v1/user",
     "":""
   },
-  "BASEURL":"http://192.168.6.20:9090/example/v1/"
+  "BASEURL":"http://192.168.6.20:8090/example/v1/"
 }
