@@ -8,5 +8,6 @@ export class Cluster{
 	ratio:number;
 	consensusMz:number[];
 	consensusIntens:number[];
-	spectraTitles:string[];
+    spectraTitles:string[];
+    sequencesRatios?:string;
 }

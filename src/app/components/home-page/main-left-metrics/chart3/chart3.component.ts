@@ -6,7 +6,7 @@ import {Router} from "@angular/router";
 import{Chart1Component,ChangeProject} from "../chart1/chart1.component"
 
 ///import { colorSets, id } from '../../../../../../node_modules/_@swimlane_ngx-charts@6.1.0@@swimlane/ngx-charts/release/utils';
-import { AfterContentInit, AfterViewInit } from '../../../../../../node_modules/_@angular_core@5.1.3@@angular/core/src/metadata/lifecycle_hooks';
+// import { AfterContentInit, AfterViewInit } from '../../../../../../node_modules/_@angular_core@5.1.3@@angular/core/src/metadata/lifecycle_hooks';
 import { document } from "app/typescripts/free/utils/facade/browser";
 
 

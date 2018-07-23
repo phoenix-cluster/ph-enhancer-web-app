@@ -1,4 +1,5 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Router} from '@angular/router';
 import {Psm} from '../../../model/psm'
 import {PsmTableService} from '../../../services/psm-tabel.service'
 import {SpectrumService} from '../../../services/spectrum.service'
@@ -11,6 +12,12 @@ import {Http} from "@angular/http";
 import {PSMsPage} from "../../../model/psmsPage";
 import {ExportConfig} from "../../../model/export-config";
 
+
+class SimPsm {
+  confidentScore: number;
+  clusterRatio: number;
+  clusterSize: number;
+}
 
 @Component({
     selector: 'app-psm-tables',
@@ -26,6 +33,7 @@ export class PsmTablesComponent implements OnInit {
     selectedPsm: Psm;
     selectedSpectrum: Spectrum;
     psm_rows: Array<Psm>;
+    psm_rows_sim: Array<SimPsm>;
     spec_rows: Array<Spectrum>;
     private defaultAcceptanceOfRecommPsm: boolean;//true means accept, false means reject
     downloadJsonHref:string; //for result download
@@ -42,6 +50,7 @@ export class PsmTablesComponent implements OnInit {
                 private spectrumService: SpectrumService,
                 private exportService: ExportService,
                 private http: Http,
+                private router: Router,
                 ) {
         this.selectedPsm = new Psm("null_cluster_id");
         this.selectedSpectrum = new Spectrum("null_spectrum_title", null, null);
@@ -81,6 +90,7 @@ export class PsmTablesComponent implements OnInit {
                 .then(spectra => {
                         this.spec_rows = this.spec_rows.concat(spectra);
                         this.selectedSpectrum = this.spec_rows[0];
+                        console.log(this.selectedSpectrum);
                         this.selected_specs = [];
                         this.selected_specs.push(this.selectedSpectrum);
 
@@ -109,6 +119,7 @@ export class PsmTablesComponent implements OnInit {
             this.selected_psms = [];
             this.selected_psms.push(this.selectedPsm);
             this.loading = false;
+            this.simplifyPsmRows();
             this.setSpectrumTable(this.psm_rows[0].spectraTitles);
         });
     }
@@ -121,6 +132,7 @@ export class PsmTablesComponent implements OnInit {
         this.page = new Page();
         this.page.sortDirection = event.sorts[0].dir;
         this.page.sortField = event.sorts[0].prop;
+        console.log(this.page.sortField);
         this.setPageData(this.page)
     }
 
@@ -170,6 +182,20 @@ export class PsmTablesComponent implements OnInit {
             //     () => console.log('Completed file download.'));
     }
 
+    //extract simple row info and then show the coverage of current page in Histogram
+    simplifyPsmRows() {
+      this.psm_rows_sim = [];
+      this.psm_rows.forEach((row) => {
+        this.psm_rows_sim.push({
+          confidentScore: row.confidentScore,
+          clusterRatio: row.clusterRatio,
+          clusterSize: row.clusterSize
+        })
+      })
+    }
 
+    gotoClusterDetails(value: string) {
+        this.router.navigateByUrl(`/cluster_details/${value}`);
+    }
 
 }

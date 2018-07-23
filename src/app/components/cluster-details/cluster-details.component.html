@@ -1,0 +1,39 @@
+
+<div class="row" >
+    <app-sequences-pie-chart id="sequences"   [cluster]="currentCluster"></app-sequences-pie-chart>
+    <app-projects-pie-chart id="project"   [cluster]="currentCluster"></app-projects-pie-chart>    
+    <app-species-ratio-chart></app-species-ratio-chart>
+</div>
+    <p><span>Spectra-comparer</span></p>
+    <div class="row" style="padding-top:15px;padding-right:15px;" id='Spectra-comparer'>
+        <div class="col-sm-4 col-md-4 col-lg-4">
+        <ngx-datatable
+            class="material"
+            [rows]="spec_rows"
+            [columnMode]="'force'"
+            [headerHeight]="50"
+            [footerHeight]="50"
+            [rowHeight]="40"
+            [limit]="15"
+            
+        >
+            <ngx-datatable-column name="title" [width]="280" title="title" >
+                <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                    <a [popover]="popTemplate"  triggers="mouseenter:mouseleave"  container="body"
+                        placement="top"  (click)="onClickSpec(row)">
+                            {{value }}
+                    </a>
+                    <ng-template #popTemplate>{{row.title}}<div [innerHtml]="html"></div></ng-template>
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="charge"></ngx-datatable-column>
+            <ngx-datatable-column name="precursorMz" [width]="180"></ngx-datatable-column>
+        </ngx-datatable>
+    </div>
+    <div  class="col-md-8 material-like " id="material-like">
+        <app-cluster-spec-compare [cluster]="currentCluster" [spectrum]="selectedSpectrum" style="float: left;">
+             </app-cluster-spec-compare>      
+    </div>
+</div>
+
+

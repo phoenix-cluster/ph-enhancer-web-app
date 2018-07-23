@@ -14,6 +14,7 @@ export class Spectrum {
   precursorMz:number;
   peaklistMz:number[];
   peaklistIntens:number[];
+  peptideSequence?:string;
 
   constructor(title: string, charge: number, precursorMz: number) {
     this.title = title;

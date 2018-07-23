@@ -20,6 +20,7 @@ export class SpectrumService {
 
     public getSpectra(titlesStr: string): Promise<Spectrum[]> {
         let spectraUrl = this.baseUrl.concat("spectrum/titles/", encodeURIComponent(titlesStr));
+        console.log(spectraUrl);
         let spectra = this.localStorageService.getData("spectra_" + titlesStr);
         if(spectra != null) {
             return new Promise(resolve => resolve(spectra));
@@ -27,6 +28,7 @@ export class SpectrumService {
             return this.http.get(spectraUrl)
                 .toPromise()
                 .then(response => {
+                    console.log(response);
                     let spectra: Spectrum[] = response.json() as Spectrum[];
                     this.localStorageService.setData("spectra_" +titlesStr, spectra);
                     return spectra
@@ -61,6 +63,16 @@ export class SpectrumService {
                 })
                 .catch(this.handleError);
         }
+    }
+
+    getPeptide(title : string) : Promise<string>{
+        let peptideUrl = this.baseUrl.concat("spectrum/peptide/",encodeURIComponent(title));
+        return this.http.get(peptideUrl)
+                .toPromise()
+                .then(response => {
+                    let peptide : string = response.json().peptide_sequence;
+                    return peptide;
+                }).catch(this.handleError);
     }
 
     private handleError(error: any): Promise<any> {

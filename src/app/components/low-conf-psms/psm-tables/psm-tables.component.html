@@ -12,7 +12,7 @@
 <p><span>Histogram-charts</span></p>
 <div class="material-like"
      style="box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);margin-bottom: 40px;height: auto;" >
-    <app-histogram-charts [activedPsm]="selectedPsm" [psmType]="psmType" [projectId]="projectId"></app-histogram-charts>
+    <app-histogram-charts [sortField]="page.sortField" [activedPage]="psm_rows_sim" [activedPsm]="selectedPsm" [psmType]="psmType" [projectId]="projectId"></app-histogram-charts>
 </div>
 
 <!--<hr>-->
@@ -96,11 +96,18 @@
             </ng-template>
             <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
                 <a [popover]="popTemplate" popoverTitle="Sequences in Cluster" triggers="mouseenter:mouseleave"  container="body"
-                   placement="right">
+                   placement="right" html="true" (click)="gotoClusterDetails(value)">
                     <!--{{value | truncate_clusterid}}-->
                     {{value }}
                 </a>
-                <ng-template #popTemplate>{{row.clusterRatioStr}}<div [innerHtml]="html"></div></ng-template>
+                <ng-template #popTemplate>
+                        <html>  
+                            <body>  
+                                <app-sequences-pie-chart  [ratioStr]="row.clusterRatioStr"></app-sequences-pie-chart>
+                            </body>
+                        </html>
+                <!--div [innerHtml]="html"></div-->
+                </ng-template>
                 <!--<button type="button" class="btn btn-success"-->
                         <!--[popover]="popTemplate" popoverTitle="Dynamic html inside">-->
                     <!--Show me popover with html-->
@@ -231,7 +238,7 @@
         <!--</ngx-datatable>-->
 
         <!--[columns]="[{name:'title'},{name:'charge'},{name:'precursorMz'}]"-->
-        <ngx-datatable
+         <ngx-datatable
             class="material"
             [rows]="spec_rows"
             [columnMode]="'force'"
@@ -250,8 +257,8 @@
     </div>                
     <div class="col-md-8 material-like " id="material-like">
 
-        <app-spectra-comparer [selectedPsm]="selectedPsm" [spectrum]="selectedSpectrum"
-                              [psmType]="psmType" style="float: left;"></app-spectra-comparer>
+         <app-spectra-comparer [selectedPsm]="selectedPsm" [spectrum]="selectedSpectrum"
+                              [psmType]="psmType" style="float: left;"></app-spectra-comparer> 
              
     </div>
 
