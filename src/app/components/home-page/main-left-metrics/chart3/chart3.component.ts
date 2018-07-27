@@ -227,7 +227,7 @@ export class Chart3Component implements OnChanges,OnInit{
     onClick(event){
         //联动chart1的饼图
         let chart1Component=new Chart1Component(this.router,this.statisticsService);
-        chart1Component.set(event.srcElement.innerHTML.trim());
+        chart1Component.setSelectedProject(event.srcElement.innerHTML.trim());
         chart1Component.getVennDataAndDraw();
         //联动chart3图的点击事件处理
         if(undefined!=document.getElementsByClassName('showStyle')[0]){
@@ -421,4 +421,3 @@ export class Chart3Component implements OnChanges,OnInit{
   }
   
 }
-

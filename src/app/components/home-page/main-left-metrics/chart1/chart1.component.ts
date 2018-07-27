@@ -112,7 +112,7 @@ export class Chart1Component implements OnInit {
                     .style("stroke-opacity", 0);
             });
     }
-  set(value){
+  setSelectedProject(value){
     document.getElementById('selectProject').value=value;
     this.selectedProject=value;
   }
@@ -290,3 +290,4 @@ export class ChangeProject {
     constructor(public  selectedProject: string) {
     }
   }
+

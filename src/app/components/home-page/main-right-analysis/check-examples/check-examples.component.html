@@ -3,22 +3,15 @@
 </h2>
 
 <div class="btn-group" dropdown>
-  <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle waves-light" mdbRippleRadius>
-   PRIDE Projects
-  </button>
+  <!--<button dropdownToggle type="button" class="btn btn-primary dropdown-toggle waves-light" mdbRippleRadius>-->
+   <!--PRIDE Projects-->
+  <!--</button>-->
 
-  <div class="dropdown-menu dropdown-primary">
-    <a class="dropdown-item" href="#">PXD000021</a>
-    <a class="dropdown-item" href="#">PXD000022</a>
-    <a class="dropdown-item" href="#">PXD000023</a>
-    <a class="dropdown-item" href="#">PXD000024</a>
-    <a class="dropdown-item" href="#">PXD000025</a>
-    <div class="divider dropdown-divider"></div>
-    <a class="dropdown-item" href="#">Separated link</a>
-  </div>
+    <select  type="button" class="btn btn-primary dropdown-toggle waves-light"
+      id="selectProject" [(ngModel)]="selectedProject" (ngModelChange)="onChange($event)"
+    >
+    <option  *ngFor="let p of projects">{{p}}</option>
+    </select>
+
 </div>
 
-<!--<div class="row">-->
-    <!--<mdb-select [options]="colorSelect" placeholder="Choose your option" class="colorful-select dropdown-primary"></mdb-select>-->
-    <!--<label>Blue select</label>-->
-<!--</div>-->

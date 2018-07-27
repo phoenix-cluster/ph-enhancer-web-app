@@ -17,3 +17,7 @@ This site is based on Angular Cli, [MDB Angular](https://mdbootstrap.com/angular
 
 5. open project with your IDE, modify the codes and the browser will give you the latest page.
 
+6.
+
+
+f

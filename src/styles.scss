@@ -102,3 +102,7 @@ g.venn-area-part path {
   .x .tick text{
     transform: rotate(-90deg)
   }
+
+.popover {
+  max-width: none !important;
+}
