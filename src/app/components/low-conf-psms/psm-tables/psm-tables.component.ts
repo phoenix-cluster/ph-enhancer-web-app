@@ -90,7 +90,7 @@ export class PsmTablesComponent implements OnInit {
                 .then(spectra => {
                         this.spec_rows = this.spec_rows.concat(spectra);
                         this.selectedSpectrum = this.spec_rows[0];
-                        console.log(this.selectedSpectrum);
+                        // console.log(this.selectedSpectrum);
                         this.selected_specs = [];
                         this.selected_specs.push(this.selectedSpectrum);
 

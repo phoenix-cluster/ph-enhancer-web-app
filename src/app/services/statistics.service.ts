@@ -29,6 +29,11 @@ export class StatisticsService {
                 .then(response => {
                     var histBins : HistgramBin[] = response.json() as HistgramBin[];
                     for(var i=0; i<histBins.length; i++) {
+                        // if (histBins[i].value == 0){
+                        //     histBins.splice(i,1);
+                        //     continue;
+                        // }
+
                        if(fieldType === "confScore" || fieldType === "recommConfScore"|| fieldType === "clusterRatio") {
                             histBins[i].name = Number(histBins[i].lowerBound).toFixed(3) + " - " + Number(histBins[i].upperBound).toFixed(3);
                         }else {
