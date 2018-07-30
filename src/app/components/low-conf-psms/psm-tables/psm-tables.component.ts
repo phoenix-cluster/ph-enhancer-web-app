@@ -31,6 +31,7 @@ export class PsmTablesComponent implements OnInit {
     selected_psms = [];
     selected_specs = [];
     selectedPsm: Psm;
+    selectedPsmIndex: number;
     selectedSpectrum: Spectrum;
     psm_rows: Array<Psm>;
     psm_rows_sim: Array<SimPsm>;
@@ -53,6 +54,7 @@ export class PsmTablesComponent implements OnInit {
                 private router: Router,
                 ) {
         this.selectedPsm = new Psm("null_cluster_id");
+        this.selectedPsmIndex = 1;
         this.selectedSpectrum = new Spectrum("null_spectrum_title", null, null);
         this.page = new Page();
         // this.cachedAcceptanceListOfRecommPsm = new Map<number, number>();
@@ -106,6 +108,7 @@ export class PsmTablesComponent implements OnInit {
 
     setPage(event) {
         this.page.pageNumber = event.offset + 1;
+        this.selectedPsmIndex = 1;
         this.setPageData(this.page);
     }
 
@@ -132,11 +135,15 @@ export class PsmTablesComponent implements OnInit {
         this.page = new Page();
         this.page.sortDirection = event.sorts[0].dir;
         this.page.sortField = event.sorts[0].prop;
+        this.selectedPsmIndex = 1;
         console.log(this.page.sortField);
         this.setPageData(this.page)
     }
 
     onSelectPsm({selected}) {
+        // console.log('selected');
+        // console.log(selected[0].$$index);
+        this.selectedPsmIndex = selected[0].$$index + 1;
         this.selectedPsm = selected[0];
         this.selected_psms = selected;
         this.setSpectrumTable(this.selectedPsm.spectraTitles);

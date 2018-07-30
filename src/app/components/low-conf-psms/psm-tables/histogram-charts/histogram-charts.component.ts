@@ -27,6 +27,7 @@ class RankAndValue {
 export class HistogramChartsComponent implements OnChanges {
     @Input() activedPage: SimPsm[];
     @Input() activedPsm: Psm;
+    @Input() activePsmIndex: number;
     @Input() sortField: string;
     @Input() psmType: string;
     @Input() projectId: string;
@@ -48,6 +49,7 @@ export class HistogramChartsComponent implements OnChanges {
 
     constructor(private statisticsService: StatisticsService) {
         this.activedPsm = new Psm("null");
+        this.activePsmIndex = 1;
         this.sortField = "confidentScore";
     }
 
@@ -67,9 +69,11 @@ export class HistogramChartsComponent implements OnChanges {
                     this.clusterRatioHistArray = bins;
                 });
         }
+
         if (this.clusterSizeHistArray.length < 1) {
             this.statisticsService.getHistData(this.projectId,this.psmType, "clusterSize").then(bins=>{this.clusterSizeHistArray = bins});
         }
+
         if(this.activedPsm) {
             let storeRank = this.getBinRank(this.confScoreHistArray, this.activedPsm.confidentScore);
             this.activedConfScoreBin = {
@@ -88,17 +92,8 @@ export class HistogramChartsComponent implements OnChanges {
                 "rank": sizeRank,
                 "value": this.activedPsm.clusterSize
             }
-
-            // console.log(this.activedPsm.confidentScore);
-            // console.log(this.activedConfScoreBin);
-            // console.log(this.confScoreHistArray);
-            //
-
-            // console.log(this.activedPsm.clusterSize);
-            // console.log(this.activedClusterSizeBin);
-            // console.log(this.clusterSizeHistArray);
-
         }
+
         if(this.activedPage) {
             let confScoreRange = [{rank: -1, value: 0}, {rank: -1, value: 0}];  //one is lowest, another is highest
             confScoreRange[0].rank = this.getBinRank(this.confScoreHistArray, this.activedPage[0].confidentScore)
