@@ -75,9 +75,9 @@ export class HistogramChartsComponent implements OnChanges {
         }
 
         if(this.activedPsm) {
-            let storeRank = this.getBinRank(this.confScoreHistArray, this.activedPsm.confidentScore);
+            let scoreRank = this.getBinRank(this.confScoreHistArray, this.activedPsm.confidentScore);
             this.activedConfScoreBin = {
-                "rank": storeRank,
+                "rank": scoreRank,
                 "value": this.activedPsm.confidentScore
             };
 
@@ -118,7 +118,7 @@ export class HistogramChartsComponent implements OnChanges {
             this.activedClusterSizeBinRange = clusterSizeRange;
 
             this.scores = this.activedPage.map((p) => p.confidentScore);            
-            this.ratios = this.activedPage.map((p) => p.clusterRatio);           
+            this.ratios = this.activedPage.map((p) => p.clusterRatio);      
             this.sizes  = this.activedPage.map((p) => p.clusterSize);
         }
     }

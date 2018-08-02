@@ -73,7 +73,6 @@ export class HistogramChartComponent implements OnChanges{
 
 
     ngOnChanges(): void {
-        console.log(this.activedPsmIndex);
         if(this.histBins == null || this.histBins.length <1 ||
            this.activedPsm == null || this.activedPsm.rank <0 ||
            this.activedBinRange == null || this.activedBinRange[0].rank < 0 || this.activedBinRange[1].rank < 0){
@@ -109,6 +108,18 @@ export class HistogramChartComponent implements OnChanges{
             }
 */
 
+            // sort array
+            for(let i = 0;i < (this.activedPageValues.length - 1);i++) {
+                let min = i;
+                for(let j = i+1;j < this.activedPageValues.length;j++){
+                    if(this.activedPageValues[min] > this.activedPageValues[j]) min = j;
+                }
+                if(i != min) {
+                    let tmp                     = this.activedPageValues[i];
+                    this.activedPageValues[i]   = this.activedPageValues[min];
+                    this.activedPageValues[min] = tmp;
+                }
+            }
 
             //calcute customColors area
             let r0 = this.activedBinRange[0].value < this.activedBinRange[1].value ? this.activedBinRange[0] : this.activedBinRange[1],
@@ -126,6 +137,7 @@ export class HistogramChartComponent implements OnChanges{
                 activeBin = this.histBins[this.activedPsm.rank - 1],
                 activeBinResolved = this.histBinsResolved[this.activedPsm.rank - 1],
                 blueName = r0ValueFixed + " - " + r1ValueFixed;
+
             if(activeBin.value == 0){
                 return;
             }
@@ -164,11 +176,10 @@ export class HistogramChartComponent implements OnChanges{
                         binLower = activeBin.lowerBound,
                         aver = (binUpper - binLower) / activeBin.value,
                         initPos = Math.floor((r0.value - binLower) / aver);
-                    console.log(binUpper + " " + binLower + "  " + aver + " " + initPos);
 
                     //if overflow, then up to Upper
-                    if(initPos + 10 > activeBinResolved.value) 
-                        initPos = activeBinResolved.value - 10;
+                    if(initPos + 10 > activeBin.value) 
+                        initPos = activeBin.value - 9;
                     if(initPos < 1)
                         initPos = 1;
                     // console.log("initPos + " + initPos + "activeBin.value " + activeBin.value);
@@ -200,8 +211,7 @@ export class HistogramChartComponent implements OnChanges{
                     if(this.activedPageValues[i] <= this.histBins[lowRank - 1].upperBound) prev++;
                     if(this.activedPageValues[i] >= this.histBins[highRank - 1].lowerBound) end++;
                 }
-                console.log(this.histBinsResolved[highRank - 2]);
-                console.log(this.histBins[highRank - 2]);
+                
                 for(let i = lowRank;i <= highRank;i++) {
                     let thisBin = this.histBins[i - 1],
                         thisBinResolved = this.histBinsResolved[i - 1],

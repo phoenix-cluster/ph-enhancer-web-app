@@ -12,7 +12,14 @@
 <p><span>Histogram-charts</span></p>
 <div class="material-like"
      style="box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);margin-bottom: 40px;height: auto;" >
-    <app-histogram-charts [sortField]="page.sortField" [activedPage]="psm_rows_sim" [activedPsm]="selectedPsm" [activePsmIndex]="selectedPsmIndex" [psmType]="psmType" [projectId]="projectId"></app-histogram-charts>
+    <app-histogram-charts 
+        [sortField]="page.sortField" 
+        [activedPage]="psm_rows_sim" 
+        [activedPsm]="selectedPsm" 
+        [activePsmIndex]="selectedPsmIndex" 
+        [psmType]="psmType" 
+        [projectId]="projectId">
+    </app-histogram-charts>
 </div>
 
 <!--<hr>-->
