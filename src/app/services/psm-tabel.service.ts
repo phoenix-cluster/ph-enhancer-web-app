@@ -26,7 +26,7 @@ export class PsmTableService{
 	// }
 
     getPsmsPage(projectId:string, psmType:string, page:Page): Promise<PSMsPage>{
-        console.log(page);
+        // console.log(page);
         if(psmType == "newid" && page.sortField == "confidentScore"){
             page.sortField = "recommConfidentScore";
         }
@@ -37,7 +37,7 @@ export class PsmTableService{
             + "&size=" + page.size
             + "&sortField=" + page.sortField
             + "&sortDirection=" + page.sortDirection;
-        console.log(psmsUrl);
+        // console.log(psmsUrl);
         return this.http.get(psmsUrl)
             .toPromise()
             .then(response => response.json() as PSMsPage)

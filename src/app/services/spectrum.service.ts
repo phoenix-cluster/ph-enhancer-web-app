@@ -20,7 +20,7 @@ export class SpectrumService {
 
     public getSpectra(titlesStr: string): Promise<Spectrum[]> {
         let spectraUrl = this.baseUrl.concat("spectrum/titles/", encodeURIComponent(titlesStr));
-        console.log(spectraUrl);
+        // console.log(spectraUrl);
         let spectra = this.localStorageService.getData("spectra_" + titlesStr);
         if(spectra != null) {
             return new Promise(resolve => resolve(spectra));

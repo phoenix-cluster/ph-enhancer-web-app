@@ -12,8 +12,9 @@ export class HistogramChartComponent implements OnChanges{
     histData: any[];
 
     @Input() isSortField: boolean;
-    @Input() activedPage: Array<number>;
+    @Input() activedPageValues: Array<number>;
     @Input() activedPsm: {rank: number, value: number};
+    @Input() activedPsmIndex: number;
     @Input() activedBinRange: Array<{rank: number, value: number}>;
     @Input() histBins:HistgramBin[];
     @Input() dataName:string;
@@ -107,6 +108,18 @@ export class HistogramChartComponent implements OnChanges{
             }
 */
 
+            // sort array
+            for(let i = 0;i < (this.activedPageValues.length - 1);i++) {
+                let min = i;
+                for(let j = i+1;j < this.activedPageValues.length;j++){
+                    if(this.activedPageValues[min] > this.activedPageValues[j]) min = j;
+                }
+                if(i != min) {
+                    let tmp                     = this.activedPageValues[i];
+                    this.activedPageValues[i]   = this.activedPageValues[min];
+                    this.activedPageValues[min] = tmp;
+                }
+            }
 
             //calcute customColors area
             let r0 = this.activedBinRange[0].value < this.activedBinRange[1].value ? this.activedBinRange[0] : this.activedBinRange[1],
@@ -116,55 +129,59 @@ export class HistogramChartComponent implements OnChanges{
             if(r0.value == null || r1.value == null) {
                 return;
             }
-            console.log(this.activedPsm);
-            let
-                r0ValueFixed = r0.value.toFixed(3),
+            // console.log('activedPsm');
+            // console.log(this.activedPsm);
+
+            let r0ValueFixed = r0.value.toFixed(3),
                 r1ValueFixed = r1.value.toFixed(3),
                 activeBin = this.histBins[this.activedPsm.rank - 1],
                 activeBinResolved = this.histBinsResolved[this.activedPsm.rank - 1],
                 blueName = r0ValueFixed + " - " + r1ValueFixed;
+
             if(activeBin.value == 0){
                 return;
             }
+            // console.log(activeBin)
+            // console.log(activeBinResolved)
 
-            if(this.isSortField == false) {       //not sort field, only show one line
-                console.log(this.activedPsm);
-                console.log(activeBin.value);
-                let binUpper = activeBin.upperBound;
-                let    binLower = activeBin.lowerBound;
-                let    aver = (binUpper - binLower) / activeBin.value;
-                let   initPos = Math.floor((this.activedPsm.value - binLower) / aver);
-                let   activeHistBinsResolved = this.histBinsResolved[activeBin.rank - 1];
+            if(this.isSortField == false) {       //not sort field, only show one red line
+                let binUpper = activeBin.upperBound,
+                    binLower = activeBin.lowerBound,
+                    aver = (binUpper - binLower) / activeBin.value,
+                    initPos = Math.floor((this.activedPsm.value - binLower) / aver),
+                    thisBin = this.histBinsResolved[activeBin.rank - 1];
 
                 initPos = initPos-1 <= 0 ? 0 : initPos - 1;
 
-                activeHistBinsResolved.series = [
+                thisBin.series = [
                     {
-                        name: activeHistBinsResolved.name,
+                        name: thisBin.name,
                         value: initPos
                     },{
                         name: this.activedPsm.value.toString(),
                         value: 1
                     },{
-                        name: activeHistBinsResolved.name,
+                        name: thisBin.name,
                         value: activeBin.value - initPos - 1
                     }
                 ]
-                console.log(activeHistBinsResolved);
+
             }else if(lowRank == highRank) {     //if in one section, divide into 1, 2, or 3 pieces
                 // uncommon case: value <= 10, but still highlight
                 if(activeBin.value <= 10) {
-                    activeBinResolved.series[0].name = r0.value + " - " + r1.value;
+                    activeBinResolved.series[0].name = blueName;
                 }else {
                     //common case: value > 10, assume average distribution
                     let binUpper = activeBin.upperBound,
                         binLower = activeBin.lowerBound,
                         aver = (binUpper - binLower) / activeBin.value,
-                        initPos = Math.floor((r0.value - binLower) / aver),
-                        span = Math.floor((this.activedPsm.value - r0.value) / aver);
-                    console.log(binUpper + " " + binLower + "  " + aver + " " + initPos);
+                        initPos = Math.floor((r0.value - binLower) / aver);
+
                     //if overflow, then up to Upper
-                    if(initPos + 10 > activeBinResolved.value) initPos = activeBinResolved.value - 10;
+                    if(initPos + 10 > activeBin.value) 
+                        initPos = activeBin.value - 9;
+                    if(initPos < 1)
+                        initPos = 1;
                     // console.log("initPos + " + initPos + "activeBin.value " + activeBin.value);
 
                     activeBinResolved.series = [
@@ -173,13 +190,13 @@ export class HistogramChartComponent implements OnChanges{
                             value: initPos - 1
                         },{
                             name: blueName,
-                            value: span
+                            value: this.activedPsmIndex - 1
                         },{
                             name: this.activedPsm.value.toString(),
                             value: 1
                         },{
                             name: blueName,
-                            value: 9 - span
+                            value: 10 - this.activedPsmIndex
                         },{
                             name: activeBinResolved.name,
                             value: activeBin.value - initPos - 9
@@ -188,107 +205,109 @@ export class HistogramChartComponent implements OnChanges{
 
                 }
             }else {                             //if cover more than one section
-                let sumOfMidCover = 0           //highlight middle section
-                for(let i = lowRank+1;i < highRank;i++) {
-                    sumOfMidCover += this.histBins[i - 1].value
-                    this.histBinsResolved[i - 1].series[0].name = blueName;
+                let prev = 0, end = 0;          //Firstly, set all coverage bar to blue color
+                let sumOfValue = 0;
+                for(let i = 0;i < 10;i++) {
+                    if(this.activedPageValues[i] <= this.histBins[lowRank - 1].upperBound) prev++;
+                    if(this.activedPageValues[i] >= this.histBins[highRank - 1].lowerBound) end++;
+                }
+                
+                for(let i = lowRank;i <= highRank;i++) {
+                    let thisBin = this.histBins[i - 1],
+                        thisBinResolved = this.histBinsResolved[i - 1],
+                        thisBinName = thisBinResolved.name,
+                        thisPsmIndex = this.activedPsmIndex
 
-                    if(this.activedPsm.rank == i) {
-                        let splitedPrevValue = this.getSplitedPrevValue(this.histBins[i-1].lowerBound, this.histBins[i-1].upperBound, this.histBins[i-1].value, this.activedPsm.value);
+                    if(i == lowRank) {
+                        sumOfValue += prev;
 
-                        this.histBinsResolved[i - 1].series = [
+                        if(thisPsmIndex <= sumOfValue){
+                            thisBinResolved.series = [
+                                {
+                                    name: thisBinName,
+                                    value: thisBin.value - prev
+                                },{
+                                    name: blueName,
+                                    value: thisPsmIndex - 1
+                                },{
+                                    name: this.activedPsm.value.toString(),
+                                    value: 1
+                                },{
+                                    name: blueName,
+                                    value: prev - thisPsmIndex
+                                }
+                            ]
+                        }else {
+                            thisBinResolved.series = [
+                                {
+                                    name: thisBinName,
+                                    value: thisBin.value - prev
+                                },{
+                                    name: blueName,
+                                    value: prev
+                                }
+                            ]
+                        }
+                        continue;
+                    }
+
+                    if(i == highRank) {
+                        let rest = thisPsmIndex - sumOfValue;
+                        if(rest > 0 && rest <= end) {
+                            thisBinResolved.series = [
+                                {
+                                    name: blueName,
+                                    value: rest - 1
+                                },{
+                                    name: this.activedPsm.value.toString(),
+                                    value: 1
+                                },{
+                                    name: blueName,
+                                    value: end - rest
+                                },{
+                                    name: thisBinName,
+                                    value: thisBin.value - end
+                                }
+                            ]
+                        }else {
+                            thisBinResolved.series = [
+                                {
+                                    name: blueName,
+                                    value: end
+                                },{
+                                    name: thisBinName,
+                                    value: thisBin.value - end
+                                }
+                            ]
+                        }
+                        continue;
+                    }
+
+                    
+                    if(thisPsmIndex > sumOfValue && thisPsmIndex <= (sumOfValue + thisBin.value)) {
+                        let rest = thisPsmIndex - sumOfValue;
+                        thisBinResolved.series = [
                             {
                                 name: blueName,
-                                value: splitedPrevValue
+                                value: rest - 1
                             },{
                                 name: this.activedPsm.value.toString(),
                                 value: 1
                             },{
                                 name: blueName,
-                                value: this.histBins[i - 1].value - splitedPrevValue - 1
+                                value: thisBin.value - rest
+                            }
+                        ]
+                    }else {
+                        thisBinResolved.series = [
+                            {
+                                name: blueName,
+                                value: thisBin.value
                             }
                         ]
                     }
-                }
 
-                //start or end of coverage range
-                let prev = 0, end = 0;
-                for(let i = 0;i < 10;i++) {
-                    if(this.activedPage[i] <= this.histBins[lowRank - 1].upperBound) prev++;
-                    if(this.activedPage[i] >= this.histBins[highRank - 1].lowerBound) end++;
-                }
-                console.log(this.activedPage);
-                console.log(this.histBins);
-                // console.log(prev + " " + end + "  "+ this.activedBinRank);
-                // console.log(this.activedBinRank);
-                // console.log(lowRank + " " + highRank);
-                if(this.activedPsm.rank != lowRank) {           //selected psm not in this bin
-                    this.histBinsResolved[lowRank - 1].series = [
-                        {
-                            name: this.histBinsResolved[lowRank - 1].name,
-                            value: this.histBins[lowRank - 1].value - prev
-                        },{
-                            name: blueName,
-                            value: prev
-                        }
-                    ]
-                }else{                                              //selected psm in this bin
-                    let lowBin = this.histBins[lowRank - 1],
-                        aver = (lowBin.upperBound - lowBin.lowerBound) / lowBin.value,
-                        initSpan = Math.floor((this.activedPsm.value - lowBin.lowerBound) / aver);
-                    initSpan = initSpan-1 >= 0 ? initSpan-1 : 0;
-                    console.log(this.activedPsm);
-                    console.log("214: prev " + prev + "  initspan " + initSpan + " lowBin.value "+ lowBin.value);
-                    this.histBinsResolved[lowRank - 1].series = [
-                        {
-                            name: lowBin.name,
-                            value: lowBin.value - prev
-                        },{
-                            name: blueName,
-                            value: initSpan
-                        },{
-                            name: this.activedPsm.value.toString(),
-                            value: 1
-                        },{
-                            name: blueName,
-                            value: prev - initSpan - 1
-                        }
-                    ]
-                }
-
-                let endValue = 10 - prev - sumOfMidCover;
-                endValue = endValue < 0 ? 0 : endValue;
-                if(this.activedPsm.rank != highRank) {
-                    this.histBinsResolved[highRank - 1].series = [
-                        {
-                            name: blueName,
-                            value: endValue
-                        },{
-                            name: this.histBinsResolved[highRank - 1].name,
-                            value: this.histBins[highRank - 1].value - endValue
-                        }
-                    ]
-                }else {
-                    let highBin = this.histBins[highRank - 1],
-                        aver = (highBin.upperBound - highBin.lowerBound) / highBin.value,
-                        initSpan = Math.floor((this.activedPsm.value - highBin.lowerBound) / aver);
-                    initSpan = initSpan-1 >= 0 ? initSpan-1 : 0;
-                    console.log(aver + "  " + initSpan);
-                    this.histBinsResolved[highRank - 1].series = [
-                        {
-                            name: blueName,
-                            value: initSpan
-                        },{
-                            name: this.activedPsm.value.toString(),
-                            value: 1
-                        },{
-                            name: blueName,
-                            value: end - initSpan - 1
-                        },{
-                            name: this.histBinsResolved[highRank - 1].name,
-                            value: this.histBins[highRank - 1].value - end
-                        }
-                    ]
+                    sumOfValue += thisBin.value;
                 }
             }
 
