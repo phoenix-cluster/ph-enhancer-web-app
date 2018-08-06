@@ -1,19 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'app-set-parameters',
-  templateUrl: './set-parameters.component.html',
-  styleUrls: ['./set-parameters.component.scss']
+    selector: 'app-set-parameters',
+    templateUrl: './set-parameters.component.html',
+    styleUrls: ['./set-parameters.component.scss']
 })
 export class SetParametersComponent implements OnInit {
+    @Input() myAnalysisId:number;
+    public minClusterSize:number;
+    constructor() {
+    }
 
-  constructor() { }
+    ngOnInit() {
+    }
 
-  ngOnInit() {
-  }
+    doAnalysis() {
+        alert("Aye caption! let's do it " + this.minClusterSize)
+    }
 
-  doAnalysis(){
-    alert("Aye caption!")
-  }
-
+    onChange(event) {
+        this.minClusterSize = event;
+    }
 }

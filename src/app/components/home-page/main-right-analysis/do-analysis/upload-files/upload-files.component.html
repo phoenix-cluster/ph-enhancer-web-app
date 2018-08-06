@@ -5,7 +5,7 @@
 
 
 <ng-template #content let-c="close" let-d="dismiss">
-  <h2 class="modal-title">Upload files</h2>
+  <h2 class="modal-title">Upload files for your assigned Analysis ID: {{myAnalysisId}}</h2>
   <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -109,6 +109,8 @@
 </div>
 
 <div class="modal-footer">
+  <button type="button" class="btn btn-outline-primary " (click)="getAnalysisId()">Get Analysis Id</button>
+  <button type="button" class="btn btn-outline-primary " (click)="conformFiles()">Conform Files</button>
   <button type="button" class="btn btn-outline-primary " (click)="c('Close click')">Close</button>
 </div>
 

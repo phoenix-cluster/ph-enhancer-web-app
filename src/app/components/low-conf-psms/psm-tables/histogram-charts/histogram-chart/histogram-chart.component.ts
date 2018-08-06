@@ -72,7 +72,7 @@ export class HistogramChartComponent implements OnChanges{
 
 
     ngOnChanges(): void {
-        if(this.histBins == null || this.histBins.length <1 || 
+        if(this.histBins == null || this.histBins.length <1 ||
            this.activedPsm == null || this.activedPsm.rank <0 ||
            this.activedBinRange == null || this.activedBinRange[0].rank < 0 || this.activedBinRange[1].rank < 0){
             return ;
@@ -93,26 +93,51 @@ export class HistogramChartComponent implements OnChanges{
                     ]
                 }
             })
+/*
+            for(let i=0; i<this.histBinsResolved.length; i++){
+                let histBin = this.histBinsResolved[i];
+                for (let j=0; j<histBin.series.length; j++){
+                    console.log(histBin.series[j]);
+                    if(histBin.series[j].value == 0 ){
+                        this.histBinsResolved.splice(i, 1);
+                        continue;
+                    }
+                }
+
+            }
+*/
+
 
             //calcute customColors area
             let r0 = this.activedBinRange[0].value < this.activedBinRange[1].value ? this.activedBinRange[0] : this.activedBinRange[1],
                 r1 = this.activedBinRange[0].value > this.activedBinRange[1].value ? this.activedBinRange[0] : this.activedBinRange[1],
                 lowRank = r0.rank,
-                highRank = r1.rank,
+                highRank = r1.rank;
+            if(r0.value == null || r1.value == null) {
+                return;
+            }
+            console.log(this.activedPsm);
+            let
                 r0ValueFixed = r0.value.toFixed(3),
                 r1ValueFixed = r1.value.toFixed(3),
                 activeBin = this.histBins[this.activedPsm.rank - 1],
                 activeBinResolved = this.histBinsResolved[this.activedPsm.rank - 1],
                 blueName = r0ValueFixed + " - " + r1ValueFixed;
+            if(activeBin.value == 0){
+                return;
+            }
 
             if(this.isSortField == false) {       //not sort field, only show one line
-                let binUpper = activeBin.upperBound,
-                    binLower = activeBin.lowerBound,
-                    aver = (binUpper - binLower) / activeBin.value,
-                    initPos = Math.floor((this.activedPsm.value - binLower) / aver),
-                    activeHistBinsResolved = this.histBinsResolved[activeBin.rank - 1];
-                
-                initPos = initPos-1 <= 0 ? 0 : initPos - 1
+                console.log(this.activedPsm);
+                console.log(activeBin.value);
+                let binUpper = activeBin.upperBound;
+                let    binLower = activeBin.lowerBound;
+                let    aver = (binUpper - binLower) / activeBin.value;
+                let   initPos = Math.floor((this.activedPsm.value - binLower) / aver);
+                let   activeHistBinsResolved = this.histBinsResolved[activeBin.rank - 1];
+
+                initPos = initPos-1 <= 0 ? 0 : initPos - 1;
+
                 activeHistBinsResolved.series = [
                     {
                         name: activeHistBinsResolved.name,
@@ -125,7 +150,7 @@ export class HistogramChartComponent implements OnChanges{
                         value: activeBin.value - initPos - 1
                     }
                 ]
-                // console.log(activeHistBinsResolved);
+                console.log(activeHistBinsResolved);
             }else if(lowRank == highRank) {     //if in one section, divide into 1, 2, or 3 pieces
                 // uncommon case: value <= 10, but still highlight
                 if(activeBin.value <= 10) {
@@ -137,8 +162,7 @@ export class HistogramChartComponent implements OnChanges{
                         aver = (binUpper - binLower) / activeBin.value,
                         initPos = Math.floor((r0.value - binLower) / aver),
                         span = Math.floor((this.activedPsm.value - r0.value) / aver);
-                    // console.log(binUpper + " " + binLower + "  " + aver + " " + initPos);
-
+                    console.log(binUpper + " " + binLower + "  " + aver + " " + initPos);
                     //if overflow, then up to Upper
                     if(initPos + 10 > activeBinResolved.value) initPos = activeBinResolved.value - 10;
                     // console.log("initPos + " + initPos + "activeBin.value " + activeBin.value);
@@ -288,3 +312,4 @@ export class HistogramChartComponent implements OnChanges{
         return Math.floor(prev);
     }
 }
+
