@@ -118,6 +118,10 @@ export class PsmTablesComponent implements OnInit {
             this.page.totalElements = psmPage.totalElements;
             this.page.totalPages = psmPage.totalPages;
             this.psm_rows = psmPage.scoredPSMs;
+            if(this.psm_rows == null || this.psm_rows.length <1) {
+                this.loading = false;
+                return;
+            }
             this.selectedPsm = this.psm_rows[0];
             this.selected_psms = [];
             this.selected_psms.push(this.selectedPsm);

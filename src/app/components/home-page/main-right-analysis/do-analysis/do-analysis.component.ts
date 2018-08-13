@@ -9,6 +9,7 @@ export class DoAnalysisComponent implements OnInit {
     public myAnalysisId: number = 0;
 
     constructor() {
+
     }
 
     ngOnInit() {
@@ -16,6 +17,5 @@ export class DoAnalysisComponent implements OnInit {
 
     onNotify(message: number): void {
         this.myAnalysisId = message;
-        alert(message);
     }
 }

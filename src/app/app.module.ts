@@ -52,6 +52,7 @@ import {LocalStorageService} from "./services/local-storage.service";
 import {StatisticsService} from "./services/statistics.service";
 import {ExportService} from "./services/export.service";
 import {FileUploadService} from "./services/file-upload.service";
+import {DoAnalysisService} from "./services/do-analysis.service";
 import {TruncatePipe} from "./pipe/truncate";
 import {SpecTitle2ListPipe} from "./pipe/spectrum-titles2list";
 import {ShortNumberPipe} from "./pipe/short-number";
@@ -131,6 +132,7 @@ import { ClusterSpecCompareComponent } from './components/cluster-details/cluste
         StatisticsService,
         ExportService,
         FileUploadService,
+        DoAnalysisService,
         // ConfigService,
         // ConfigModule.init(),
     ],

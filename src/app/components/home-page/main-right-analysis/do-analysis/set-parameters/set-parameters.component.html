@@ -21,7 +21,7 @@
             <!--for="checkbox3">-->
             Minimum Cluster Size：
         </label>
-        <input class="mb-2 mr-sm-2 mb-sm-0" [(ngModel)]="minClusterSize" name="minClusterSizeInput" (ngModelChange)="onChange($event)" id="minSize" placeholder="10">
+        <input class="mb-2 mr-sm-2 mb-sm-0" [(ngModel)]="minClusterSize" name="minClusterSizeInput" (ngModelChange)="onChange($event)" id="minSize" placeholder={{minClusterSize}}>
     </div>
     {{minClusterSize}}
     <div class="form-row">

@@ -13,15 +13,15 @@ import {ResultFileList} from "../../../../../model/resultFileList";
 })
 export class UploadFilesComponent implements OnInit {
     @Output() notify: EventEmitter<number> = new EventEmitter<number>();
+    @Input() analysisJobId: number;
 
     closeResult: string;
     uploadUrl = Config.baseUrl + "file/upload";
     public uploader: FileUploader;
-    public myAnalysisId: number;
 
     constructor(private modalService: NgbModal, private fileUploadService: FileUploadService) {
+        this.analysisJobId = 0;
     }
-
 
     public hasBaseDropZoneOver: boolean = false;
     public hasAnotherDropZoneOver: boolean = false;
@@ -54,55 +54,98 @@ export class UploadFilesComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.initUploader();
+    }
+
+    //request an analysis id for next step to upload files
+    // getAnalysisId() {
+    //     this.fileUploadService.apply_an_analysis_id().then(
+    //         id => {
+    //             this.analysisJobId = id;
+    //             console.log("got analysis id: " + this.analysisJobId);
+    //             this.notify.emit(this.analysisJobId);
+    //             this.uploader = new FileUploader({
+    //                 url: this.uploadUrl,
+    //                 isHTML5: true,
+    //                 maxFileSize: 1000 * 1000 * 1000,
+    //                 headers: [{name: 'myId', value: String(this.analysisJobId)}],
+    //                 allowedMimeType: ['text/xml','application/x-gzip']
+    //                 // allowedFileType: [".xml", ".xml.gz"]
+    //             });
+    //             this.uploader.onErrorItem = (item, response, status, headers) => this.onErrorItem(item, response, status, headers);
+    //             this.uploader.onSuccessItem = (item, response, status, headers) => this.onSuccessItem(item, response, status, headers);
+    //             this.uploader.onBuildItemForm = (fileItem: any, form: any) => {
+    //                 form.append('myId', this.analysisJobId);
+    //             };
+    //
+    //         }
+    //     );
+    // }
+    //
+
+    //initialize the uploader
+    initUploader() {
         this.uploader = new FileUploader({
             url: this.uploadUrl,
             isHTML5: true,
             maxFileSize: 1000 * 1000 * 1000,
-            allowedMimeType: []
+            // headers: [{name: 'myId', value: String(this.analysisJobId)}],
+            allowedMimeType: ['text/xml', 'application/x-gzip']
+            // allowedFileType: [".xml", ".xml.gz"]
         });
+        this.uploader.onErrorItem = (item, response, status, headers) => this.onErrorItem(item, response, status, headers);
+        this.uploader.onSuccessItem = (item, response, status, headers) => this.onSuccessItem(item, response, status, headers);
     }
 
-    //request an analysis id for next step to upload files
-    getAnalysisId() {
-        this.fileUploadService.apply_an_analysis_id().then(
-            id => {
-                this.myAnalysisId = id;
-                console.log("got analysis id: " + this.myAnalysisId);
-                this.notify.emit(this.myAnalysisId);
-                this.uploader = new FileUploader({
-                    url: this.uploadUrl,
-                    isHTML5: true,
-                    maxFileSize: 1000 * 1000 * 1000,
-                    headers: [{name: 'myId', value: String(this.myAnalysisId)}],
-                    allowedMimeType: ['text/xml','application/x-gzip']
-                    // allowedFileType: [".xml", ".xml.gz"]
-                });
-                this.uploader.onErrorItem = (item, response, status, headers) => this.onErrorItem(item, response, status, headers);
-                this.uploader.onSuccessItem = (item, response, status, headers) => this.onSuccessItem(item, response, status, headers);
-                this.uploader.onBuildItemForm = (fileItem: any, form: any) => {
-                    form.append('myId', this.myAnalysisId);
-                };
-
-            }
-        );
-    }
 
     //check the files are in server or not
-    conformFiles(){
+    confirmFiles() {
         console.log(this.uploader.queue);
         this.resultFileList = new ResultFileList();
-        for (let i=0; i<this.uploader.queue.length; i++){
+        for (let i = 0; i < this.uploader.queue.length; i++) {
             let fileItem = this.uploader.queue[i];
-            if(fileItem.isSuccess != true || fileItem.isUploaded != true){
+            if (fileItem.isSuccess != true || fileItem.isUploaded != true) {
                 alert("File " + fileItem.file.name + "is not uploaded or not success!")
                 return;
             }
             this.resultFileList.fileList.push(fileItem.file.name);
         }
         this.resultFileList.fileListLength = this.uploader.queue.length;
-        this.fileUploadService.conform_files(this.resultFileList, this.myAnalysisId).then(
-            status=>{console.log(status)}
+        this.fileUploadService.conform_files(this.resultFileList, this.analysisJobId).then(
+            status => {
+                console.log(status)
+            }
         )
+    }
+
+    public uploadItem(item: any) {
+        if (this.analysisJobId == 0) {
+            this.fileUploadService.apply_an_analysis_id().then(
+                id => {
+                    this.analysisJobId = id;
+                    this.notify.emit(this.analysisJobId); //pass the analysisJobId to parent component
+                    this.uploader.options.headers = [{name: 'myId', value: String(this.analysisJobId)}];
+                    alert("Your analysis job id is :" + this.analysisJobId + ", please remember this id and use it for help or result checking");
+                    item.upload();
+                })
+        }else{
+            item.upload();
+        }
+    }
+
+    public uploadAll(uploader: any) {
+        if (this.analysisJobId == 0) {
+            this.fileUploadService.apply_an_analysis_id().then(
+                id => {
+                    this.analysisJobId = id;
+                    this.notify.emit(this.analysisJobId); //pass the analysisJobId to parent component
+                    this.uploader.options.headers = [{name: 'myId', value: String(this.analysisJobId)}];
+                    alert("Your analysis job id is :" + this.analysisJobId + ", please remember this id and use it for help or result checking");
+                    uploader.uploadAll();
+                })
+        }else{
+            uploader.uploadAll();
+        }
     }
 
     onSuccessItem(item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any {
@@ -117,7 +160,6 @@ export class UploadFilesComponent implements OnInit {
         // let error = JSON.parse(response); //error server response
         // console.log(error)
     }
-
 
 
 }

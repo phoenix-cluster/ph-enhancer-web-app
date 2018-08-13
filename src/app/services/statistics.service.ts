@@ -27,6 +27,9 @@ export class StatisticsService {
             return this.http.get(histDataUrl)
                 .toPromise()
                 .then(response => {
+                    if(response == null){
+                        return null;
+                    };
                     var histBins : HistgramBin[] = response.json() as HistgramBin[];
                     for(var i=0; i<histBins.length; i++) {
                         // if (histBins[i].value == 0){

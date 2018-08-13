@@ -7,7 +7,7 @@
 </div>
 
 <div class="row frame hr">
-  <app-upload-files  (notify)='onNotify($event)'>  </app-upload-files>
+  <app-upload-files  [myAnalysisId]="myAnalysisId">  </app-upload-files>
 </div>
 <div class="row frame pd_20">
   <app-set-parameters [myAnalysisId]="myAnalysisId"></app-set-parameters>

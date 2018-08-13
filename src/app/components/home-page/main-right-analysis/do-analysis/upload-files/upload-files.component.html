@@ -5,7 +5,7 @@
 
 
 <ng-template #content let-c="close" let-d="dismiss">
-  <h2 class="modal-title">Upload files for your assigned Analysis ID: {{myAnalysisId}}</h2>
+  <h2 class="modal-title">Upload files for your assigned Analysis ID: {{analysisJobId}}</h2>
   <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -65,7 +65,7 @@
           </td>
           <td nowrap><!--Actions-->
             <button type="button" class="btn btn-success btn-xs "
-                    (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                    (click)="uploadItem(item)" [disabled]="item.isReady || item.isUploading || item.isSuccess">
               <span class="glyphicon glyphicon-upload"></span> Upload
             </button>
             <button type="button" class="btn btn-warning btn-xs"
@@ -89,7 +89,7 @@
           </div>
         </div>
         <button type="button" class="btn btn-success btn-s"
-                (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+                (click)="uploadAll(uploader).uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
           <span class="glyphicon glyphicon-upload"></span> Upload all
         </button>
         <button type="button" class="btn btn-warning btn-s"
@@ -109,8 +109,8 @@
 </div>
 
 <div class="modal-footer">
-  <button type="button" class="btn btn-outline-primary " (click)="getAnalysisId()">Get Analysis Id</button>
-  <button type="button" class="btn btn-outline-primary " (click)="conformFiles()">Conform Files</button>
+  <!--<button type="button" class="btn btn-outline-primary " (click)="getAnalysisId()">Get Analysis Id</button>-->
+  <button type="button" class="btn btn-outline-primary " (click)="confirmFiles()">Confirm Files</button>
   <button type="button" class="btn btn-outline-primary " (click)="c('Close click')">Close</button>
 </div>
 
