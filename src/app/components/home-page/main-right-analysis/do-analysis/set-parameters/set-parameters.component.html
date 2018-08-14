@@ -2,19 +2,8 @@
 
 <form role="form">
 
-    <h3>for job: {{myAnalysisId}}</h3>
-    <!--<div class="form-check abc-checkbox">-->
-        <!--<input class="form-check-input invisible" id="checkbox1" type="checkbox">-->
-        <!--<label class="form-check-label" for="checkbox1">-->
-            <!--Search Identified-->
-        <!--</label>-->
-    <!--</div>-->
-    <!--<div class="form-check abc-checkbox">-->
-        <!--<input class="form-check-input invisible" id="checkbox2" type="checkbox">-->
-        <!--<label class="form-check-label" for="checkbox2">-->
-            <!--Search Unidentified-->
-        <!--</label>-->
-    <!--</div>-->
+    <h3>for job: {{analysisJobId}}</h3>
+
     <div class="form-check form-check-inline abc-checkbox">
         <!--<input class="form-check-input invisible" id="checkbox3" type="checkbox">-->
         <label class="form-check-label" >
@@ -30,3 +19,12 @@
         </button>
     </div>
 </form>
+
+<h3>Check running status</h3>
+
+    <div class="form-row">
+        <button class="btn btn-lg btn-outline-primary outline" (click)="doAnalysis(content)">
+            goCheck
+        </button>
+    </div>
+

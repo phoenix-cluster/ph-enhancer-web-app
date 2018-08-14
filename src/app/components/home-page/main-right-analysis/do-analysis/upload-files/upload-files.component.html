@@ -5,119 +5,145 @@
 
 
 <ng-template #content let-c="close" let-d="dismiss">
-  <h2 class="modal-title">Upload files for your assigned Analysis ID: {{analysisJobId}}</h2>
-  <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-    <span aria-hidden="true">&times;</span>
-  </button>
+    <h2 class="modal-title">Upload files for your assigned Analysis ID: {{analysisJobId}}</h2>
 
-<div class="container modal-body">
+    <popup (confirmClick)="popupConfirmEvent()" (cancelClick)="popupCancelEvent()">
+        <html>
+        <body>
+        Your analysis job id/token are : <p style="color:red">{{analysisJobId }} <span style="color:blue">{{analysisJobToken}} </span> </p>
+        , please remember them for asking help or browsing analysis result;
+        </body>
+        </html>
+    </popup>
 
-  <div class="row">
 
-    <div class="col-md-3">
+    <a [popover]="popTemplate" popoverTitle="Succed to apply analysis job ID." triggers="mouseenter:mouseleave" container="body"
+       placement="right" html="true" (click)="gotoClusterDetails(value)">
+        <!--{{value | truncate_clusterid}}-->
+        {{value }}
+    </a>
+    <ng-template #popTemplate>
 
-      <h3>Select files</h3>
+        <!--div [innerHtml]="html"></div-->
+    </ng-template>
 
-      <div ng2FileDrop
-           [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
-           (fileOver)="fileOverBase($event)"
-           [uploader]="uploader"
-           class="well my-drop-zone">
-        Drop your files.
-      </div>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
 
-      Multiple
-      <input type="file" ng2FileSelect [uploader]="uploader" multiple  /><br/>
+    <div class="container modal-body">
 
-      Single
-      <input type="file" ng2FileSelect [uploader]="uploader" />
-    </div>
+        <div class="row">
 
-    <div class="col-md-9" style="margin-bottom: 40px">
+            <div class="col-md-3">
 
-      <h3>Upload queue</h3>
-      <p>Queue length: {{ uploader?.queue?.length }}</p>
+                <h3>Select files</h3>
 
-      <table class="table">
-        <thead>
-        <tr>
-          <th width="50%">Name</th>
-          <th>Size</th>
-          <th>Progress</th>
-          <th>Status</th>
-          <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let item of uploader.queue">
-          <td><strong>{{ item?.file?.name }}</strong></td> <!--Name-->
-          <td *ngIf="uploader.options.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td><!--Size-->
-          <td *ngIf="uploader.options.isHTML5"><!--Progress-->
-            <div class="progress" style="margin-bottom: 0;">
-              <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+                <div ng2FileDrop
+                     [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+                     (fileOver)="fileOverBase($event)"
+                     [uploader]="uploader"
+                     class="well my-drop-zone">
+                    Drop your files.
+                </div>
+
+                Multiple
+                <input type="file" ng2FileSelect [uploader]="uploader" multiple/><br/>
+
+                Single
+                <input type="file" ng2FileSelect [uploader]="uploader"/>
             </div>
-          </td>
-          <td class="text-center"><!--Status-->
-            <!--<span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>-->
-            <span *ngIf="item.isSuccess"><i class="fa fa-check-circle fa-2x"  style="color:#00e25b"></i></span>
-            <span *ngIf="item.isCancel"><i class="fa fa-close fa-2x"  style="color:#ff941a"></i></span>
-            <span *ngIf="item.isError"><i class="fa fa-warning fa-2x"  style="color:#ff3547"></i></span>
-          </td>
-          <td nowrap><!--Actions-->
-            <button type="button" class="btn btn-success btn-xs "
-                    (click)="uploadItem(item)" [disabled]="item.isReady || item.isUploading || item.isSuccess">
-              <span class="glyphicon glyphicon-upload"></span> Upload
-            </button>
-            <button type="button" class="btn btn-warning btn-xs"
-                    (click)="item.cancel()" [disabled]="!item.isUploading">
-              <span class="glyphicon glyphicon-ban-circle"></span> Cancel
-            </button>
-            <button type="button" class="btn btn-danger btn-xs"
-                    (click)="item.remove()">
-              <span class="glyphicon glyphicon-trash"></span> Remove
-            </button>
-          </td>
-        </tr>
-        </tbody>
-      </table>
 
-      <div>
-        <div>
-          Queue progress:
-          <div class="progress" style="">
-            <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
-          </div>
+            <div class="col-md-9" style="margin-bottom: 40px">
+
+                <h3>Upload queue</h3>
+                <p>Queue length: {{ uploader?.queue?.length }}</p>
+
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th width="50%">Name</th>
+                        <th>Size</th>
+                        <th>Progress</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let item of uploader.queue">
+                        <td><strong>{{ item?.file?.name }}</strong></td> <!--Name-->
+                        <td *ngIf="uploader.options.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB
+                        </td><!--Size-->
+                        <td *ngIf="uploader.options.isHTML5"><!--Progress-->
+                            <div class="progress" style="margin-bottom: 0;">
+                                <div class="progress-bar" role="progressbar"
+                                     [ngStyle]="{ 'width': item.progress + '%' }"></div>
+                            </div>
+                        </td>
+                        <td class="text-center"><!--Status-->
+                            <!--<span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>-->
+                            <span *ngIf="item.isSuccess"><i class="fa fa-check-circle fa-2x" style="color:#00e25b"></i></span>
+                            <span *ngIf="item.isCancel"><i class="fa fa-close fa-2x" style="color:#ff941a"></i></span>
+                            <span *ngIf="item.isError"><i class="fa fa-warning fa-2x" style="color:#ff3547"></i></span>
+                        </td>
+                        <td nowrap><!--Actions-->
+                            <button type="button" class="btn btn-success btn-xs "
+                                    (click)="uploadItem(item)"
+                                    [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                                <span class="glyphicon glyphicon-upload"></span> Upload
+                            </button>
+                            <button type="button" class="btn btn-warning btn-xs"
+                                    (click)="item.cancel()" [disabled]="!item.isUploading">
+                                <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+                            </button>
+                            <button type="button" class="btn btn-danger btn-xs"
+                                    (click)="item.remove()">
+                                <span class="glyphicon glyphicon-trash"></span> Remove
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div>
+                    <div>
+                        Queue progress:
+                        <div class="progress" style="">
+                            <div class="progress-bar" role="progressbar"
+                                 [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-success btn-s"
+                            (click)="uploadAll()"
+                            [disabled]="!uploader.getNotUploadedItems().length">
+                        <span class="glyphicon glyphicon-upload"></span> Upload all
+                    </button>
+                    <button type="button" class="btn btn-warning btn-s"
+                            (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+                        <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
+                    </button>
+                    <button type="button" class="btn btn-danger btn-s"
+                            (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+                        <span class="glyphicon glyphicon-trash"></span> Remove all
+                    </button>
+                </div>
+
+            </div>
+
         </div>
-        <button type="button" class="btn btn-success btn-s"
-                (click)="uploadAll(uploader).uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
-          <span class="glyphicon glyphicon-upload"></span> Upload all
-        </button>
-        <button type="button" class="btn btn-warning btn-s"
-                (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
-          <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
-        </button>
-        <button type="button" class="btn btn-danger btn-s"
-                (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
-          <span class="glyphicon glyphicon-trash"></span> Remove all
-        </button>
-      </div>
 
     </div>
 
-  </div>
-
-</div>
-
-<div class="modal-footer">
-  <!--<button type="button" class="btn btn-outline-primary " (click)="getAnalysisId()">Get Analysis Id</button>-->
-  <button type="button" class="btn btn-outline-primary " (click)="confirmFiles()">Confirm Files</button>
-  <button type="button" class="btn btn-outline-primary " (click)="c('Close click')">Close</button>
-</div>
+    <div class="modal-footer">
+        <!--<button type="button" class="btn btn-outline-primary " (click)="getAnalysisId()">Get Analysis Id</button>-->
+        <button type="button" class="btn btn-outline-primary " (click)="confirmFiles()">Confirm Files</button>
+        <button type="button" class="btn btn-outline-primary " (click)="c('Close click')">Close</button>
+    </div>
 
 </ng-template>
 
 <button class="btn btn-lg btn-outline-primary outline" (click)="open(content)">
-Upload files
+    Upload files
 </button>
 
 <!--<hr>-->
@@ -128,38 +154,38 @@ Upload files
 
 <!--<div class="modal fade" id="modalSubscription" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">-->
 <!--<div class="modal-dialog cascading-modal" role="document">-->
-  <!--&lt;!&ndash;Content&ndash;&gt;-->
-  <!--<div class="modal-content">-->
+<!--&lt;!&ndash;Content&ndash;&gt;-->
+<!--<div class="modal-content">-->
 
-    <!--&lt;!&ndash;Header&ndash;&gt;-->
-    <!--<div class="modal-header light-blue darken-3 white-text">-->
-      <!--<h4 class="title"><i class="fa fa-newspaper-o"></i> Subscription form</h4>-->
-      <!--<button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close">-->
-        <!--<span aria-hidden="true">&times;</span>-->
-      <!--</button>-->
-    <!--</div>-->
-    <!--&lt;!&ndash;Body&ndash;&gt;-->
-    <!--<div class="modal-body mb-0">-->
+<!--&lt;!&ndash;Header&ndash;&gt;-->
+<!--<div class="modal-header light-blue darken-3 white-text">-->
+<!--<h4 class="title"><i class="fa fa-newspaper-o"></i> Subscription form</h4>-->
+<!--<button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close">-->
+<!--<span aria-hidden="true">&times;</span>-->
+<!--</button>-->
+<!--</div>-->
+<!--&lt;!&ndash;Body&ndash;&gt;-->
+<!--<div class="modal-body mb-0">-->
 
-      <!--<div class="md-form form-sm">-->
-        <!--<i class="fa fa-lock prefix"></i>-->
-        <!--<input type="password" id="form27" class="form-control">-->
-        <!--<label for="form27">Your name</label>-->
-      <!--</div>-->
+<!--<div class="md-form form-sm">-->
+<!--<i class="fa fa-lock prefix"></i>-->
+<!--<input type="password" id="form27" class="form-control">-->
+<!--<label for="form27">Your name</label>-->
+<!--</div>-->
 
-      <!--<div class="md-form form-sm">-->
-        <!--<i class="fa fa-envelope prefix"></i>-->
-        <!--<input type="text" id="form28" class="form-control">-->
-        <!--<label for="form28">Your email</label>-->
-      <!--</div>-->
+<!--<div class="md-form form-sm">-->
+<!--<i class="fa fa-envelope prefix"></i>-->
+<!--<input type="text" id="form28" class="form-control">-->
+<!--<label for="form28">Your email</label>-->
+<!--</div>-->
 
-      <!--<div class="text-center mt-1-half">-->
-        <!--<button class="btn btn-info mb-1">Submit <i class="fa fa-check ml-1"></i></button>-->
-      <!--</div>-->
+<!--<div class="text-center mt-1-half">-->
+<!--<button class="btn btn-info mb-1">Submit <i class="fa fa-check ml-1"></i></button>-->
+<!--</div>-->
 
-    <!--</div>-->
-  <!--</div>-->
-  <!--&lt;!&ndash;/.Content&ndash;&gt;-->
+<!--</div>-->
+<!--</div>-->
+<!--&lt;!&ndash;/.Content&ndash;&gt;-->
 <!--</div>-->
 <!--</div>-->
 <!--&lt;!&ndash;Modal: Subscription From&ndash;&gt;-->
@@ -172,26 +198,26 @@ Upload files
 <!--&lt;!&ndash; Modal &ndash;&gt;-->
 <!--<div class="modal fade" id="basicExample" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">-->
 <!--<div class="modal-dialog" role="document">-->
-  <!--&lt;!&ndash;Content&ndash;&gt;-->
-  <!--<div class="modal-content">-->
-    <!--&lt;!&ndash;Header&ndash;&gt;-->
-    <!--<div class="modal-header">-->
-      <!--<h4 class="modal-title w-100" id="myModalLabel">Modal title</h4>-->
-      <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-        <!--<span aria-hidden="true">&times;</span>-->
-      <!--</button>-->
-    <!--</div>-->
-    <!--&lt;!&ndash;Body&ndash;&gt;-->
-    <!--<div class="modal-body">-->
-      <!--...-->
-    <!--</div>-->
-    <!--&lt;!&ndash;Footer&ndash;&gt;-->
-    <!--<div class="modal-footer">-->
-      <!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
-      <!--<button type="button" class="btn btn-primary">Save changes</button>-->
-    <!--</div>-->
-  <!--</div>-->
-  <!--&lt;!&ndash;/.Content&ndash;&gt;-->
+<!--&lt;!&ndash;Content&ndash;&gt;-->
+<!--<div class="modal-content">-->
+<!--&lt;!&ndash;Header&ndash;&gt;-->
+<!--<div class="modal-header">-->
+<!--<h4 class="modal-title w-100" id="myModalLabel">Modal title</h4>-->
+<!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--<span aria-hidden="true">&times;</span>-->
+<!--</button>-->
+<!--</div>-->
+<!--&lt;!&ndash;Body&ndash;&gt;-->
+<!--<div class="modal-body">-->
+<!--...-->
+<!--</div>-->
+<!--&lt;!&ndash;Footer&ndash;&gt;-->
+<!--<div class="modal-footer">-->
+<!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+<!--<button type="button" class="btn btn-primary">Save changes</button>-->
+<!--</div>-->
+<!--</div>-->
+<!--&lt;!&ndash;/.Content&ndash;&gt;-->
 <!--</div>-->
 <!--</div>-->
 <!--&lt;!&ndash; Modal &ndash;&gt;-->

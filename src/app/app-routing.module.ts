@@ -21,6 +21,7 @@ const routes: Routes = [
     {path: 'high_conf/:project', component: HighConfPsmsComponent},
     {path: 'new_id/:project', component: NewIdentifiedComponent},
     {path: 'cluster_details/:clusterId', component: ClusterDetailsComponent},
+    {path: 'analysis_progress/:anaJobToken', component: ClusterDetailsComponent},
 ];
 
 @NgModule({

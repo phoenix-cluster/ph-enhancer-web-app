@@ -13,6 +13,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 // import { SidebarModule } from 'ng-sidebar';
+import {PopupModule} from 'ng2-opd-popup';
 
 
 import {AppRoutingModule} from './app-routing.module';
@@ -53,6 +54,8 @@ import {StatisticsService} from "./services/statistics.service";
 import {ExportService} from "./services/export.service";
 import {FileUploadService} from "./services/file-upload.service";
 import {DoAnalysisService} from "./services/do-analysis.service";
+import {AnalysisDataService} from "./services/analysis-data.service";
+
 import {TruncatePipe} from "./pipe/truncate";
 import {SpecTitle2ListPipe} from "./pipe/spectrum-titles2list";
 import {ShortNumberPipe} from "./pipe/short-number";
@@ -62,6 +65,7 @@ import { ClusterDetailsComponent } from './components/cluster-details/cluster-de
 import { SequencesPieChartComponent } from './components/cluster-details/sequences-pie-chart/sequences-pie-chart.component';
 import { ProjectsPieChartComponent } from './components/cluster-details/projects-pie-chart/projects-pie-chart.component';
 import { ClusterSpecCompareComponent } from './components/cluster-details/cluster-spec-compare/cluster-spec-compare.component';
+import { JobProgressComponent } from './job-progress/job-progress.component';
 
 
 
@@ -101,6 +105,7 @@ import { ClusterSpecCompareComponent } from './components/cluster-details/cluste
         SequencesPieChartComponent,
         ProjectsPieChartComponent,
         ClusterSpecCompareComponent,
+        JobProgressComponent,
     ],
     imports: [
         BrowserModule,
@@ -117,6 +122,8 @@ import { ClusterSpecCompareComponent } from './components/cluster-details/cluste
         // SidebarModule.forRoot(),
         NgxChartsModule,
         PopoverModule.forRoot(),
+        PopupModule.forRoot(),
+
 
         // AgmCoreModule.forRoot({
         //   // https://developers.google.com/maps/documentation/javascript/get-api-key?hl=en#key
@@ -133,6 +140,7 @@ import { ClusterSpecCompareComponent } from './components/cluster-details/cluste
         ExportService,
         FileUploadService,
         DoAnalysisService,
+        AnalysisDataService,
         // ConfigService,
         // ConfigModule.init(),
     ],
