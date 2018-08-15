@@ -13,6 +13,7 @@ import { LowConfPsmsComponent } from './components/low-conf-psms/low-conf-psms.c
 import { HighConfPsmsComponent } from './components/high-conf-psms/high-conf-psms.component';
 import { NewIdentifiedComponent } from './components/new-identified/new-identified.component';
 import { ClusterDetailsComponent } from './components/cluster-details/cluster-details.component';
+import {JobProgressComponent} from "./components/job-progress/job-progress.component";
 
 const routes: Routes = [
     {path: '', redirectTo: '/index', pathMatch: 'full'},
@@ -21,7 +22,7 @@ const routes: Routes = [
     {path: 'high_conf/:project', component: HighConfPsmsComponent},
     {path: 'new_id/:project', component: NewIdentifiedComponent},
     {path: 'cluster_details/:clusterId', component: ClusterDetailsComponent},
-    {path: 'analysis_progress/:anaJobToken', component: ClusterDetailsComponent},
+    {path: 'job_progress/:jobToken', component: JobProgressComponent},
 ];
 
 @NgModule({

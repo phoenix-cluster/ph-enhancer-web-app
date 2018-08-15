@@ -65,7 +65,7 @@ import { ClusterDetailsComponent } from './components/cluster-details/cluster-de
 import { SequencesPieChartComponent } from './components/cluster-details/sequences-pie-chart/sequences-pie-chart.component';
 import { ProjectsPieChartComponent } from './components/cluster-details/projects-pie-chart/projects-pie-chart.component';
 import { ClusterSpecCompareComponent } from './components/cluster-details/cluster-spec-compare/cluster-spec-compare.component';
-import { JobProgressComponent } from './job-progress/job-progress.component';
+import { JobProgressComponent } from './components/job-progress/job-progress.component';
 
 
 

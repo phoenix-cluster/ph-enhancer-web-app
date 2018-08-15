@@ -14,13 +14,7 @@
     padding-right: 20%!important;
 }
 
-.activePage{
-    color:lightcoral!important;
-}
-/*.deactivePage {
-    color:white!important;
-}
-*/
+
 .nav ul {
     list-style: none;
     //background-color: #282d31;
@@ -115,10 +109,20 @@ ul{
      color:#333;
      font-weight:400;
 }
-.activePage a{
+.activePage {
 	background-color:#45526E;
 	
 }
+.activePage {
+    color:lightcoral!important;
+}
+/*.deactivePage {
+    color:white!important;
+}
+*/
+
+
+
 .nav a:hover {
     background-color: #45526E;
     color:lightcoral!important;

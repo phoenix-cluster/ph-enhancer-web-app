@@ -50,14 +50,14 @@ export class AppHeaderComponent implements OnInit {
         // }
     }
 
-    getClass(pagetype: string): string {
+    getClass(page: string): string {
         let currentUrl = this.router.routerState.snapshot.url;
         let dataType = null;
         let patern = /\/(\w+)\/(\w+)/g;
         let a = patern.exec(currentUrl);
         if (a) {
             dataType = a[1];
-            if (dataType == pagetype ) {
+            if (dataType == page ) {
                 return "activePage";
             }else{
                 return "deactivePage";
@@ -67,13 +67,52 @@ export class AppHeaderComponent implements OnInit {
         a = patern.exec(currentUrl);
         if (a) {
             dataType = a[1];
-            if (dataType == pagetype ) {
+            if (dataType == page ) {
                 return "activePage";
             }else{
                 return "deactivePage";
             }
         }
-
-
     }
+
+    /***
+     * get the page type from url, result/appendix/job/index
+     ***/
+
+    getPageType(page: string): string {
+        let currentUrl = this.router.routerState.snapshot.url;
+        let pageName = null;
+        let patern = /\/(\w+)\/(\w+)/g;
+        let a = patern.exec(currentUrl);
+        if (a) {
+            pageName = a[1];
+
+            if (pageName == 'low_conf' || pageName =="high_conf" || pageName == "new_id"){
+                return "result";
+            }
+
+
+            if (pageName == "cluster_details"){
+                return "appendix";
+            }
+
+            if(pageName == "job_progress") {
+                return "job";
+            }
+
+        }
+        patern = /\/(\w+)/g;
+        a = patern.exec(currentUrl);
+        if (a) {
+            pageName = a[1];
+            if (pageName== 'index' ) {
+                return "index";
+            }else{
+                return null;
+            }
+        }
+
+        return null;
+    }
+
 }

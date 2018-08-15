@@ -12,20 +12,23 @@
     <div class="nav">
         <links>     
             <ul >
-                <li class="nav-item activePage">
+                <li class="nav-item">
                     <a class="" [ngClass]="getClass('index')" routerLink="/index" >Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" *ngIf="getPageType() == 'result' || getPageType() == 'index'">
                     <a class="" [ngClass]="getClass('low_conf')" routerLink="/low_conf/{{projectId}}">Low Confident</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" *ngIf="getPageType() == 'result' || getPageType() == 'index'">
                     <a class="" [ngClass]="getClass('high_conf')" routerLink="/high_conf/{{projectId}}">High Confident</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" *ngIf="getPageType() == 'result' || getPageType() == 'index'">
                     <a class="" [ngClass]="getClass('new_id')" routerLink="/new_id/{{projectId}}">New Identified</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" *ngIf="getPageType() == 'appendix'">
                     <a class="" [ngClass]="getClass('cluster_details')" routerLink="/cluster_details/{{clusterId}}">Cluster</a>
+                </li>
+                <li class="nav-item" *ngIf="getPageType() == 'job'">
+                    <a class="" [ngClass]="getClass('job_progress')" routerLink="/job_progress/{{jobToken}}">JobProgress</a>
                 </li>
             </ul>
           
