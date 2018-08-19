@@ -5,13 +5,14 @@ import 'rxjs/add/operator/toPromise'
 import {Config} from "../model/config";
 import {ResultFileList} from "../model/resultFileList";
 import {AnalysisJob} from "../model/analysisJob";
+import {Observable} from "rxjs/Observable";
 
 @Injectable()
 
 export class FileUploadService {
 
     private baseUrl = Config.baseUrl;
-    private getidUrl = this.baseUrl + "/" + "file/apply"
+    private applyJobUrl = this.baseUrl + "/" + "file/apply"
     private confirmFilesUrl = this.baseUrl + "/" + "file/confirmFiles"
     private headers = new Headers({'Content-type': 'application/json'});
 
@@ -19,7 +20,7 @@ export class FileUploadService {
     }
 
     apply_an_analysis_job(): Promise<AnalysisJob> {
-        return this.http.get(this.getidUrl)
+        return this.http.get(this.applyJobUrl)
             .toPromise()
             .then(response => {
                 let analysisJob:AnalysisJob = response.json() as AnalysisJob;
@@ -56,5 +57,7 @@ export class FileUploadService {
             })
             .catch(this.handleError);
     }
+
+
 
 }

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {ModalDismissReasons, NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {FileUploader, FileItem, ParsedResponseHeaders} from "ng2-file-upload";
 import {Config} from "../../../../../model/config"
@@ -15,12 +15,13 @@ import {AnalysisDataService} from "../../../../../services/analysis-data.service
 export class UploadFilesComponent implements OnInit {
     analysisJobId: number;
     analysisJobToken:string;
+    fileUploadEnabled:boolean;
     closeResult: string;
     uploadUrl = Config.baseUrl + "file/upload";
     public uploader: FileUploader;
 
     constructor(private modalService: NgbModal, private fileUploadService: FileUploadService,
-                private popup:Popup, private analysisData:AnalysisDataService) {
+                 private analysisData:AnalysisDataService) {
         this.analysisJobId = 0;
     }
 
@@ -44,6 +45,27 @@ export class UploadFilesComponent implements OnInit {
         });
     }
 
+    openJobIdPopup(jobIdPopup) {
+        this.modalService.open(jobIdPopup, {windowClass: "hugeModal"}).result.then((result) => {
+            this.closeResult = `Closed with: ${result}`;
+        }, (reason) => {
+            this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        });
+    }
+
+    openConfirmPopup(confirmPopup) {
+        if (this.uploader.queue.length < 1) {
+            alert("You have not select any files.");
+            return;
+        }
+        this.modalService.open(confirmPopup, {windowClass: "hugeModal"}).result.then((result) => {
+            this.closeResult = `Closed with: ${result}`;
+        }, (reason) => {
+            this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        });
+    }
+
+
     private getDismissReason(reason: any): string {
         if (reason === ModalDismissReasons.ESC) {
             return 'by pressing ESC';
@@ -57,33 +79,10 @@ export class UploadFilesComponent implements OnInit {
     ngOnInit() {
         this.initUploader();
         this.analysisData.currentAnalysisId.subscribe(analysisId => this.analysisJobId = analysisId);
+        this.analysisData.currentAnalysisToken.subscribe(analysisToken => this.analysisJobToken = analysisToken);
+        this.analysisData.currentFileUploadEnabled.subscribe(fileUploadEnabled=> this.fileUploadEnabled= fileUploadEnabled);
     }
 
-    //request an analysis id for next step to upload files
-    // getAnalysisId() {
-    //     this.fileUploadService.apply_an_analysis_id().then(
-    //         id => {
-    //             this.analysisJobId = id;
-    //             console.log("got analysis id: " + this.analysisJobId);
-    //             this.notify.emit(this.analysisJobId);
-    //             this.uploader = new FileUploader({
-    //                 url: this.uploadUrl,
-    //                 isHTML5: true,
-    //                 maxFileSize: 1000 * 1000 * 1000,
-    //                 headers: [{name: 'myId', value: String(this.analysisJobId)}],
-    //                 allowedMimeType: ['text/xml','application/x-gzip']
-    //                 // allowedFileType: [".xml", ".xml.gz"]
-    //             });
-    //             this.uploader.onErrorItem = (item, response, status, headers) => this.onErrorItem(item, response, status, headers);
-    //             this.uploader.onSuccessItem = (item, response, status, headers) => this.onSuccessItem(item, response, status, headers);
-    //             this.uploader.onBuildItemForm = (fileItem: any, form: any) => {
-    //                 form.append('myId', this.analysisJobId);
-    //             };
-    //
-    //         }
-    //     );
-    // }
-    //
 
     //initialize the uploader
     initUploader() {
@@ -102,12 +101,15 @@ export class UploadFilesComponent implements OnInit {
 
     //check the files are in server or not
     confirmFiles() {
-
-        if(this.uploader.queue.length <1){
+        if (this.uploader.queue.length < 1) {
             alert("You have not select any files.");
             return;
         }
+        this.confirmFilesForSure();
+    }
 
+    confirmFilesForSure(){
+        // this.popup2.hide();
         this.resultFileList = new ResultFileList();
         for (let i = 0; i < this.uploader.queue.length; i++) {
             let fileItem = this.uploader.queue[i];
@@ -121,6 +123,9 @@ export class UploadFilesComponent implements OnInit {
             }
             this.resultFileList.fileList.push(fileItem.file.name);
         }
+        this.uploader.options.disableMultipart = true;
+        this.uploader.options.allowedMimeType = [];
+        this.analysisData.changeFileUploadEnabled(false);
         this.resultFileList.fileListLength = this.uploader.queue.length;
         this.fileUploadService.conform_files(this.resultFileList, this.analysisJobId).then(
             status => {
@@ -129,47 +134,54 @@ export class UploadFilesComponent implements OnInit {
         )
     }
 
-    public uploadItem(item: any) {
+    public uploadItem(item: any, jobIdPopup:any) {
         if (this.analysisJobId == 0) {
             this.fileUploadService.apply_an_analysis_job().then(
                 analysisJob => {
                     this.analysisJobId = analysisJob.id;
                     this.analysisData.changeAnalysisId(analysisJob.id);
                     this.analysisJobToken = analysisJob.token;
+                    this.analysisData.changeAnalysisToken(analysisJob.token);
                     this.uploader.options.headers = [{name: 'myId', value: String(this.analysisJobId)}];
                     // alert("Your analysis job id is :" + this.analysisJobId + ", please remember this id and use it for help or result checking");
-                    this.popup.show();
+                    // this.popup1.show();
+                    this.openJobIdPopup(jobIdPopup);
                     item.upload();
                 })
         }else{
+            this.uploader.options.headers = [{name: 'myId', value: String(this.analysisJobId)}];
             item.upload();
         }
     }
 
-    public uploadAll() {
+    public uploadAll(jobIdPopup:any) {
         if (this.analysisJobId == 0) {
             this.fileUploadService.apply_an_analysis_job().then(
                 analysisJob => {
                     this.analysisJobId = analysisJob.id;
                     this.analysisData.changeAnalysisId(analysisJob.id);
                     this.analysisJobToken = analysisJob.token;
+                    this.analysisData.changeAnalysisToken(analysisJob.token);
                     this.uploader.options.headers = [{name: 'myId', value: String(this.analysisJobId)}];
                     // alert("Your analysis job id is :" + this.analysisJobId + ", please remember this id and use it for help or result checking");
-                    this.popup.show();
+                    // this.popup1.show();
+                    this.openJobIdPopup(jobIdPopup);
                     this.uploader.uploadAll();
                 })
         }else{
+            this.uploader.options.headers = [{name: 'myId', value: String(this.analysisJobId)}];
             this.uploader.uploadAll();
         }
     }
 
-    public popupConfirmEvent(){
-        this.popup.hide();
-    }
+    // public popupConfirmEvent(){
+    //     this.popup1.hide();
+    // }
+    //
+    // public popupCancelEvent(){
+    //     this.popup1.hide();
+    // }
 
-    public popupCancelEvent(){
-        this.popup.hide();
-    }
 
     onSuccessItem(item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any {
         console.log(response)

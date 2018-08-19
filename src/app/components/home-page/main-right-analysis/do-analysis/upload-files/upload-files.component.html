@@ -4,20 +4,15 @@
 <!--Modal: Subscription From-->
 
 
+
+
+
 <ng-template #content let-c="close" let-d="dismiss">
     <h2 class="modal-title">Upload files for your assigned Analysis ID: {{analysisJobId}}</h2>
 
-    <popup (confirmClick)="popupConfirmEvent()" (cancelClick)="popupCancelEvent()">
-        <html>
-        <body>
-        Your analysis job id/token are : <p style="color:red">{{analysisJobId }} <span style="color:blue">{{analysisJobToken}} </span> </p>
-        , please remember them for asking help or browsing analysis result;
-        </body>
-        </html>
-    </popup>
 
-
-    <a [popover]="popTemplate" popoverTitle="Succed to apply analysis job ID." triggers="mouseenter:mouseleave" container="body"
+    <a [popover]="popTemplate" popoverTitle="Succed to apply analysis job ID." triggers="mouseenter:mouseleave"
+       container="body"
        placement="right" html="true" (click)="gotoClusterDetails(value)">
         <!--{{value | truncate_clusterid}}-->
         {{value }}
@@ -88,7 +83,7 @@
                         </td>
                         <td nowrap><!--Actions-->
                             <button type="button" class="btn btn-success btn-xs "
-                                    (click)="uploadItem(item)"
+                                    (click)="uploadItem(item,jobIdPopup)"
                                     [disabled]="item.isReady || item.isUploading || item.isSuccess">
                                 <span class="glyphicon glyphicon-upload"></span> Upload
                             </button>
@@ -114,7 +109,7 @@
                         </div>
                     </div>
                     <button type="button" class="btn btn-success btn-s"
-                            (click)="uploadAll()"
+                            (click)="uploadAll(jobIdPopup)"
                             [disabled]="!uploader.getNotUploadedItems().length">
                         <span class="glyphicon glyphicon-upload"></span> Upload all
                     </button>
@@ -136,7 +131,12 @@
 
     <div class="modal-footer">
         <!--<button type="button" class="btn btn-outline-primary " (click)="getAnalysisId()">Get Analysis Id</button>-->
-        <button type="button" class="btn btn-outline-primary " (click)="confirmFiles()">Confirm Files</button>
+        <button id="confirmFileButton" [disabled]="!fileUploadEnabled" type="button" class="btn btn-outline-primary "
+            (click)="openConfirmPopup(confirmPopup)">Confirm Files
+        </button>
+        <button id="openJobId"  type="button" class="btn btn-outline-primary "
+                (click)="openJobIdPopup()"> testJobIdpopup
+        </button>
         <button type="button" class="btn btn-outline-primary " (click)="c('Close click')">Close</button>
     </div>
 
@@ -146,79 +146,44 @@
     Upload files
 </button>
 
-<!--<hr>-->
+<ng-template #confirmPopup let-c="close" let-d="dismiss">
+    <h2 class="modal-title">Confirm Upload files for your assigned Analysis ID: {{analysisJobId}}</h2>
 
-<!--<pre>{{closeResult}}</pre>-->
+    <div class="container modal-body">
+    After confirming file list, you will not able to upload new files. Please click confirm to continue, cancel to
+    abort.
+    </div>
 
-<!--<button type="button" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#modalSubscription">Select files</button>-->
+    <div class="modal-footer">
+        <!--<button type="button" class="btn btn-outline-primary " (click)="getAnalysisId()">Get Analysis Id</button>-->
+        <button id="confirmFileButton2" [disabled]="!fileUploadEnabled" type="button" class="btn btn-outline-primary "
+                (click)="confirmFilesForSure()">Confirm Files
+        </button>
+        <button type="button" class="btn btn-outline-primary " (click)="c('Close click')">Close</button>
+    </div>
 
-<!--<div class="modal fade" id="modalSubscription" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">-->
-<!--<div class="modal-dialog cascading-modal" role="document">-->
-<!--&lt;!&ndash;Content&ndash;&gt;-->
-<!--<div class="modal-content">-->
+</ng-template>
 
-<!--&lt;!&ndash;Header&ndash;&gt;-->
-<!--<div class="modal-header light-blue darken-3 white-text">-->
-<!--<h4 class="title"><i class="fa fa-newspaper-o"></i> Subscription form</h4>-->
-<!--<button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close">-->
-<!--<span aria-hidden="true">&times;</span>-->
-<!--</button>-->
-<!--</div>-->
-<!--&lt;!&ndash;Body&ndash;&gt;-->
-<!--<div class="modal-body mb-0">-->
+<ng-template #jobIdPopup let-c="close" let-d="dismiss">
 
-<!--<div class="md-form form-sm">-->
-<!--<i class="fa fa-lock prefix"></i>-->
-<!--<input type="password" id="form27" class="form-control">-->
-<!--<label for="form27">Your name</label>-->
-<!--</div>-->
+    <h2 class="modal-title">Upload files for your assigned Analysis ID: {{analysisJobId}}</h2>
 
-<!--<div class="md-form form-sm">-->
-<!--<i class="fa fa-envelope prefix"></i>-->
-<!--<input type="text" id="form28" class="form-control">-->
-<!--<label for="form28">Your email</label>-->
-<!--</div>-->
+    <div class="container modal-body">
 
-<!--<div class="text-center mt-1-half">-->
-<!--<button class="btn btn-info mb-1">Submit <i class="fa fa-check ml-1"></i></button>-->
-<!--</div>-->
+    Your analysis job id/token are : <p style="color:red">{{analysisJobId }} <span style="color:blue">{{analysisJobToken}} </span>
+    </p>
+    , please remember them for asking help or browsing analysis result;
 
-<!--</div>-->
-<!--</div>-->
-<!--&lt;!&ndash;/.Content&ndash;&gt;-->
-<!--</div>-->
-<!--</div>-->
-<!--&lt;!&ndash;Modal: Subscription From&ndash;&gt;-->
+    </div>
 
-<!--&lt;!&ndash; Button trigger modal &ndash;&gt;-->
-<!--<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#basicExample">-->
-<!--Launch demo modal-->
-<!--</button>-->
+    <div class="modal-footer">
+        <!--<button type="button" class="btn btn-outline-primary " (click)="getAnalysisId()">Get Analysis Id</button>-->
+        <!--<button id="confirmFileButton3" [disabled]="!fileUploadEnabled" type="button" class="btn btn-outline-primary "-->
+                <!--(click)="confirmFiles()">Confirm Files-->
+        <!--</button>-->
+        <button type="button" class="btn btn-outline-primary " (click)="c('Close click')">Close</button>
+    </div>
 
-<!--&lt;!&ndash; Modal &ndash;&gt;-->
-<!--<div class="modal fade" id="basicExample" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">-->
-<!--<div class="modal-dialog" role="document">-->
-<!--&lt;!&ndash;Content&ndash;&gt;-->
-<!--<div class="modal-content">-->
-<!--&lt;!&ndash;Header&ndash;&gt;-->
-<!--<div class="modal-header">-->
-<!--<h4 class="modal-title w-100" id="myModalLabel">Modal title</h4>-->
-<!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-<!--<span aria-hidden="true">&times;</span>-->
-<!--</button>-->
-<!--</div>-->
-<!--&lt;!&ndash;Body&ndash;&gt;-->
-<!--<div class="modal-body">-->
-<!--...-->
-<!--</div>-->
-<!--&lt;!&ndash;Footer&ndash;&gt;-->
-<!--<div class="modal-footer">-->
-<!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
-<!--<button type="button" class="btn btn-primary">Save changes</button>-->
-<!--</div>-->
-<!--</div>-->
-<!--&lt;!&ndash;/.Content&ndash;&gt;-->
-<!--</div>-->
-<!--</div>-->
-<!--&lt;!&ndash; Modal &ndash;&gt;-->
+</ng-template>
+
 

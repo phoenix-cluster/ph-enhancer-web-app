@@ -4,13 +4,27 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable()
 export class AnalysisDataService{
 
-    private analysisIdSource = new BehaviorSubject(0);
+    analysisIdSource = new BehaviorSubject(0);
+    analysisTokenSource = new BehaviorSubject("");
+    analysisEnabledSource = new BehaviorSubject(true);
+    fileUploadEnabledSource = new BehaviorSubject(true);
     currentAnalysisId = this.analysisIdSource.asObservable();
+    currentAnalysisToken = this.analysisTokenSource.asObservable();
+    currentAnalysisEnabled = this.analysisEnabledSource.asObservable();
+    currentFileUploadEnabled = this.fileUploadEnabledSource.asObservable();
 
     constructor() { }
 
     changeAnalysisId(analysisId: number) {
-        console.log(analysisId);
         this.analysisIdSource.next(analysisId);
+    }
+    changeAnalysisToken(analysisToken: string) {
+        this.analysisTokenSource.next(analysisToken);
+    }
+    changeAnalysisEnabled(analysisEnabled: boolean) {
+        this.analysisEnabledSource.next(analysisEnabled);
+    }
+    changeFileUploadEnabled(fileUploadEnabled: boolean) {
+        this.fileUploadEnabledSource.next(fileUploadEnabled);
     }
 }

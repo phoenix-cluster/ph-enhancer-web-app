@@ -4,12 +4,18 @@ import {Headers, Http, RequestOptions, ResponseContentType} from "@angular/http"
 import 'rxjs/add/operator/toPromise'
 import {Config} from "../model/config";
 
-@Injectable()
+import {Observable} from "rxjs/Observable";
+import {AnalysisJob} from "../model/analysisJob";
+import {PageOfLogFile} from "../model/pageOfLogFile";
+import {map} from "rxjs/operator/map";
 
+@Injectable()
 export class DoAnalysisService{
 
     private baseUrl = Config.baseUrl;
     private doAanlysisUrl :string = this.baseUrl + "analysis/do";
+    private getJobByTokenUrl = this.baseUrl + "/" + "analysis/getAnalysisJobByToken?"
+    private getPageOfLogByTokenUrl = this.baseUrl + "/" + "analysis/getPageOfLogByToken?";
     private headers = new Headers({'Content-type': 'application/json'});
 
     constructor(private http: Http) {
@@ -42,4 +48,24 @@ export class DoAnalysisService{
         console.log('A error occurred', error);
         return Promise.reject(error.message || error);
     }
+
+
+    get_analysis_job_by_token(token:string): Observable<AnalysisJob> {
+        if(token == null || token.length != 10){
+            return null;
+        }
+        return this.http.get(this.getJobByTokenUrl +"token=" + token)
+            .map(response => response.json())
+            .catch(this.handleError);
+    }
+
+    get_page_of_log_by_token(token:string, startLineNo:number): Observable<PageOfLogFile> {
+        if(token == null || token.length != 10){
+            return null;
+        }
+        return this.http.get(this.getPageOfLogByTokenUrl+ "token=" + token + "&startLineNo=" + startLineNo)
+            .map(response => response.json())
+            ;
+    }
+
 }

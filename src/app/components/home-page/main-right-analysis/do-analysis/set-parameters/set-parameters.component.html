@@ -14,17 +14,22 @@
     </div>
     {{minClusterSize}}
     <div class="form-row">
-        <button class="btn btn-lg btn-outline-primary outline" (click)="doAnalysis(content)">
+        <button class="btn btn-lg btn-outline-primary outline" (click)="doAnalysis(content)" [disabled]="!analysisEnabled" >
             Do Analysis
         </button>
     </div>
-</form>
-
-<h3>Check running status</h3>
+    <h3> ---------- </h3>
+<h3>Check Job Progress</h3>
+<input class="mb-2 mr-sm-2 mb-sm-0" [(ngModel)]="analysisJobToken" name="analysisJobTokenInput"  id="tokenInput" placeholder={{analysisJobToken}}>
 
     <div class="form-row">
-        <button class="btn btn-lg btn-outline-primary outline" (click)="doAnalysis(content)">
+        <button class="btn btn-lg btn-outline-primary outline" (click)="checkJobProgress()">
             goCheck
         </button>
     </div>
+
+
+
+</form>
+
 
