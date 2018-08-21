@@ -22,11 +22,13 @@ export class DoAnalysisService{
     }
 
 
-    public do_analysis(analysis_job_id:number, min_cluster_size:number): Promise<string> {
+    public do_analysis(analysis_job_id:number, min_cluster_size:number, userEmailAdd:string, isPublic:boolean): Promise<string> {
         const params = new URLSearchParams();
         let headers = new Headers({'Content-type': 'application/json'});
         headers.append('analysisId', String(analysis_job_id));
         headers.append('minClusterSize', String(min_cluster_size));
+        headers.append('userEmailAdd', String(userEmailAdd));
+        headers.append('isPublic', String(isPublic));
 
         const options = new RequestOptions({
             headers: headers,

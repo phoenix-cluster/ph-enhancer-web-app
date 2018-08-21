@@ -8,19 +8,19 @@
 
 
 <ng-template #content let-c="close" let-d="dismiss">
-    <h2 class="modal-title">Upload files for your assigned Analysis ID: {{analysisJobId}}</h2>
+    <!--<h2 class="modal-title">Upload files for your assigned Analysis ID: {{analysisJobId}}</h2>-->
 
 
-    <a [popover]="popTemplate" popoverTitle="Succed to apply analysis job ID." triggers="mouseenter:mouseleave"
-       container="body"
-       placement="right" html="true" (click)="gotoClusterDetails(value)">
+    <!--<a [popover]="popTemplate" popoverTitle="Succed to apply analysis job ID." triggers="mouseenter:mouseleave"-->
+       <!--container="body"-->
+       <!--placement="right" html="true" (click)="gotoClusterDetails(value)">-->
         <!--{{value | truncate_clusterid}}-->
-        {{value }}
-    </a>
-    <ng-template #popTemplate>
+        <!--{{value }}-->
+    <!--</a>-->
+    <!--<ng-template #popTemplate>-->
 
         <!--div [innerHtml]="html"></div-->
-    </ng-template>
+    <!--</ng-template>-->
 
     <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
         <span aria-hidden="true">&times;</span>
