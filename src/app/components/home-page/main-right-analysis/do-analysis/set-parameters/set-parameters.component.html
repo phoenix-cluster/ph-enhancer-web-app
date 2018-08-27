@@ -2,7 +2,7 @@
 
 <form role="form">
 
-    <h3>for job: {{analysisJobId}}</h3>
+    <h3 *ngIf="analysisJob">for job: {{analysisJob.accessionId}}</h3>
 
     <div class="">
         <!--<input class="form-check-input invisible" id="checkbox3" type="checkbox">-->

@@ -34,10 +34,10 @@ export class FileUploadService {
         return Promise.reject(error.message || error);
     }
 
-    conform_files(resultFileList: ResultFileList, myId:number): Promise<String> {
+    conform_files(resultFileList: ResultFileList, jobId:number): Promise<String> {
         const params = new URLSearchParams();
         let headers = new Headers();
-        headers.append('myId', String(myId))
+        headers.append('jobId', String(jobId))
 
         const options = new RequestOptions({
             headers: headers,

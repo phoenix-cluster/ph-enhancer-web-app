@@ -1,22 +1,23 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import {AnalysisJob} from "../model/analysisJob";
 
 @Injectable()
 export class AnalysisDataService{
 
-    analysisIdSource = new BehaviorSubject(0);
+    analysisJobSource = new BehaviorSubject(null);
     analysisTokenSource = new BehaviorSubject("");
     analysisEnabledSource = new BehaviorSubject(true);
     fileUploadEnabledSource = new BehaviorSubject(true);
-    currentAnalysisId = this.analysisIdSource.asObservable();
+    currentAnalysisJob = this.analysisJobSource.asObservable();
     currentAnalysisToken = this.analysisTokenSource.asObservable();
     currentAnalysisEnabled = this.analysisEnabledSource.asObservable();
     currentFileUploadEnabled = this.fileUploadEnabledSource.asObservable();
 
     constructor() { }
 
-    changeAnalysisId(analysisId: number) {
-        this.analysisIdSource.next(analysisId);
+    changeAnalysisJob(analysisJob: AnalysisJob) {
+        this.analysisJobSource.next(analysisJob);
     }
     changeAnalysisToken(analysisToken: string) {
         this.analysisTokenSource.next(analysisToken);

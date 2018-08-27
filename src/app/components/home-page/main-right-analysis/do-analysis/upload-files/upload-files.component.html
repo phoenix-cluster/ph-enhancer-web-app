@@ -134,9 +134,7 @@
         <button id="confirmFileButton" [disabled]="!fileUploadEnabled" type="button" class="btn btn-outline-primary "
             (click)="openConfirmPopup(confirmPopup)">Confirm Files
         </button>
-        <button id="openJobId"  type="button" class="btn btn-outline-primary "
-                (click)="openJobIdPopup()"> testJobIdpopup
-        </button>
+
         <button type="button" class="btn btn-outline-primary " (click)="c('Close click')">Close</button>
     </div>
 
@@ -147,7 +145,7 @@
 </button>
 
 <ng-template #confirmPopup let-c="close" let-d="dismiss">
-    <h2 class="modal-title">Confirm Upload files for your assigned Analysis ID: {{analysisJobId}}</h2>
+    <h2 class="modal-title">Confirm Upload files for your assigned Analysis ID: {{analysisJob.accessionId}}</h2>
 
     <div class="container modal-body">
     After confirming file list, you will not able to upload new files. Please click confirm to continue, cancel to
@@ -166,12 +164,12 @@
 
 <ng-template #jobIdPopup let-c="close" let-d="dismiss">
 
-    <h2 class="modal-title">Upload files for your assigned Analysis ID: {{analysisJobId}}</h2>
+    <h2 class="modal-title">Upload files for your assigned Analysis ID: {{analysisJob.accessionId}}</h2>
 
     <div class="container modal-body">
-
-    Your analysis job id/token are : <p style="color:red">{{analysisJobId }} <span style="color:blue">{{analysisJobToken}} </span>
+    Your analysis job id/token are : <p style="color:red">{{analysisJob.accessionId}} -  <span style="color:blue">{{analysisJobToken}} </span>
     </p>
+        b
     , please remember them for asking help or browsing analysis result;
 
     </div>

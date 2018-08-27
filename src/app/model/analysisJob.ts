@@ -6,4 +6,5 @@ export class AnalysisJob{
     status:string;
     isPublic:boolean;
     token:string;
+    accessionId:string;
 }

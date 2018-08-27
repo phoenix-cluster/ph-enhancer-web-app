@@ -6,6 +6,7 @@ import {FileUploadService} from "../../../../../services/file-upload.service";
 import {ResultFileList} from "../../../../../model/resultFileList";
 import {Popup} from 'ng2-opd-popup';
 import {AnalysisDataService} from "../../../../../services/analysis-data.service";
+import {AnalysisJob} from "../../../../../model/analysisJob";
 
 @Component({
     selector: 'app-upload-files',
@@ -13,6 +14,7 @@ import {AnalysisDataService} from "../../../../../services/analysis-data.service
     styleUrls: ['./upload-files.component.scss'],
 })
 export class UploadFilesComponent implements OnInit {
+    analysisJob:AnalysisJob;
     analysisJobId: number;
     analysisJobToken:string;
     fileUploadEnabled:boolean;
@@ -78,7 +80,10 @@ export class UploadFilesComponent implements OnInit {
 
     ngOnInit() {
         this.initUploader();
-        this.analysisData.currentAnalysisId.subscribe(analysisId => this.analysisJobId = analysisId);
+        this.analysisData.currentAnalysisJob.subscribe(analysisJob => {this.analysisJob = analysisJob;
+            if(this.analysisJob != null) {
+                this.analysisJobId = analysisJob.id
+            }});
         this.analysisData.currentAnalysisToken.subscribe(analysisToken => this.analysisJobToken = analysisToken);
         this.analysisData.currentFileUploadEnabled.subscribe(fileUploadEnabled=> this.fileUploadEnabled= fileUploadEnabled);
     }
@@ -138,18 +143,22 @@ export class UploadFilesComponent implements OnInit {
         if (this.analysisJobId == 0) {
             this.fileUploadService.apply_an_analysis_job().then(
                 analysisJob => {
+                    console.log(analysisJob);
+                    this.analysisJob = this.analysisJob;
                     this.analysisJobId = analysisJob.id;
-                    this.analysisData.changeAnalysisId(analysisJob.id);
+                    this.analysisData.changeAnalysisJob(analysisJob);
                     this.analysisJobToken = analysisJob.token;
                     this.analysisData.changeAnalysisToken(analysisJob.token);
-                    this.uploader.options.headers = [{name: 'myId', value: String(this.analysisJobId)}];
+                    this.uploader.options.headers = [{name: 'jobId', value: String(this.analysisJob.id)},
+                                                    {name: 'accessionId', value: String(this.analysisJob.accessionId)}];
                     // alert("Your analysis job id is :" + this.analysisJobId + ", please remember this id and use it for help or result checking");
                     // this.popup1.show();
                     this.openJobIdPopup(jobIdPopup);
                     item.upload();
                 })
         }else{
-            this.uploader.options.headers = [{name: 'myId', value: String(this.analysisJobId)}];
+            this.uploader.options.headers = [{name: 'jobId', value: String(this.analysisJob.id)},
+                {name: 'accessionId', value: String(this.analysisJob.accessionId)}];
             item.upload();
         }
     }
@@ -159,17 +168,20 @@ export class UploadFilesComponent implements OnInit {
             this.fileUploadService.apply_an_analysis_job().then(
                 analysisJob => {
                     this.analysisJobId = analysisJob.id;
-                    this.analysisData.changeAnalysisId(analysisJob.id);
+                    this.analysisJob = this.analysisJob;
+                    this.analysisData.changeAnalysisJob(analysisJob);
                     this.analysisJobToken = analysisJob.token;
                     this.analysisData.changeAnalysisToken(analysisJob.token);
-                    this.uploader.options.headers = [{name: 'myId', value: String(this.analysisJobId)}];
+                    this.uploader.options.headers = [{name: 'jobId', value: String(this.analysisJob.id)},
+                        {name: 'accessionId', value: String(this.analysisJob.accessionId)}];
                     // alert("Your analysis job id is :" + this.analysisJobId + ", please remember this id and use it for help or result checking");
                     // this.popup1.show();
                     this.openJobIdPopup(jobIdPopup);
                     this.uploader.uploadAll();
                 })
         }else{
-            this.uploader.options.headers = [{name: 'myId', value: String(this.analysisJobId)}];
+            this.uploader.options.headers = [{name: 'jobId', value: String(this.analysisJob.id)},
+                {name: 'accessionId', value: String(this.analysisJob.accessionId)}];
             this.uploader.uploadAll();
         }
     }

@@ -4,6 +4,7 @@ import {DoAnalysisService} from "../../../../../services/do-analysis.service";
 import {AnalysisDataService} from "../../../../../services/analysis-data.service";
 import {Router} from "@angular/router";
 import {_catch} from "rxjs/operator/catch";
+import {AnalysisJob} from "../../../../../model/analysisJob";
 // import { NG_VALIDATORS,Validator, Validators,AbstractControl,ValidatorFn } from '@angular/forms';
 
 @Component({
@@ -13,6 +14,7 @@ import {_catch} from "rxjs/operator/catch";
 })
 export class SetParametersComponent implements OnInit {
     analysisJobId:number;
+    analysisJob:AnalysisJob;
     analysisJobToken:string;
     analysisEnabled:boolean;
     userEmailAdd:string;
@@ -23,7 +25,10 @@ export class SetParametersComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.analysisData.currentAnalysisId.subscribe(analysisId => this.analysisJobId = analysisId);
+        this.analysisData.currentAnalysisJob.subscribe(analysisJob => {this.analysisJob = analysisJob;
+            if(this.analysisJob != null) {
+                this.analysisJobId = analysisJob.id
+            }});
         this.analysisData.currentAnalysisToken.subscribe(analysisToken => this.analysisJobToken = analysisToken);
         this.analysisData.currentAnalysisEnabled.subscribe(analysisEnabled=> this.analysisEnabled = analysisEnabled);
     }
@@ -34,7 +39,7 @@ export class SetParametersComponent implements OnInit {
             return;
         }
         // console.log(this.isEmailValidated(this.userEmailAdd));
-        if(!this.isEmailValidated(this.userEmailAdd)){
+        if(this.userEmailAdd == null || !this.isEmailValidated(this.userEmailAdd)){
             alert("Please input a validated email address");
             return;
         }
