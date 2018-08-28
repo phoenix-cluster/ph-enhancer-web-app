@@ -25,14 +25,14 @@ export class PsmTableService{
      //  .catch(this.handleError);
 	// }
 
-    getPsmsPage(projectId:string, psmType:string, page:Page): Promise<PSMsPage>{
+    getPsmsPage(identifier:string, psmType:string, page:Page): Promise<PSMsPage>{
         // console.log(page);
         if(psmType == "newid" && page.sortField == "confidentScore"){
             page.sortField = "recommConfidentScore";
         }
 
         let psmsUrl = this.baseUrl + psmType + "?"
-            + "projectId=" + projectId
+            + "identifier=" + identifier
             + "&page=" + page.pageNumber
             + "&size=" + page.size
             + "&sortField=" + page.sortField
@@ -102,8 +102,8 @@ export class PsmTableService{
     //   .catch(this.handleError);
     // }
 
-    public uploadUserAcceptance(projectId:string, psmType:string, acceptanceMap:Map<number, number>) {
-        let uploadUrl = this.baseUrl.concat("updateAcceptance?projectId=" + projectId + "&psmtype=" + psmType);
+    public uploadUserAcceptance(identifier:string, psmType:string, acceptanceMap:Map<number, number>) {
+        let uploadUrl = this.baseUrl.concat("updateAcceptance?identifier=" + identifier + "&psmtype=" + psmType);
         let options = new RequestOptions({headers: this.headers});
         let mapKeys = acceptanceMap.keys();
         let jsonStr = "{";

@@ -18,9 +18,9 @@ export class StatisticsService {
                 ) {
     }
 
-    public getHistData(projectId:string,psmType:string, fieldType: string): Promise<HistgramBin[]> {
+    public getHistData(identifier:string,psmType:string, fieldType: string): Promise<HistgramBin[]> {
         let histDataUrl = this.baseUrl + "statistics/histogram?" +
-                "projectId=" + projectId +
+                "identifier=" + identifier +
                 "&numBins=" + "20" +
                 "&psmType=" + psmType +
                 "&fieldType=" + fieldType;
@@ -48,9 +48,9 @@ export class StatisticsService {
                 .catch(this.handleError);
     }
 
-    public getThresholds(projectId: string): Promise<Thresholds> {
+    public getThresholds(identifier: string): Promise<Thresholds> {
         let dataUrl = this.baseUrl + "statistics/thresholds?" +
-            "projectId=" + projectId ;
+            "identifier=" + identifier ;
         return this.http.get(dataUrl)
             .toPromise()
             .then(response => {
@@ -60,9 +60,9 @@ export class StatisticsService {
             .catch(this.handleError);
     }
 
-    public getVennData(projectId: string): Promise<VennData> {
+    public getVennData(identifier: string): Promise<VennData> {
         let dataUrl = this.baseUrl + "statistics/venndata?" +
-            "projectId=" + projectId ;
+            "identifier=" + identifier ;
         return this.http.get(dataUrl)
             .toPromise()
             .then(response => {
