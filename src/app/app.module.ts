@@ -23,9 +23,7 @@ import {HomePageComponent} from './components/home-page/home-page.component';
 
 import {MainLeftMetricsComponent} from './components/home-page/main-left-metrics/main-left-metrics.component';
 import {Chart1Component} from './components/home-page/main-left-metrics/chart1/chart1.component';
-import {Chart2Component} from './components/home-page/main-left-metrics/chart2/chart2.component';
 import {Chart3Component} from './components/home-page/main-left-metrics/chart3/chart3.component';
-import {Chart4Component} from './components/home-page/main-left-metrics/chart4/chart4.component';
 import {DescriptionComponent} from './components/home-page/main-left-metrics/description/description.component';
 
 import {MainRightAnalysisComponent} from './components/home-page/main-right-analysis/main-right-analysis.component';
@@ -78,8 +76,6 @@ import { JobProgressComponent } from './components/job-progress/job-progress.com
         MainLeftMetricsComponent,
         MainRightAnalysisComponent,
         Chart1Component,
-        Chart2Component,
-        Chart4Component,
         Chart3Component,
         DescriptionComponent,
         CheckExamplesComponent,
