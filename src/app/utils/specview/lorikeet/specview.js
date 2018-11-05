@@ -2498,25 +2498,25 @@ var ui = require('jquery-ui');
         return ionRow;
     }
     /* scroll action*/ 
-    (function scroll(){
-        $(window).scroll(function(event){
-            event.stopPropagation();
-            var s=$(window).scrollTop();
-            if(s>=10){
-                
-            $(".mdb-color").addClass('slide-btn');
-            $(".header").addClass('position');
-            
-            }
-            
-            else{
-                $('.mdb-color').removeClass('slide-btn');
-                $('.header').removeClass('position');
-            }
-            });
-        
-
-    })()
+    // (function scroll(){
+    //     $(window).scroll(function(event){
+    //         event.stopPropagation();
+    //         var s=$(window).scrollTop();
+    //         if(s>=10){
+    //
+    //         $(".mdb-color").addClass('slide-btn');
+    //         $(".header").addClass('position');
+    //
+    //         }
+    //
+    //         else{
+    //             $('.mdb-color').removeClass('slide-btn');
+    //             $('.header').removeClass('position');
+    //         }
+    //         });
+    //
+    //
+    // })()
     /* nav selected*/ 
     $(function(){
         $('.nav li').click(function(event){

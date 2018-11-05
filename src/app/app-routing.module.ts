@@ -14,6 +14,7 @@ import { HighConfPsmsComponent } from './components/high-conf-psms/high-conf-psm
 import { NewIdentifiedComponent } from './components/new-identified/new-identified.component';
 import { ClusterDetailsComponent } from './components/cluster-details/cluster-details.component';
 import {JobProgressComponent} from "./components/job-progress/job-progress.component";
+import {HelpPageComponent} from "./components/help-page/help-page.component";
 
 const routes: Routes = [
     {path: '', redirectTo: '/index', pathMatch: 'full'},
@@ -23,6 +24,7 @@ const routes: Routes = [
     {path: 'new_id/:project', component: NewIdentifiedComponent},
     {path: 'cluster_details/:clusterId', component: ClusterDetailsComponent},
     {path: 'job_progress/:jobToken', component: JobProgressComponent},
+    {path: 'help', component: HelpPageComponent},
 ];
 
 @NgModule({

@@ -1,8 +1,0 @@
-assets/js/lorikeet/specview.js:    // plugin name - specview
-assets/js/lorikeet/specview.js:	$.fn.specview = function (opts) {
-components/low-conf-psms/spectra-comparer/spectra-comparer.component.ts:import "../../../assets/js/lorikeet/specview.js";
-components/low-conf-psms/spectra-comparer/spectra-comparer.component.ts:        $("#lorikeet").specview({
-assets/js/lorikeet/specview.js:    // plugin name - specview
-assets/js/lorikeet/specview.js:	$.fn.specview = function (opts) {
-components/low-conf-psms/spectra-comparer/spectra-comparer.component.ts:import "../../../assets/js/lorikeet/specview.js";
-components/low-conf-psms/spectra-comparer/spectra-comparer.component.ts:        $("#lorikeet").specview({

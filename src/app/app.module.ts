@@ -64,6 +64,7 @@ import { SequencesPieChartComponent } from './components/cluster-details/sequenc
 import { ProjectsPieChartComponent } from './components/cluster-details/projects-pie-chart/projects-pie-chart.component';
 import { ClusterSpecCompareComponent } from './components/cluster-details/cluster-spec-compare/cluster-spec-compare.component';
 import { JobProgressComponent } from './components/job-progress/job-progress.component';
+import { HelpPageComponent } from './components/help-page/help-page.component';
 
 
 
@@ -102,6 +103,7 @@ import { JobProgressComponent } from './components/job-progress/job-progress.com
         ProjectsPieChartComponent,
         ClusterSpecCompareComponent,
         JobProgressComponent,
+        HelpPageComponent,
     ],
     imports: [
         BrowserModule,

@@ -100,6 +100,10 @@ export class AppHeaderComponent implements OnInit {
                 return "job";
             }
 
+            if(pageName == "help") {
+                return "help";
+            }
+
         }
         patern = /\/(\w+)/g;
         a = patern.exec(currentUrl);

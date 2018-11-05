@@ -14,22 +14,22 @@
         <input class="mb-2 mr-sm-2 mb-sm-0" [(ngModel)]="minClusterSize" name="minClusterSizeInput" (ngModelChange)="onMinClusterSizeChange($event)" id="minSize" placeholder={{minClusterSize}}>
            <!--Please input your email address:-->
         </div>
-        <div class="form-group">
-            <label for="emailaddress">Email Address</label>
-            <input type="text" class="form-control" id="emailaddress"
+        <span class="form-group" style="white-space:nowrap">
+            <label for="emailaddress" class="form-check-label" style="display: inline-block"  >Email Address</label>
+            <input type="text" class="form-control form-check-label" id="emailaddress" style="display: inline-block; width: 250px"
                    required
                    [(ngModel)]="userEmailAdd" name="email"
                    pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
                    #email="ngModel">
+
+        </span>
             <div [hidden]="email.valid || email.pristine"
-                 class="alert alert-danger">
+                 class="alert alert-danger ">
                 <div [hidden]="!email.hasError('required')">Email is required</div>
                 <div [hidden]="!email.hasError('pattern')">Email format should be
                     <small><b>joe@abc.com</b></small>
                 </div>
             </div>
-        </div>
-
         <div class="form-check abc-checkbox">
             <input class="form-check-input invisible" id="checkbox_make_public" type="checkbox"
                    [(checked)]="makeResultsPublic" (click)="onMakePublicCheck(event)">
@@ -43,7 +43,8 @@
             Do Analysis
         </button>
     </div>
-    <h3> ---------- </h3>
+
+<hr>
 <h3>Check Job Progress</h3>
 <input class="mb-2 mr-sm-2 mb-sm-0" [(ngModel)]="analysisJobToken" name="analysisJobTokenInput"  id="tokenInput" placeholder={{analysisJobToken}}>
 
@@ -53,7 +54,7 @@
         </button>
     </div>
 
-
+<hr>
 <h3>Start a New Analysis Job </h3>
     <div class="form-row">
         <button class="btn btn-lg btn-outline-primary outline" (click)="refreshPage()">
