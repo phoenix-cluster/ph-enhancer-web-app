@@ -88,8 +88,10 @@ export class PsmTablesComponent implements OnInit {
             var endIndex = i + 100;
             if (endIndex > spectraTitles.length) endIndex = spectraTitles.length;
             var tempSpectraTitlesStr = spectraTitles.slice(i, endIndex).join("||");
+            //            console.log(tempSpectraTitlesStr);
             this.spectrumService.getSpectra(tempSpectraTitlesStr)
                 .then(spectra => {
+                //console.log(spectra);
                         this.spec_rows = this.spec_rows.concat(spectra);
                         this.selectedSpectrum = this.spec_rows[0];
                         // console.log(this.selectedSpectrum);

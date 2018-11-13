@@ -171,6 +171,7 @@ export class SpectraComparerComponent implements OnChanges {
         }
         if (mzArray.length != intensArray.length) {
             console.error("Error, the length of mzArray and intensArray is diffrent");
+            return null;
         }
 
         let peaks = [];
