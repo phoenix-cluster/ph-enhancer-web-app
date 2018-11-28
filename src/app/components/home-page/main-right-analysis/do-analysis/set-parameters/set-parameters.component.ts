@@ -17,6 +17,7 @@ export class SetParametersComponent implements OnInit {
     analysisJob:AnalysisJob;
     analysisJobToken:string;
     analysisEnabled:boolean;
+    fileUploadEnabled:boolean;
     userEmailAdd:string;
     makeResultsPublic:boolean = false;
     public minClusterSize:number = Config.defaultMinClusterSize;
@@ -31,11 +32,19 @@ export class SetParametersComponent implements OnInit {
             }});
         this.analysisData.currentAnalysisToken.subscribe(analysisToken => this.analysisJobToken = analysisToken);
         this.analysisData.currentAnalysisEnabled.subscribe(analysisEnabled=> this.analysisEnabled = analysisEnabled);
+        this.analysisData.currentFileUploadEnabled.subscribe(fileUploadEnabled=> this.fileUploadEnabled= fileUploadEnabled);
     }
 
     doAnalysis() {
-        if(this.analysisJobId <= 0){
+
+        if(this.analysisJobId == null || this.analysisJobId <= 0){
             alert("Please upload your files firstly");
+            return;
+        }
+
+        if(this.fileUploadEnabled){
+            console.log(this.analysisJobId);
+            alert("Please confirm your files in uploading component.");
             return;
         }
         // console.log(this.isEmailValidated(this.userEmailAdd));

@@ -135,7 +135,7 @@
             (click)="openConfirmPopup(confirmPopup)">Confirm Files
         </button>
 
-        <button type="button" class="btn btn-outline-primary " (click)="c('Close click')">Close</button>
+        <button type="button" class="btn btn-outline-primary " [disabled]="fileUploadEnabled" (click)="c('Close click')">Close</button>
     </div>
 
 </ng-template>
@@ -157,7 +157,7 @@
         <button id="confirmFileButton2" [disabled]="!fileUploadEnabled" type="button" class="btn btn-outline-primary "
                 (click)="confirmFilesForSure()">Confirm Files
         </button>
-        <button type="button" class="btn btn-outline-primary " (click)="c('Close click')">Close</button>
+        <button type="button"  class="btn btn-outline-primary " (click)="c('Close click')">Close</button>
     </div>
 
 </ng-template>
