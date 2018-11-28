@@ -151,7 +151,9 @@
                 Recommend<br>Peptide
             </ng-template>
             <ng-template let-value="value" ngx-datatable-cell-template>
-                {{value|truncate: 20}}
+                <a target="_blank" href="http://wwwdev.ebi.ac.uk/pride/peptidesearch?keyword={{value.replace('R_NEW_','').replace('R_Better_','')}}&page=0&pageSize=10">
+                    {{value.replace("R_NEW_","").replace('R_Better_','')}}
+                </a>
             </ng-template>
         </ngx-datatable-column>
 

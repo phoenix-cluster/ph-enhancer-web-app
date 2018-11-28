@@ -137,6 +137,8 @@ export class UploadFilesComponent implements OnInit {
                 console.log(status)
             }
         )
+        document.getElementById("confirmPopup").style.display = "none";
+
     }
 
     public uploadItem(item: any, jobIdPopup:any) {
