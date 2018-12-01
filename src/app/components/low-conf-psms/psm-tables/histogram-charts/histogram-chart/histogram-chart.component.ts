@@ -75,7 +75,7 @@ export class HistogramChartComponent implements OnChanges{
     ngOnChanges(): void {
         if(this.histBins == null || this.histBins.length <1 ||
            this.activedPsm == null || this.activedPsm.rank <0 ||
-           this.activedBinRange == null || this.activedBinRange[0].rank < 0 || this.activedBinRange[1].rank < 0){
+           this.activedBinRange == null || this.activedBinRange.length<1 || this.activedBinRange[0].rank < 0 || this.activedBinRange[1].rank < 0){
             return ;
         }
         this.showHis = true;

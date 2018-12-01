@@ -55,25 +55,36 @@ export class HistogramChartsComponent implements OnChanges {
 
     ngOnChanges(): void {
       // console.log(this.sortField);
-        if (this.psmType == "newid" && this.confScoreHistArray.length < 1) {
-            this.statisticsService.getHistData(this.projectId,this.psmType, "recommConfScore").then(bins=>{this.confScoreHistArray = bins;} );
+        if (this.psmType == "newid" && (this.confScoreHistArray ==null || this.confScoreHistArray.length < 1)) {
+            // this.statisticsService.getHistData(this.projectId,this.psmType, "recommConfScore").then(bins=>{this.confScoreHistArray = bins;} );
+            var promise1 =this.statisticsService.getHistData(this.projectId,this.psmType, "recommConfScore");
         }
 
-        if (this.psmType != "newid" && this.confScoreHistArray.length < 1) {
-            this.statisticsService.getHistData(this.projectId,this.psmType, "confScore").then(bins=>{this.confScoreHistArray = bins;} );
+        else if (this.psmType != "newid" && (this.confScoreHistArray==null || this.confScoreHistArray.length < 1)) {
+            // this.statisticsService.getHistData(this.projectId,this.psmType, "confScore").then(bins=>{this.confScoreHistArray = bins;} );
+            var promise1 =this.statisticsService.getHistData(this.projectId,this.psmType, "confScore");
         }
 
-        if (this.clusterRatioHistArray.length < 1) {
-            this.statisticsService.getHistData(this.projectId,this.psmType, "clusterRatio").then(
-                bins=>{
-                    this.clusterRatioHistArray = bins;
-                });
+        if (this.clusterRatioHistArray == null || this.clusterRatioHistArray.length < 1) {
+            var promise2 = this.statisticsService.getHistData(this.projectId,this.psmType, "clusterRatio");
+            // this.statisticsService.getHistData(this.projectId,this.psmType, "clusterRatio").then(
+            //     bins=>{
+            //         this.clusterRatioHistArray = bins;
+            //     });
         }
 
-        if (this.clusterSizeHistArray.length < 1) {
-            this.statisticsService.getHistData(this.projectId,this.psmType, "clusterSize").then(bins=>{this.clusterSizeHistArray = bins});
+        if (this.clusterSizeHistArray==null || this.clusterSizeHistArray.length < 1) {
+            // this.statisticsService.getHistData(this.projectId,this.psmType, "clusterSize").then(bins=>{this.clusterSizeHistArray = bins});
+            var promise3 = this.statisticsService.getHistData(this.projectId,this.psmType, "clusterSize");
         }
 
+        Promise.all([promise1,promise2, promise3]).then(values =>{
+            console.log(values);
+            this.confScoreHistArray = values[0];
+            this.clusterRatioHistArray = values[1];
+            this.clusterSizeHistArray = values[2];
+
+        console.log(this.activedPsm);
         if(this.activedPsm) {
             let scoreRank = this.getBinRank(this.confScoreHistArray, this.activedPsm.confidentScore);
             this.activedConfScoreBin = {
@@ -93,7 +104,7 @@ export class HistogramChartsComponent implements OnChanges {
                 "value": this.activedPsm.clusterSize
             }
         }
-
+        console.log(this.activedPage);
         if(this.activedPage) {
             let confScoreRange = [{rank: -1, value: 0}, {rank: -1, value: 0}];  //one is lowest, another is highest
             confScoreRange[0].rank = this.getBinRank(this.confScoreHistArray, this.activedPage[0].confidentScore)
@@ -117,15 +128,16 @@ export class HistogramChartsComponent implements OnChanges {
             clusterSizeRange[1].value = this.activedPage[this.activedPage.length - 1].clusterSize;
             this.activedClusterSizeBinRange = clusterSizeRange;
 
-            this.scores = this.activedPage.map((p) => p.confidentScore);            
-            this.ratios = this.activedPage.map((p) => p.clusterRatio);      
+            this.scores = this.activedPage.map((p) => p.confidentScore);
+            this.ratios = this.activedPage.map((p) => p.clusterRatio);
             this.sizes  = this.activedPage.map((p) => p.clusterSize);
         }
+        });
     }
 
     getBinRank(histogramArray:any[], score:number):number{
 
-        if(histogramArray.length < 1) return -1;
+        if(histogramArray==null || histogramArray.length < 1) return -1;
 
         if(score <= histogramArray[0].upperBound) {
             return histogramArray[0].rank;
@@ -150,13 +162,13 @@ export class HistogramChartsComponent implements OnChanges {
         //     }
         // }
         // return bin;
-    
+
 
     // getBinRange(histogramArray: any[], top: number, btm: number): any {
     //     let range = [{rank: 0, lower: 0},
     //                  {rank: 0, top: 0},
     //                  {rank: 0, avtivedPsmValue: 0}];
-        
+
     //     if(histogramArray.length < 1) return range;
     // }
 

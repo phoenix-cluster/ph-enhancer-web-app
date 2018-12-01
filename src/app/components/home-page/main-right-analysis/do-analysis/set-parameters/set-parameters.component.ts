@@ -61,10 +61,12 @@ export class SetParametersComponent implements OnInit {
             " job:" +this.analysisJobId+ " with cluster Size "+ this.minClusterSize;
         alert(message);
 
+        this.analysisEnabled = false;
+        this.analysisData.changeAnalysisEnabled(false);
+        this.router.navigateByUrl("job_progress/" + this.analysisJobToken).then(_ =>{console.log("route changed to job_progress")});
         this.doAnalysisService.do_analysis(this.analysisJobId, this.minClusterSize, this.userEmailAdd, this.makeResultsPublic).then(
             response=>{
-                this.analysisEnabled = false;
-                this.analysisData.changeAnalysisEnabled(false);
+                console.log(response);
             }
         )
     }
