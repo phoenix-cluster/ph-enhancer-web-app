@@ -140,8 +140,10 @@ a:active {
 header {
     padding: 2em 0 2em 0;
     text-align: center;
-    background: #409f89;
-    color: #fff;
+    background: #fff;
+    color: #409f89;
+    /*border-color: #00bfa5;*/
+    /*border-style: dashed;*/
 }
 
 
@@ -429,7 +431,7 @@ input:focus {
 
 
     header {
-        padding: 4em 0 4em 0;
+        padding: 2em 0 2em 0;
     }
 
     .container {

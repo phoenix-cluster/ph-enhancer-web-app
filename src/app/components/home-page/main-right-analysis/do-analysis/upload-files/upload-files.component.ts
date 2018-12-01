@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {ModalDismissReasons, NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {ModalDismissReasons, NgbActiveModal, NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {FileUploader, FileItem, ParsedResponseHeaders} from "ng2-file-upload";
 import {Config} from "../../../../../model/config"
 import {FileUploadService} from "../../../../../services/file-upload.service";
@@ -21,6 +21,7 @@ export class UploadFilesComponent implements OnInit {
     closeResult: string;
     uploadUrl = Config.baseUrl + "file/upload";
     public uploader: FileUploader;
+    modalReference:NgbModalRef;
 
     constructor(private modalService: NgbModal, private fileUploadService: FileUploadService,
                  private analysisData:AnalysisDataService) {
@@ -40,7 +41,8 @@ export class UploadFilesComponent implements OnInit {
     }
 
     open(content) {
-        this.modalService.open(content, {windowClass: "hugeModal"}).result.then((result) => {
+        this.modalReference = this.modalService.open(content, {windowClass: "hugeModal"});
+        this.modalReference.result.then((result) => {
             this.closeResult = `Closed with: ${result}`;
         }, (reason) => {
             this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -56,15 +58,7 @@ export class UploadFilesComponent implements OnInit {
     }
 
     openConfirmPopup(confirmPopup) {
-        if (this.uploader.queue.length < 1) {
-            alert("You have not select any files.");
-            return;
-        }
-        this.modalService.open(confirmPopup, {windowClass: "hugeModal"}).result.then((result) => {
-            this.closeResult = `Closed with: ${result}`;
-        }, (reason) => {
-            this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-        });
+
     }
 
 
@@ -137,8 +131,7 @@ export class UploadFilesComponent implements OnInit {
                 console.log(status)
             }
         )
-        document.getElementById("confirmPopup").style.display = "none";
-
+        this.modalReference.close();
     }
 
     public uploadItem(item: any, jobIdPopup:any) {
@@ -155,7 +148,7 @@ export class UploadFilesComponent implements OnInit {
                                                     {name: 'accessionId', value: String(this.analysisJob.accessionId)}];
                     // alert("Your analysis job id is :" + this.analysisJobId + ", please remember this id and use it for help or result checking");
                     // this.popup1.show();
-                    this.openJobIdPopup(jobIdPopup);
+                    // this.openJobIdPopup(jobIdPopup);
                     item.upload();
                 })
         }else{
@@ -178,7 +171,7 @@ export class UploadFilesComponent implements OnInit {
                         {name: 'accessionId', value: String(this.analysisJob.accessionId)}];
                     // alert("Your analysis job id is :" + this.analysisJobId + ", please remember this id and use it for help or result checking");
                     // this.popup1.show();
-                    this.openJobIdPopup(jobIdPopup);
+                    // this.openJobIdPopup(jobIdPopup);
                     this.uploader.uploadAll();
                 })
         }else{
