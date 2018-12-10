@@ -18,6 +18,6 @@ export class Page {
 
     sortField:string = 'confidentScore';
 
-    sortDirection:string = 'asc';
+    sortDirection:string = 'desc';
 
 }
