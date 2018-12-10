@@ -23,7 +23,7 @@ export class SpectrumService {
         //        console.log(spectraUrl);
         let spectra = this.localStorageService.getData("spectra_" + titlesStr);
         if(spectra != null && spectra.length > 0) {
-            console.log(spectra);
+            // console.log(spectra);
             return new Promise(resolve => resolve(spectra));
         }else {
             return this.http.get(spectraUrl)

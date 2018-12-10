@@ -130,6 +130,8 @@ export class PsmTablesComponent implements OnInit {
             this.loading = false;
             this.simplifyPsmRows();
             this.setSpectrumTable(this.psm_rows[0].spectraTitles);
+            // console.log(this.selectedPsm);
+            // console.log(this.psm_rows_sim);
         });
     }
 

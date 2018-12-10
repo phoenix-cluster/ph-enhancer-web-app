@@ -55,6 +55,9 @@ export class HistogramChartsComponent implements OnChanges {
 
     ngOnChanges(): void {
       // console.log(this.sortField);
+        if(this.confScoreHistArray!=null && this.confScoreHistArray.length>=1)
+            return;
+
         if (this.psmType == "newid" && (this.confScoreHistArray ==null || this.confScoreHistArray.length < 1)) {
             // this.statisticsService.getHistData(this.projectId,this.psmType, "recommConfScore").then(bins=>{this.confScoreHistArray = bins;} );
             var promise1 =this.statisticsService.getHistData(this.projectId,this.psmType, "recommConfScore");
@@ -79,12 +82,12 @@ export class HistogramChartsComponent implements OnChanges {
         }
 
         Promise.all([promise1,promise2, promise3]).then(values =>{
-            console.log(values);
+            // console.log(values);
             this.confScoreHistArray = values[0];
             this.clusterRatioHistArray = values[1];
             this.clusterSizeHistArray = values[2];
 
-        console.log(this.activedPsm);
+        // console.log(this.activedPsm);
         if(this.activedPsm) {
             let scoreRank = this.getBinRank(this.confScoreHistArray, this.activedPsm.confidentScore);
             this.activedConfScoreBin = {
@@ -104,7 +107,7 @@ export class HistogramChartsComponent implements OnChanges {
                 "value": this.activedPsm.clusterSize
             }
         }
-        console.log(this.activedPage);
+        // console.log(this.activedPage);
         if(this.activedPage) {
             let confScoreRange = [{rank: -1, value: 0}, {rank: -1, value: 0}];  //one is lowest, another is highest
             confScoreRange[0].rank = this.getBinRank(this.confScoreHistArray, this.activedPage[0].confidentScore)
