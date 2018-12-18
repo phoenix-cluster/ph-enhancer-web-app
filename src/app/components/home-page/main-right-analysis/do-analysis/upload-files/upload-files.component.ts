@@ -7,6 +7,7 @@ import {ResultFileList} from "../../../../../model/resultFileList";
 import {Popup} from 'ng2-opd-popup';
 import {AnalysisDataService} from "../../../../../services/analysis-data.service";
 import {AnalysisJob} from "../../../../../model/analysisJob";
+import {queue} from "rxjs/scheduler/queue";
 
 @Component({
     selector: 'app-upload-files',
@@ -95,6 +96,7 @@ export class UploadFilesComponent implements OnInit {
         });
         this.uploader.onErrorItem = (item, response, status, headers) => this.onErrorItem(item, response, status, headers);
         this.uploader.onSuccessItem = (item, response, status, headers) => this.onSuccessItem(item, response, status, headers);
+        this.resultFileList = new ResultFileList();
     }
 
 
@@ -107,24 +109,44 @@ export class UploadFilesComponent implements OnInit {
         this.confirmFilesForSure();
     }
 
+    //check file types
+    isFileTypesSet(){
+        console.log(this.uploader, queue);
+        for (let i = 0; i < this.uploader.queue.length; i++) {
+            let fileItem = this.uploader.queue[i];
+            //we only use headers[0] to store the information here
+            if (fileItem.headers.length !=1 || !("filetype" in fileItem.headers[0]) || fileItem.headers[0]["filetype"] == "none"){
+                console.log(fileItem);
+                alert("Please set the file type for file" + ": " + (i+1) +" " + fileItem.file.name)
+                return false;
+            }
+        }
+        return true;
+    }
+
     confirmFilesForSure(){
         // this.popup2.hide();
-        this.resultFileList = new ResultFileList();
+
+        if(!this.isFileTypesSet()){
+            return;
+        }
+
         for (let i = 0; i < this.uploader.queue.length; i++) {
             let fileItem = this.uploader.queue[i];
             if (fileItem.isSuccess != true || fileItem.isUploaded != true) {
                 alert("File " + fileItem.file.name + "is not uploaded or not success!")
                 return;
             }
-            if(this.resultFileList.fileList.indexOf(fileItem.file.name) >=0 ){
+            if(this.resultFileList.isFileinList(fileItem.file.name) ){
                 alert("multiple files with same filename" + fileItem.file.name + ", the latest uploaded file will overwrite the previous ones.")
                 continue;
             }
-            this.resultFileList.fileList.push(fileItem.file.name);
+            this.resultFileList.addFile(fileItem.file.name,fileItem.headers[0]["filetype"] );
         }
         this.uploader.options.disableMultipart = true;
         this.uploader.options.allowedMimeType = [];
         this.analysisData.changeFileUploadEnabled(false);
+        console.log(this.resultFileList);
         this.resultFileList.fileListLength = this.uploader.queue.length;
         this.fileUploadService.conform_files(this.resultFileList, this.analysisJobId).then(
             status => {
@@ -135,6 +157,11 @@ export class UploadFilesComponent implements OnInit {
     }
 
     public uploadItem(item: any, jobIdPopup:any) {
+
+        if(!this.isFileTypesSet()){
+            return;
+        }
+
         if (this.analysisJobId == 0) {
             this.fileUploadService.apply_an_analysis_job().then(
                 analysisJob => {
@@ -159,6 +186,11 @@ export class UploadFilesComponent implements OnInit {
     }
 
     public uploadAll(jobIdPopup:any) {
+
+        if(!this.isFileTypesSet()){
+            return;
+        }
+
         if (this.analysisJobId == 0) {
             this.fileUploadService.apply_an_analysis_job().then(
                 analysisJob => {
@@ -180,6 +212,14 @@ export class UploadFilesComponent implements OnInit {
             this.uploader.uploadAll();
         }
     }
+
+    public uploadFileTypeChange(value:any, item:FileItem){
+        item.headers.push({"filetype":value});
+        console.log(item.headers[0]);
+    }
+
+
+
 
     // public popupConfirmEvent(){
     //     this.popup1.hide();

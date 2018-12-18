@@ -49,7 +49,7 @@
                 <!--<input type="file" ng2FileSelect [uploader]="uploader"/>-->
             </div>
 
-            <div class="col-md-9" style="margin-bottom: 40px">
+            <div class="col-md-7" style="margin-bottom: 40px">
 
                 <h3>Upload queue</h3>
                 <p>Queue length: {{ uploader?.queue?.length }}</p>
@@ -59,6 +59,7 @@
                     <tr>
                         <th width="50%">Name</th>
                         <th>Size</th>
+                        <th>Type</th>
                         <th>Progress</th>
                         <th>Status</th>
                         <th>Actions</th>
@@ -69,6 +70,19 @@
                         <td><strong>{{ item?.file?.name }}</strong></td> <!--Name-->
                         <td *ngIf="uploader.options.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB
                         </td><!--Size-->
+                        <td class="text-center"><!--Type-->
+                            <!--<span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>-->
+
+                            <select id="upload-file-type" (change) ="uploadFileTypeChange($event.target.value, item)">
+                                <option value="none">--select--</option>
+                                <option value="peak">Peak</option>
+                                <option value="psm">PSM</option>
+                                <option value="peaknpsm">Peak & PSM</option>
+                            </select>
+
+
+                            <!--<span *ngIf="item.isSuccess"><i class="fa fa-check-circle fa-2x" style="color:#00e25b"></i></span>-->
+                        </td><!--Type-->
                         <td *ngIf="uploader.options.isHTML5"><!--Progress-->
                             <div class="progress" style="margin-bottom: 0;">
                                 <div class="progress-bar" role="progressbar"
