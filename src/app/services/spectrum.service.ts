@@ -1,17 +1,16 @@
 import {Injectable} from "@angular/core";
 import {SpectrumInCluster} from "../model/spectrum-in-cluster";
 import {Headers, Http} from "@angular/http";
-import {Config} from "../model/config"
 import {Spectrum} from "../model/spectrum";
 import {LocalStorageService} from "./local-storage.service";
-
+import { environment } from '../../environments/environment';
 // import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 
 export class SpectrumService {
 
-    private baseUrl = Config.baseUrl;
+    private baseUrl = environment.baseUrl;
     private headers = new Headers({'Content-type': 'application/json'});
 
     constructor(private http: Http,

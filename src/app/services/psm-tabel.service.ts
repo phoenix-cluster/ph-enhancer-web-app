@@ -3,7 +3,7 @@ import {Headers, Http, Response, RequestOptions} from "@angular/http";
 
 import 'rxjs/add/operator/toPromise'
 import {PSMsPage} from "../model/psmsPage";
-import {Config} from "../model/config";
+import {environment} from "../../environments/environment";
 import {Page} from "../model/page";
 import {PagedData} from "../model/paged-data";
 import {Psm} from "../model/psm";
@@ -12,7 +12,7 @@ import {Psm} from "../model/psm";
 
 export class PsmTableService{
 
-  private baseUrl = Config.baseUrl + "scoredpsms/";
+  private baseUrl = environment.baseUrl + "scoredpsms/";
   private psmTitleListUrl = 'api/psmTitleList';
   private headers = new Headers({'Content-type': 'application/json', "Access-Control-Allow-Origin": "*" });
 

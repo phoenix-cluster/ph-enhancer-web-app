@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {DOCUMENT} from '@angular/common';
-import {Config} from '../../model/config';
 import {NavigationEnd, Router} from "@angular/router";
+import {environment} from "../../../environments/environment";
 
 @Component({
     selector: 'app-header',
@@ -9,7 +9,7 @@ import {NavigationEnd, Router} from "@angular/router";
     styleUrls: ['./app-header.component.scss']
 })
 export class AppHeaderComponent implements OnInit {
-    projectId: string = Config.defaultProject;
+    projectId: string = environment.defaultProject;
 
     // constructor(@Inject(DOCUMENT) private document: Document) {
     // }
@@ -39,7 +39,7 @@ export class AppHeaderComponent implements OnInit {
                 let projectId = dataValue;
                 return projectId;
             } else {
-                return Config.defaultProject;
+                return environment.defaultProject;
             }
         }
         return null;

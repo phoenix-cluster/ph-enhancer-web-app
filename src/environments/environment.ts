@@ -4,5 +4,8 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  baseUrl : 'http://namenode:8070/example/v1/',
+  defaultProject : 'PXD000021',
+  defaultMinClusterSize : 10,
 };

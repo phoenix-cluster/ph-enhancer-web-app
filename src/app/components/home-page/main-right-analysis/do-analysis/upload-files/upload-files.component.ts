@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {ModalDismissReasons, NgbActiveModal, NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {FileUploader, FileItem, ParsedResponseHeaders} from "ng2-file-upload";
-import {Config} from "../../../../../model/config"
+import {environment} from "../../../../../../environments/environment"
 import {FileUploadService} from "../../../../../services/file-upload.service";
 import {ResultFileList} from "../../../../../model/resultFileList";
 import {Popup} from 'ng2-opd-popup';
@@ -20,7 +20,7 @@ export class UploadFilesComponent implements OnInit {
     analysisJobToken:string;
     fileUploadEnabled:boolean;
     closeResult: string;
-    uploadUrl = Config.baseUrl + "file/upload";
+    uploadUrl = environment.baseUrl + "file/upload";
     public uploader: FileUploader;
     modalReference:NgbModalRef;
 

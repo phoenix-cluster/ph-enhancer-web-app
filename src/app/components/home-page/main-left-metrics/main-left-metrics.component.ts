@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {StatisticsService} from "../../../services/statistics.service";
 import {VennData} from "../../../model/vennData";
 import{ChangeProject} from "./chart1/chart1.component"
-import {Config} from "../../../model/config";
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-main-left-metrics',
@@ -12,7 +12,7 @@ import {Config} from "../../../model/config";
 export class MainLeftMetricsComponent implements OnInit {
     vennDataList:VennData[] = new Array();
     changeProject: ChangeProject = new ChangeProject('');
-    currentProjectId:string = Config.defaultProject;
+    currentProjectId:string = environment.defaultProject;
    constructor(private statisticsService: StatisticsService) {
         // let venn = {
         //     "projectId": "PXD000021",

@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {SpectrumInCluster} from "../model/spectrum-in-cluster";
 import {Headers, Http} from "@angular/http";
-import {Config} from "../model/config";
+import {environment} from "../../environments/environment";
 import {LocalStorageService} from "./local-storage.service";
 
 // import 'rxjs/add/operator/toPromise';
@@ -10,7 +10,7 @@ import {LocalStorageService} from "./local-storage.service";
 
 export class SpectraInClusterTableService {
 
-    private baseUrl = Config.baseUrl;
+    private baseUrl = environment.baseUrl;
 
     private headers = new Headers({'Content-type': 'application/json'});
 

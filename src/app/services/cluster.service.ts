@@ -4,14 +4,14 @@ import {Headers, Http} from "@angular/http";
 
 import 'rxjs/add/operator/toPromise'
 import {Cluster} from "../model/cluster";
-import {Config} from "../model/config";
+import {environment} from "../../environments/environment";
 import {LocalStorageService} from "./local-storage.service";
 
 @Injectable()
 
 export class ClusterService {
 
-    private baseUrl = Config.baseUrl;
+    private baseUrl = environment.baseUrl;
     private headers = new Headers({'Content-type': 'application/json'});
 
     constructor(private http: Http, private localStorageService: LocalStorageService) {
