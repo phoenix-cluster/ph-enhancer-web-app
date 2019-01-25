@@ -12,8 +12,9 @@ import {Observable} from "rxjs/Observable";
 export class FileUploadService {
 
     private baseUrl = environment.baseUrl;
-    private applyJobUrl = this.baseUrl + "/" + "file/apply"
-    private confirmFilesUrl = this.baseUrl + "/" + "file/confirmFiles"
+    private applyJobUrl = this.baseUrl +  "analysis/apply"
+    private analysisBaseUrl = environment.analysisBaseUrl;
+    private confirmFilesUrl = this.analysisBaseUrl+ "file/confirm"
     private headers = new Headers({'Content-type': 'application/json'});
 
     constructor(private http: Http) {
@@ -34,10 +35,10 @@ export class FileUploadService {
         return Promise.reject(error.message || error);
     }
 
-    conform_files(resultFileList: ResultFileList, jobId:number): Promise<String> {
+    conform_files(resultFileList: ResultFileList, analysisId:number): Promise<String> {
         const params = new URLSearchParams();
         let headers = new Headers();
-        headers.append('jobId', String(jobId))
+        headers.append('analysisId', String(analysisId))
 
         const options = new RequestOptions({
             headers: headers,

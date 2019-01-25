@@ -11,14 +11,14 @@ import {LocalStorageService} from "./local-storage.service";
 
 export class ClusterService {
 
-    private baseUrl = environment.baseUrl;
+    private clusterBaseUrl = environment.clusterBaseUrl;
     private headers = new Headers({'Content-type': 'application/json'});
 
     constructor(private http: Http, private localStorageService: LocalStorageService) {
     }
 
     public getACluster(clusterid: string): Promise<Cluster> {
-        let clusterUrl = this.baseUrl + "clusters/"
+        let clusterUrl = this.clusterBaseUrl+ "clusters/"
             + clusterid;
         let cluster = this.localStorageService.getData("cluster_" + clusterid);
         if(cluster != null) {
@@ -37,7 +37,7 @@ export class ClusterService {
     }
 
     getPsmTitleList(listLen: number): Promise<string[]> {
-        return this.http.get(this.baseUrl)
+        return this.http.get(this.clusterBaseUrl)
             .toPromise()
             .then(response => {
                 let strs: string[] = response.json().data as string[];

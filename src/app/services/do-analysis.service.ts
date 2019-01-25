@@ -13,7 +13,8 @@ import {map} from "rxjs/operator/map";
 export class DoAnalysisService{
 
     private baseUrl = environment.baseUrl;
-    private doAanlysisUrl :string = this.baseUrl + "analysis/do";
+    private analysisBaseUrl = environment.analysisBaseUrl;
+    private doAanlysisUrl :string = this.analysisBaseUrl + "analysis/do";
     private getJobByTokenUrl = this.baseUrl + "/" + "analysis/getAnalysisJobByToken?"
     private getPageOfLogByTokenUrl = this.baseUrl + "/" + "analysis/getPageOfLogByToken?";
     private headers = new Headers({'Content-type': 'application/json'});
