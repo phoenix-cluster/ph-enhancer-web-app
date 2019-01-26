@@ -53,10 +53,10 @@ export class HistogramChartsComponent implements OnChanges {
         this.sortField = "confidentScore";
     }
 
-    ngOnChanges(): void {
+    ngOnInit(): void {
       // console.log(this.sortField);
-        if(this.confScoreHistArray!=null && this.confScoreHistArray.length>=1)
-            return;
+      //   if(this.confScoreHistArray!=null && this.confScoreHistArray.length>=1)
+      //       return;
 
         if (this.psmType == "newid" && (this.confScoreHistArray ==null || this.confScoreHistArray.length < 1)) {
             // this.statisticsService.getHistData(this.projectId,this.psmType, "recommConfScore").then(bins=>{this.confScoreHistArray = bins;} );
@@ -81,12 +81,17 @@ export class HistogramChartsComponent implements OnChanges {
             var promise3 = this.statisticsService.getHistData(this.projectId,this.psmType, "clusterSize");
         }
 
-        Promise.all([promise1,promise2, promise3]).then(values =>{
+        Promise.all([promise1,promise2, promise3]).then(values => {
             // console.log(values);
             this.confScoreHistArray = values[0];
             this.clusterRatioHistArray = values[1];
             this.clusterSizeHistArray = values[2];
+            this.ngOnChanges();
+        });
 
+    }
+
+    ngOnChanges(): void {
         // console.log(this.activedPsm);
         if(this.activedPsm) {
             let scoreRank = this.getBinRank(this.confScoreHistArray, this.activedPsm.confidentScore);
@@ -135,8 +140,7 @@ export class HistogramChartsComponent implements OnChanges {
             this.ratios = this.activedPage.map((p) => p.clusterRatio);
             this.sizes  = this.activedPage.map((p) => p.clusterSize);
         }
-        });
-    }
+    };
 
     getBinRank(histogramArray:any[], score:number):number{
 

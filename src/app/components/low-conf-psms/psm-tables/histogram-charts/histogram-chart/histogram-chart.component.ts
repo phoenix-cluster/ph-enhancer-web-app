@@ -50,7 +50,7 @@ export class HistogramChartComponent implements OnChanges{
     };
 
     customColors = [];
-
+    psmSortDirection = 'asc';
 
     onSelect(event) {
         // console.log(event);
@@ -83,6 +83,7 @@ export class HistogramChartComponent implements OnChanges{
         // console.log(this.xAxisLabel);
         if (this.activedPsm.rank >=0 && this.activedBinRange[0].rank >= 0 && this.activedBinRange[1].rank >= 0 && this.histBins != null) {
 
+            //get the histgram data, for color them next step
             this.histBinsResolved = this.histBins.map((bin, index) => {
                 return {
                     "name": bin.name,
@@ -107,7 +108,10 @@ export class HistogramChartComponent implements OnChanges{
 
             }
 */
-
+            //get the sort direction before sorting
+            if(this.activedPageValues[this.activedPageValues.length - 1] < this.activedPageValues[0]) {
+                this.psmSortDirection = 'desc';
+            }
             // sort array
             for(let i = 0;i < (this.activedPageValues.length - 1);i++) {
                 let min = i;
@@ -129,8 +133,6 @@ export class HistogramChartComponent implements OnChanges{
             if(r0.value == null || r1.value == null) {
                 return;
             }
-            // console.log('activedPsm');
-            // console.log(this.activedPsm);
 
             let r0ValueFixed = r0.value.toFixed(3),
                 r1ValueFixed = r1.value.toFixed(3),
@@ -141,8 +143,6 @@ export class HistogramChartComponent implements OnChanges{
             if(activeBin.value == 0){
                 return;
             }
-            // console.log(activeBin)
-            // console.log(activeBinResolved)
 
             if(this.isSortField == false) {       //not sort field, only show one red line
                 let binUpper = activeBin.upperBound,
@@ -211,13 +211,18 @@ export class HistogramChartComponent implements OnChanges{
                     if(this.activedPageValues[i] <= this.histBins[lowRank - 1].upperBound) prev++;
                     if(this.activedPageValues[i] >= this.histBins[highRank - 1].lowerBound) end++;
                 }
-                
+
+
+
+
                 for(let i = lowRank;i <= highRank;i++) {
                     let thisBin = this.histBins[i - 1],
                         thisBinResolved = this.histBinsResolved[i - 1],
                         thisBinName = thisBinResolved.name,
                         thisPsmIndex = this.activedPsmIndex
-
+                    if (this.psmSortDirection == 'desc'){
+                        thisPsmIndex = this.activedPageValues.length - (thisPsmIndex-1);
+                    }
                     if(i == lowRank) {
                         sumOfValue += prev;
 
@@ -321,7 +326,6 @@ export class HistogramChartComponent implements OnChanges{
                 }
             ]
         }
-        // console.log(this.customColors);
         this.histData = this.histBins;
     }
 
