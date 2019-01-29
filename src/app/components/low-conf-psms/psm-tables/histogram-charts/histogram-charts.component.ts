@@ -88,7 +88,6 @@ export class HistogramChartsComponent implements OnChanges {
             this.clusterSizeHistArray = values[2];
             this.ngOnChanges();
         });
-
     }
 
     ngOnChanges(): void {
@@ -97,8 +96,9 @@ export class HistogramChartsComponent implements OnChanges {
             let scoreRank = this.getBinRank(this.confScoreHistArray, this.activedPsm.confidentScore);
             this.activedConfScoreBin = {
                 "rank": scoreRank,
-                "value": this.activedPsm.confidentScore
+                "value": this.activedPsm.confidentScore || this.activedPsm.recommConfidentScore
             };
+
 
             let ratioRank = this.getBinRank(this.clusterRatioHistArray, this.activedPsm.clusterRatio);
             this.activedClusterRatioBin = {
@@ -112,10 +112,9 @@ export class HistogramChartsComponent implements OnChanges {
                 "value": this.activedPsm.clusterSize
             }
         }
-        // console.log(this.activedPage);
         if(this.activedPage) {
             let confScoreRange = [{rank: -1, value: 0}, {rank: -1, value: 0}];  //one is lowest, another is highest
-            confScoreRange[0].rank = this.getBinRank(this.confScoreHistArray, this.activedPage[0].confidentScore)
+            confScoreRange[0].rank = this.getBinRank(this.confScoreHistArray, this.activedPage[0].confidentScore || this.activedPage[0].confidentScore)
             confScoreRange[0].value = this.activedPage[0].confidentScore;
             confScoreRange[1].rank = this.getBinRank(this.confScoreHistArray, this.activedPage[this.activedPage.length - 1].confidentScore)
             confScoreRange[1].value = this.activedPage[this.activedPage.length - 1].confidentScore;
