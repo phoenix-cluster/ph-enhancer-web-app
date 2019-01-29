@@ -151,21 +151,25 @@ export class HistogramChartComponent implements OnChanges{
                     initPos = Math.floor((this.activedPsm.value - binLower) / aver),
                     thisBin = this.histBinsResolved[activeBin.rank - 1];
 
-                initPos = initPos-1 <= 0 ? 0 : initPos - 1;
+                initPos = initPos - 1 <= 0 ? 0 : initPos - 1;
+
+                //if the whole bin is from the same value, choose the middle to highlight
+                if(binLower == binUpper) {
+                    initPos = 0.5 * activeBin.value;
+                }
 
                 thisBin.series = [
                     {
                         name: thisBin.name,
                         value: initPos
-                    },{
+                    }, {
                         name: this.activedPsm.value.toString(),
                         value: 1
-                    },{
+                    }, {
                         name: thisBin.name,
                         value: activeBin.value - initPos - 1
                     }
                 ]
-
             }else if(lowRank == highRank) {     //if in one section, divide into 1, 2, or 3 pieces
                 // uncommon case: value <= 10, but still highlight
                 if(activeBin.value <= 10) {
@@ -178,7 +182,7 @@ export class HistogramChartComponent implements OnChanges{
                         initPos = Math.floor((r0.value - binLower) / aver);
 
                     //if overflow, then up to Upper
-                    if(initPos + 10 > activeBin.value) 
+                    if(initPos + 10 > activeBin.value)
                         initPos = activeBin.value - 9;
                     if(initPos < 1)
                         initPos = 1;
@@ -202,7 +206,6 @@ export class HistogramChartComponent implements OnChanges{
                             value: activeBin.value - initPos - 9
                         }
                     ]
-
                 }
             }else {                             //if cover more than one section
                 let prev = 0, end = 0;          //Firstly, set all coverage bar to blue color
@@ -288,7 +291,7 @@ export class HistogramChartComponent implements OnChanges{
                         continue;
                     }
 
-                    
+
                     if(thisPsmIndex > sumOfValue && thisPsmIndex <= (sumOfValue + thisBin.value)) {
                         let rest = thisPsmIndex - sumOfValue;
                         thisBinResolved.series = [
