@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Config} from "../../../../model/config";
+import {environment} from "../../../../../environments/environment";
 import {Router} from "@angular/router";
 import {StatisticsService} from "../../../../services/statistics.service";
 
@@ -16,8 +16,8 @@ export class CheckExamplesComponent implements OnInit {
     colorSelect: Array<any>;
 
 
-    projects = [Config.defaultProject];
-    selectedProject = Config.defaultProject;
+    projects = [environment.defaultProject];
+    selectedProject = environment.defaultProject;
 
     ngOnInit() {
         this.getAndSetProjects();

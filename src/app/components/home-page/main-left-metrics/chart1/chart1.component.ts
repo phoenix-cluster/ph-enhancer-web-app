@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 import * as venn from 'venn.js/venn.js';
 import {StatisticsService} from "../../../../services/statistics.service";
 import {VennData} from "../../../../model/vennData";
-import {Config} from "../../../../model/config";
+import {environment} from "../../../../../environments/environment";
 import { document } from 'app/typescripts/free/utils/facade/browser';
 import{Chart3Component} from "../chart3/chart3.component"
 import {Router} from "@angular/router";
@@ -17,8 +17,8 @@ export class Chart1Component implements OnInit {
  change:EventEmitter<ChangeProject>=new EventEmitter();
     private sets = null;
     private vennData : VennData;
-    projects = [Config.defaultProject];
-    selectedProject=Config.defaultProject;
+    projects = [environment.defaultProject];
+    selectedProject=environment.defaultProject;
     constructor(private router: Router,private statisticsService: StatisticsService) {
         this.sets = [
             {"sets": [0], "label": "Original Identified", "size": 500, "addInfo": ", 400 unmatched"},
@@ -41,7 +41,7 @@ export class Chart1Component implements OnInit {
 
     getVennDataAndDraw() {
         if(this.selectedProject== null){
-            this.selectedProject = Config.defaultProject;
+            this.selectedProject = environment.defaultProject;
         }
         document.getElementById('selectProject');
         this.statisticsService.getVennData(this.selectedProject)

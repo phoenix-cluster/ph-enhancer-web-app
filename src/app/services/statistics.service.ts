@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {Headers, Http} from "@angular/http";
-import {Config} from "../model/config"
+import {environment} from "../../environments/environment"
 import {HistgramBin} from "../model/histogram-bin";
 import {VennData} from "../model/vennData";
 import {Thresholds} from "../model/thresholds";
@@ -11,7 +11,7 @@ import {Thresholds} from "../model/thresholds";
 
 export class StatisticsService {
 
-    private baseUrl = Config.baseUrl;
+    private baseUrl = environment.baseUrl;
     private headers = new Headers({'Content-type': 'application/json'});
 
     constructor(private http: Http,

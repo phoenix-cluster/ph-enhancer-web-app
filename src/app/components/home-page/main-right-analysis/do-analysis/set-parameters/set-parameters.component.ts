@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Config} from "../../../../../model/config";
+import {environment} from "../../../../../../environments/environment";
 import {DoAnalysisService} from "../../../../../services/do-analysis.service";
 import {AnalysisDataService} from "../../../../../services/analysis-data.service";
 import {Router} from "@angular/router";
@@ -20,7 +20,7 @@ export class SetParametersComponent implements OnInit {
     fileUploadEnabled:boolean;
     userEmailAdd:string;
     makeResultsPublic:boolean = false;
-    public minClusterSize:number = Config.defaultMinClusterSize;
+    public minClusterSize:number = environment.defaultMinClusterSize;
 
     constructor(private router: Router, private  doAnalysisService: DoAnalysisService, private analysisData:AnalysisDataService) {
     }

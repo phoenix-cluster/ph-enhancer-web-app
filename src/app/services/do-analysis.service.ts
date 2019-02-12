@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {Headers, Http, RequestOptions, ResponseContentType} from "@angular/http";
 
 import 'rxjs/add/operator/toPromise'
-import {Config} from "../model/config";
+import {environment} from "../../environments/environment"
 
 import {Observable} from "rxjs/Observable";
 import {AnalysisJob} from "../model/analysisJob";
@@ -12,8 +12,9 @@ import {map} from "rxjs/operator/map";
 @Injectable()
 export class DoAnalysisService{
 
-    private baseUrl = Config.baseUrl;
-    private doAanlysisUrl :string = this.baseUrl + "analysis/do";
+    private baseUrl = environment.baseUrl;
+    private analysisBaseUrl = environment.analysisBaseUrl;
+    private doAanlysisUrl :string = this.analysisBaseUrl + "analysis/do";
     private getJobByTokenUrl = this.baseUrl + "/" + "analysis/getAnalysisJobByToken?"
     private getPageOfLogByTokenUrl = this.baseUrl + "/" + "analysis/getPageOfLogByToken?";
     private headers = new Headers({'Content-type': 'application/json'});

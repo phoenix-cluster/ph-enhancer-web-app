@@ -144,7 +144,7 @@ export class PsmTablesComponent implements OnInit {
         this.page.sortDirection = event.sorts[0].dir;
         this.page.sortField = event.sorts[0].prop;
         this.selectedPsmIndex = 1;
-        console.log(this.page.sortField);
+        // console.log(this.page.sortField);
         this.setPageData(this.page)
     }
 
@@ -202,7 +202,7 @@ export class PsmTablesComponent implements OnInit {
       this.psm_rows_sim = [];
       this.psm_rows.forEach((row) => {
         this.psm_rows_sim.push({
-          confidentScore: row.confidentScore,
+          confidentScore: row.confidentScore || row.recommConfidentScore,
           clusterRatio: row.clusterRatio,
           clusterSize: row.clusterSize
         })

@@ -1,6 +1,5 @@
 import {Component, Input, OnChanges, OnInit,SimpleChanges} from "@angular/core";
 import {StatisticsService} from "../../../../services/statistics.service";
-import {Config} from "../../../../model/config";
 import {VennData} from "../../../../model/vennData";
 import {Router} from "@angular/router";
 import{Chart1Component,ChangeProject} from "../chart1/chart1.component"
@@ -25,7 +24,6 @@ export class Chart3Component implements OnChanges,OnInit{
     yMulti:any[] = [];
     view: any[] = [400, 500];
     nodes:any;
-    config:Config
     changeValue=this.changeProject;
   
     // options
