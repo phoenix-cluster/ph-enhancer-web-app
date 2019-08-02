@@ -28,7 +28,6 @@ export class SpectrumService {
             return this.http.get(spectraUrl)
                 .toPromise()
                 .then(response => {
-                    console.log(response);
                     let spectra: Spectrum[] = response.json() as Spectrum[];
                     this.localStorageService.setData("spectra_" +titlesStr, spectra);
                     return spectra

@@ -11,6 +11,8 @@ import { saveAs } from 'file-saver/FileSaver';
 import {Http} from "@angular/http";
 import {PSMsPage} from "../../../model/psmsPage";
 import {ExportConfig} from "../../../model/export-config";
+import {SpeciesInProject} from "../../../model/speciesInProject";
+import {SpecPage} from "../../../model/spec-page";
 
 
 class SimPsm {
@@ -36,13 +38,20 @@ export class PsmTablesComponent implements OnInit {
     psm_rows: Array<Psm>;
     psm_rows_sim: Array<SimPsm>;
     spec_rows: Array<Spectrum>;
+    spec_rows_in_page: Array<Spectrum>;
+    speciesList: Array<SpeciesInProject>;
+    defaultSpecies: SpeciesInProject = new SpeciesInProject("ALL", "ALL", 0);
+    selectedSpeciesId: string = this.defaultSpecies.id;
+    selectedSpeciesData: string = "0---ALL(ALL)";
     private defaultAcceptanceOfRecommPsm: boolean;//true means accept, false means reject
     downloadJsonHref:string; //for result download
 
     page = new Page();
+    specPage = new SpecPage();
     loading: boolean = false;
     isDefaultSort: boolean = true;
     private activedHistItem: number;
+    private specTableOffset:number = 0;
 
     private export:ExportConfig;
 
@@ -57,6 +66,7 @@ export class PsmTablesComponent implements OnInit {
         this.selectedPsmIndex = 1;
         this.selectedSpectrum = new Spectrum("null_spectrum_title", null, null);
         this.page = new Page();
+        this.specPage = new SpecPage();
         // this.cachedAcceptanceListOfRecommPsm = new Map<number, number>();
         this.defaultAcceptanceOfRecommPsm = null;//true means accept, false means reject
         this.psm_rows = new Array<Psm>();
@@ -65,8 +75,10 @@ export class PsmTablesComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.setPageData(this.page);
+        // this.setPageData(this.page);
+        this.onSelectSpeciesChange();
         this.isDefaultSort = true;
+        this.getAndSetSpeciesListInProject()
     }
 
     onAcceptClick(row): void {
@@ -97,7 +109,11 @@ export class PsmTablesComponent implements OnInit {
                         // console.log(this.selectedSpectrum);
                         this.selected_specs = [];
                         this.selected_specs.push(this.selectedSpectrum);
-
+                        this.specPage.totalElements = this.spec_rows.length;
+                        this.spec_rows_in_page = this.spec_rows.slice( 0, this.specPage.size);
+                        this.specPage.pageNumber = 1;
+                        this.specPage.totalPages = Math.ceil(this.specPage.totalElements/this.specPage.size );
+                        // this.onSpecChange(null);
                     }
                 ).catch(this.handleError);
         }
@@ -113,6 +129,12 @@ export class PsmTablesComponent implements OnInit {
         this.selectedPsmIndex = 1;
         this.setPageData(this.page);
     }
+
+    setSpecPage(event) {
+        this.specPage.pageNumber = event.offset + 1;
+        this.spec_rows_in_page = this.spec_rows.slice(event.offset * this.specPage.size, this.specPage.pageNumber*this.specPage.size);
+    }
+
 
     setPageData(page: Page) {
         this.loading = true;
@@ -130,22 +152,20 @@ export class PsmTablesComponent implements OnInit {
             this.loading = false;
             this.simplifyPsmRows();
             this.setSpectrumTable(this.psm_rows[0].spectraTitles);
-            // console.log(this.selectedPsm);
-            // console.log(this.psm_rows_sim);
         });
     }
 
     onSort(event) {
         // event was triggered, start sort sequence
-        // console.log('Sort Event', event);
         this.loading = true;
         this.isDefaultSort = false;
         this.page = new Page();
         this.page.sortDirection = event.sorts[0].dir;
         this.page.sortField = event.sorts[0].prop;
+        this.page.selectedSpeciesId = this.selectedSpeciesId;
         this.selectedPsmIndex = 1;
-        // console.log(this.page.sortField);
-        this.setPageData(this.page)
+        this.onSelectSpeciesChange();
+        // this.setPageData(this.page)
     }
 
     onSelectPsm({selected}) {
@@ -209,9 +229,33 @@ export class PsmTablesComponent implements OnInit {
       })
     }
 
+    onSpecChange(event: any): void {
+        this.specTableOffset = event.offset;
+        console.log(event.offset);
+    }
+
     gotoClusterDetails(value: string) {
 //        this.router.navigateByUrl(`/cluster_details/${value}`);
         window.open(`/cluster_details/${value}`);
+    }
+
+
+    private getAndSetSpeciesListInProject() {
+        this.psmTableService.getSpecies(this.projectId, this.psmType)
+            .then( speciesList => {
+                this.speciesList = speciesList.sort((a, b) => (a.psmNo> b.psmNo) ? -1 : 1);
+                this.speciesList.splice(0,0,this.defaultSpecies);
+            }).catch(this.handleError);
+    }
+    onSelectSpeciesChange(){
+        var selectedString = this.selectedSpeciesData.toString();
+        this.selectedSpeciesId = selectedString.replace(/\d+\-\-\-/, "").replace(/\(.*\)/, '');
+        this.loading = true;
+        // console.log(this.selectedSpecies.replace);
+        // this.selectedProject=value;
+        this.page.selectedSpeciesId = this.selectedSpeciesId;
+        this.selectedPsmIndex = 1;
+        this.setPageData(this.page)
     }
 
 }

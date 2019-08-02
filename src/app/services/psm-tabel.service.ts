@@ -36,7 +36,8 @@ export class PsmTableService{
             + "&page=" + page.pageNumber
             + "&size=" + page.size
             + "&sortField=" + page.sortField
-            + "&sortDirection=" + page.sortDirection;
+            + "&sortDirection=" + page.sortDirection
+            + "&FilterBySpecies=" + page.selectedSpeciesId;
         // console.log(psmsUrl);
         return this.http.get(psmsUrl)
             .toPromise()
@@ -127,4 +128,14 @@ export class PsmTableService{
   }
 
 
+  getSpecies(identifier:string, scoreType:string) {
+        let dataUrl = this.baseUrl + "species/?identifier=" + identifier + "&Score%20type=" + scoreType;
+        return this.http.get(dataUrl)
+            .toPromise()
+            .then(response => {
+                var speciesList: string[] = response.json() as string[];
+                return speciesList;
+            })
+            .catch(this.handleError);
+    }
 }

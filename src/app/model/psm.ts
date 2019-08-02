@@ -10,6 +10,7 @@ export class Psm {
             {"name": "clusterSize", "order": "True"},
             {"name": "recommendPeptide", "order": "False"},
             {"name": "spectraNum", "order": "False"},
+            {"name": "taxIds", "order": "False"},
             {"name": "acceptance", "order": "True"}
         ];
 
@@ -31,5 +32,6 @@ export class Psm {
     recommendPepMods: Modification[];
     spectraNum: number;
     spectraTitles: string[];
+    taxIds: string;
     acceptance: number;
 }

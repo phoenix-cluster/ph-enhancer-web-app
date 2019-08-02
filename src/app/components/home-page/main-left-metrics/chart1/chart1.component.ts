@@ -117,11 +117,9 @@ export class Chart1Component implements OnInit {
     this.selectedProject=value;
   }
     onChange(event){
-        this.getVennDataAndDraw();
+       this.getVennDataAndDraw();
        this.change.emit(new ChangeProject(event));
-      
-
-    }    
+    }
     /* can not show each intersection's number, don't use it
     ngOnInit() {
         var sets = [

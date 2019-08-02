@@ -8,7 +8,8 @@ export const environment = {
   baseUrl : 'http://namenode:8070/v1/',
   // analysisBaseUrl : 'http://namenode:8090/example/v1/',
   analysisBaseUrl : 'http://namenode:5001/',
-  clusterBaseUrl : 'http://enhancer.ncpsb.org:8090/example/v1/',
+  //clusterBaseUrl : 'http://enhancer.ncpsb.org:8090/v1/',
+  clusterBaseUrl : 'http://namenode:8070/v1/',
   defaultProject : 'PXD000021',
   defaultMinClusterSize : 10,
   allowedFileType : [
