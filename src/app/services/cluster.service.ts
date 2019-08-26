@@ -4,46 +4,52 @@ import {Headers, Http} from "@angular/http";
 
 import 'rxjs/add/operator/toPromise'
 import {Cluster} from "../model/cluster";
-import {environment} from "../../environments/environment";
+import {ConfigService} from "../services/config.service";
 import {LocalStorageService} from "./local-storage.service";
 
 @Injectable()
 
 export class ClusterService {
 
-    private clusterBaseUrl = environment.clusterBaseUrl;
     private headers = new Headers({'Content-type': 'application/json'});
+    private clusterUrl: string;
 
-    constructor(private http: Http, private localStorageService: LocalStorageService) {
+    constructor(private http: Http, private localStorageService: LocalStorageService,
+                private configService: ConfigService) {
     }
 
     public getACluster(clusterid: string): Promise<Cluster> {
-        let clusterUrl = this.clusterBaseUrl+ "clusters/"
-            + clusterid;
         let cluster = this.localStorageService.getData("cluster_" + clusterid);
         if(cluster != null) {
             return new Promise(resolve => resolve(cluster));
         }else {
-            return this.http.get(clusterUrl)
-                .toPromise()
-            //     to do the map here!
-            .then(response => {
-                let newCluster: Cluster = response.json();
-                this.localStorageService.setData("cluster_" + clusterid, newCluster);
-                return newCluster;
-            })
-            .catch(this.handleError);
+            return this.configService.getConfig().then((configJson) =>
+            {
+                this.clusterUrl = configJson.clusterBaseUrl+ "clusters/"
+                    + clusterid;
+                return this.http.get(this.clusterUrl)
+                    .toPromise()
+                    //     to do the map here!
+                    .then(response => {
+                        let newCluster: Cluster = response.json();
+                        this.localStorageService.setData("cluster_" + clusterid, newCluster);
+                        return newCluster;
+                    })
+                    .catch(this.handleError);
+            });
         }
     }
 
     getPsmTitleList(listLen: number): Promise<string[]> {
-        return this.http.get(this.clusterBaseUrl)
-            .toPromise()
-            .then(response => {
-                let strs: string[] = response.json().data as string[];
-                return strs.slice(0, listLen)
-            })
-            .catch(this.handleError);
+        return this.configService.getConfig().then(configJson => {
+                return this.http.get(configJson.clusterBaseUrl)
+                    .toPromise()
+                    .then(response => {
+                        let strs: string[] = response.json().data as string[];
+                        return strs.slice(0, listLen)
+                    })
+                    .catch(this.handleError);
+            });
     }
 
     // getPsm(id: number): Promise<Psm>{

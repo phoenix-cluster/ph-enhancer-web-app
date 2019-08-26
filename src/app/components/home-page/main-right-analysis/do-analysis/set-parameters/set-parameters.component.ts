@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {environment} from "../../../../../../environments/environment";
 import {DoAnalysisService} from "../../../../../services/do-analysis.service";
 import {AnalysisDataService} from "../../../../../services/analysis-data.service";
+import {ConfigService} from "../../../../../services/config.service";
 import {Router} from "@angular/router";
 import {_catch} from "rxjs/operator/catch";
 import {AnalysisJob} from "../../../../../model/analysisJob";
@@ -20,9 +21,10 @@ export class SetParametersComponent implements OnInit {
     fileUploadEnabled:boolean;
     userEmailAdd:string;
     makeResultsPublic:boolean = false;
-    public minClusterSize:number = environment.defaultMinClusterSize;
+    public minClusterSize:number ;
 
-    constructor(private router: Router, private  doAnalysisService: DoAnalysisService, private analysisData:AnalysisDataService) {
+    constructor(private router: Router, private  doAnalysisService: DoAnalysisService, private analysisData:AnalysisDataService,
+                private configService:ConfigService) {
     }
 
     ngOnInit() {
@@ -33,6 +35,10 @@ export class SetParametersComponent implements OnInit {
         this.analysisData.currentAnalysisToken.subscribe(analysisToken => this.analysisJobToken = analysisToken);
         this.analysisData.currentAnalysisEnabled.subscribe(analysisEnabled=> this.analysisEnabled = analysisEnabled);
         this.analysisData.currentFileUploadEnabled.subscribe(fileUploadEnabled=> this.fileUploadEnabled= fileUploadEnabled);
+        this.configService.getConfig().then(configJson => {
+                this.minClusterSize = configJson.defaultMinClusterSize;
+            }
+        )
     }
 
     doAnalysis() {

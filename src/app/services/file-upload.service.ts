@@ -6,18 +6,25 @@ import {environment} from "../../environments/environment";
 import {ResultFileList} from "../model/resultFileList";
 import {AnalysisJob} from "../model/analysisJob";
 import {Observable} from "rxjs/Observable";
+import {ConfigService} from "./config.service";
 
 @Injectable()
 
 export class FileUploadService {
 
-    private baseUrl = environment.baseUrl;
-    private applyJobUrl = this.baseUrl +  "analysis/apply"
-    private analysisBaseUrl = environment.analysisBaseUrl;
-    private confirmFilesUrl = this.analysisBaseUrl+ "file/confirm"
+    private applyJobUrl:string;
+    private analysisBaseUrl:string;
+    private confirmFilesUrl:string;
     private headers = new Headers({'Content-type': 'application/json'});
 
-    constructor(private http: Http) {
+    constructor(private http: Http,
+    private configService: ConfigService) {
+
+        this.configService.getConfig().then((configJson) => {
+            this.applyJobUrl = configJson.baseUrl +  "analysis/apply"
+            this.analysisBaseUrl = configJson.analysisBaseUrl;
+            this.confirmFilesUrl = this.analysisBaseUrl+ "file/confirm"
+        });
     }
 
     apply_an_analysis_job(): Promise<AnalysisJob> {

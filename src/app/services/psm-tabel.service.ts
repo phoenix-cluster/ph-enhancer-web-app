@@ -7,16 +7,19 @@ import {environment} from "../../environments/environment";
 import {Page} from "../model/page";
 import {PagedData} from "../model/paged-data";
 import {Psm} from "../model/psm";
+import {ConfigService} from "../services/config.service";
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 
 export class PsmTableService{
 
-  private baseUrl = environment.baseUrl + "scoredpsms/";
   private psmTitleListUrl = 'api/psmTitleList';
   private headers = new Headers({'Content-type': 'application/json', "Access-Control-Allow-Origin": "*" });
 
-  constructor(private http: Http){}
+  constructor(private http: Http,
+              private configService: ConfigService) {
+              }
 
 	// getPsms(): Promise<Psm[]>{
     // return this.http.get(this.psmsUrl)
@@ -30,19 +33,21 @@ export class PsmTableService{
         if(psmType == "newid" && page.sortField == "confidentScore"){
             page.sortField = "recommConfidentScore";
         }
+        return this.configService.getConfig().then((configJson) => {
+                let psmsUrl = configJson.baseUrl + "scoredpsms/" + psmType + "?"
+                    + "identifier=" + identifier
+                    + "&page=" + page.pageNumber
+                    + "&size=" + page.size
+                    + "&sortField=" + page.sortField
+                    + "&sortDirection=" + page.sortDirection
+                    + "&FilterBySpecies=" + page.selectedSpeciesId;
+                // console.log(psmsUrl);
+                return this.http.get(psmsUrl)
+                    .toPromise()
+                    .then(response => response.json() as PSMsPage)
+                    .catch(this.handleError);
+        });
 
-        let psmsUrl = this.baseUrl + psmType + "?"
-            + "identifier=" + identifier
-            + "&page=" + page.pageNumber
-            + "&size=" + page.size
-            + "&sortField=" + page.sortField
-            + "&sortDirection=" + page.sortDirection
-            + "&FilterBySpecies=" + page.selectedSpeciesId;
-        // console.log(psmsUrl);
-        return this.http.get(psmsUrl)
-            .toPromise()
-            .then(response => response.json() as PSMsPage)
-            .catch(this.handleError);
     }
 
     //
@@ -103,23 +108,26 @@ export class PsmTableService{
     //   .catch(this.handleError);
     // }
 
-    public uploadUserAcceptance(identifier:string, psmType:string, acceptanceMap:Map<number, number>) {
-        let uploadUrl = this.baseUrl.concat("updateAcceptance?identifier=" + identifier + "&psmtype=" + psmType);
-        let options = new RequestOptions({headers: this.headers});
-        let mapKeys = acceptanceMap.keys();
-        let jsonStr = "{";
-        acceptanceMap.forEach((value:number, key:number)=>{
-            jsonStr += "\"" + key + "\": \"" + value + "\",";
-        });
-        jsonStr = jsonStr.substr(0, jsonStr.length - 1) + "}";
-        let body = jsonStr;
-        return this.http.put(uploadUrl, body, options)
-            .toPromise()
-            .then(response => {
-                return response.json();
-            })
-            .catch(this.handleError);
-    }
+    public uploadUserAcceptance(identifier:string, psmType:string, acceptanceMap:Map<number, number>):Promise<any> {
+        return    this.configService.getConfig().then((configJson) => {
+                let baseUrl = configJson.baseUrl + "scoredpsms/";
+                let uploadUrl = baseUrl.concat("updateAcceptance?identifier=" + identifier + "&psmtype=" + psmType);
+                let options = new RequestOptions({headers: this.headers});
+                let mapKeys = acceptanceMap.keys();
+                let jsonStr = "{";
+                acceptanceMap.forEach((value: number, key: number) => {
+                    jsonStr += "\"" + key + "\": \"" + value + "\",";
+                });
+                jsonStr = jsonStr.substr(0, jsonStr.length - 1) + "}";
+                let body = jsonStr;
+                return this.http.put(uploadUrl, body, options)
+                    .toPromise()
+                    .then(response => {
+                        return response.json();
+                    })
+                    .catch(this.handleError);
+            });
+  }
 
 
   private handleError(error: any): Promise<any> {
@@ -128,14 +136,17 @@ export class PsmTableService{
   }
 
 
-  getSpecies(identifier:string, scoreType:string) {
-        let dataUrl = this.baseUrl + "species/?identifier=" + identifier + "&Score%20type=" + scoreType;
-        return this.http.get(dataUrl)
-            .toPromise()
-            .then(response => {
-                var speciesList: string[] = response.json() as string[];
-                return speciesList;
-            })
-            .catch(this.handleError);
-    }
+  getSpecies(identifier:string, scoreType:string): Promise<any> {
+      return    this.configService.getConfig().then((configJson) => {
+              let baseUrl = configJson.baseUrl + "scoredpsms/";
+              let dataUrl = baseUrl + "species/?identifier=" + identifier + "&Score%20type=" + scoreType;
+              return this.http.get(dataUrl)
+                  .toPromise()
+                  .then(response => {
+                      var speciesList: string[] = response.json() as string[];
+                      return speciesList;
+                  })
+                  .catch(this.handleError);
+          });
+  }
 }

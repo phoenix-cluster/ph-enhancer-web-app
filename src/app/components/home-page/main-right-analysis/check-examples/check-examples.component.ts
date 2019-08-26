@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {environment} from "../../../../../environments/environment";
 import {Router} from "@angular/router";
 import {StatisticsService} from "../../../../services/statistics.service";
+import {ConfigService} from "../../../../services/config.service";
 
 @Component({
     selector: 'app-check-examples',
@@ -10,17 +11,22 @@ import {StatisticsService} from "../../../../services/statistics.service";
 })
 export class CheckExamplesComponent implements OnInit {
 
-    constructor(private router: Router, private statisticsService: StatisticsService) {
+    constructor(private router: Router, private statisticsService: StatisticsService,
+                private configService:ConfigService) {
     }
 
     colorSelect: Array<any>;
 
 
-    projects = [environment.defaultProject];
-    selectedProject = environment.defaultProject;
+    projects : string[];
+    selectedProject :string;
 
     ngOnInit() {
-        this.getAndSetProjects();
+        this.configService.getConfig().then((configJson) => {
+            this.projects = [configJson.defaultProject];
+            this.selectedProject = configJson.defaultProject;
+            this.getAndSetProjects();
+        });
     }
 
     onChange(event){

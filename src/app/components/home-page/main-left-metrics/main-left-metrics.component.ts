@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {StatisticsService} from "../../../services/statistics.service";
+import {ConfigService} from "../../../services/config.service";
 import {VennData} from "../../../model/vennData";
 import{ChangeProject} from "./chart1/chart1.component"
 import {environment} from "../../../../environments/environment";
@@ -12,8 +13,8 @@ import {environment} from "../../../../environments/environment";
 export class MainLeftMetricsComponent implements OnInit {
     vennDataList:VennData[] = new Array();
     changeProject: ChangeProject = new ChangeProject('');
-    currentProjectId:string = environment.defaultProject;
-   constructor(private statisticsService: StatisticsService) {
+    currentProjectId:string ;
+   constructor(private statisticsService: StatisticsService, private configService:ConfigService) {
         // let venn = {
         //     "projectId": "PXD000021",
         //     "prePSM_no": 42972,
@@ -59,8 +60,11 @@ export class MainLeftMetricsComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.setStatckedVennData();
-        this.changeHandler(this.changeProject);
+        this.configService.getConfig().then((configJson) => {
+            this.currentProjectId = configJson.defaultProject;
+            this.setStatckedVennData();
+            this.changeHandler(this.changeProject);
+        });
     }
 
     setStatckedVennData() {

@@ -1,5 +1,6 @@
 import {Component, Input, OnChanges, OnInit,SimpleChanges} from "@angular/core";
 import {StatisticsService} from "../../../../services/statistics.service";
+import {ConfigService} from "../../../../services/config.service";
 import {VennData} from "../../../../model/vennData";
 import {Router} from "@angular/router";
 import{Chart1Component,ChangeProject} from "../chart1/chart1.component"
@@ -44,7 +45,8 @@ export class Chart3Component implements OnChanges,OnInit{
     colorScheme = {
         domain: ['gray', '#A10A28', 'blue', '#10c008', 'purple', "pink"]
     };
-    constructor(private router: Router, private statisticsService: StatisticsService) {
+    constructor(private router: Router, private statisticsService: StatisticsService,
+                private configService:ConfigService) {
     }
     
     ngOnInit():void{
@@ -224,7 +226,7 @@ export class Chart3Component implements OnChanges,OnInit{
 
     onClick(event){
         //联动chart1的饼图
-        let chart1Component=new Chart1Component(this.router,this.statisticsService);
+        let chart1Component=new Chart1Component(this.router,this.statisticsService, this.configService);
         chart1Component.setSelectedProject(event.srcElement.innerHTML.trim());
         chart1Component.getVennDataAndDraw();
         //联动chart3图的点击事件处理

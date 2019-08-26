@@ -6,6 +6,7 @@ import 'rxjs/add/operator/toPromise'
 import {Cluster} from "../model/cluster";
 import {environment} from "../../environments/environment";
 import {LocalStorageService} from "./local-storage.service";
+import {ConfigService} from "../services/config.service";
 import 'rxjs/add/operator/map'
 import {ExportConfig} from "../model/export-config";
 
@@ -13,37 +14,41 @@ import {ExportConfig} from "../model/export-config";
 
 export class ExportService {
 
-    private baseUrl = environment.baseUrl;
     private headers = new Headers({'Content-type': 'application/json'});
 
-    constructor(private http: Http) {
+    constructor(private http: Http,
+        private configService: ConfigService) {
     }
 
-    public setExport(projectId: string, exportConfig : ExportConfig): Promise<String> {
-        let exportUrl = this.baseUrl + "export?";
-        exportUrl += "projectId=" + projectId;
-        if (exportConfig.newIdent)
-            exportUrl += "&newIdentScRange=[" + exportConfig.newIdentStart + "," + exportConfig.newIdentEnd + "]";
-        if (exportConfig.highConf)
-            exportUrl += "&highConfScRange=[" + exportConfig.highConfStart + ","+ exportConfig.highConfEnd + "]";
-        if (exportConfig.recommBetter)
-            exportUrl += "&recommendRange=[" + exportConfig.recommBetterStart + ","+ exportConfig.recommBetterEnd+ "]";
+    public setExport(identifier: string, exportConfig : ExportConfig): Promise<String> {
+         return  this.configService.getConfig().then((configJson) =>
+            {
+                let exportUrl = configJson.baseUrl + "export?";
+                exportUrl += "identifier=" + identifier;
+                if (exportConfig.newIdent)
+                    exportUrl += "&newIdentScRange=[" + exportConfig.newIdentStart + "," + exportConfig.newIdentEnd + "]";
+                if (exportConfig.highConf)
+                    exportUrl += "&highConfScRange=[" + exportConfig.highConfStart + "," + exportConfig.highConfEnd + "]";
+                if (exportConfig.recommBetter)
+                    exportUrl += "&recommendRange=[" + exportConfig.recommBetterStart + "," + exportConfig.recommBetterEnd + "]";
 
-        exportUrl += "&hasAccept=" + exportConfig.hasAccpeted;
-        exportUrl += "&defaultAcceptType=" + exportConfig.defaultAccpetType;
-        exportUrl += "&hasRejected=" + exportConfig.hasRejected;
-        // this.headers['exportParams'] = exportParams;
+                exportUrl += "&hasAccept=" + exportConfig.hasAccpeted;
+                exportUrl += "&defaultAcceptType=" + exportConfig.defaultAccpetType;
+                exportUrl += "&hasRejected=" + exportConfig.hasRejected;
 
-        return this.http.get(exportUrl)
-                .toPromise()
-                //     to do the map here!
-                .then(response => {
-                    let obj = response.json();
-                    let filepath: string = obj.filePath;
-                    let downloadurl = environment.baseUrl + "file/download?filepath=" + filepath;
-                    return downloadurl;
-                })
-                .catch(this.handleError);
+                // this.headers['exportParams'] = exportParams;
+
+                return this.http.get(exportUrl)
+                    .toPromise()
+                    //     to do the map here!
+                    .then(response => {
+                        let obj = response.json();
+                        let filepath: string = obj.filePath;
+                        let downloadurl = configJson.baseUrl + "file/download?filepath=" + filepath;
+                        return downloadurl;
+                    })
+                    .catch(this.handleError);
+            });
     }
 
     downloadfile(filepath: string){

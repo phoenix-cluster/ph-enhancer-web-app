@@ -6,6 +6,7 @@ import {FileUploadService} from "../../../../../services/file-upload.service";
 import {ResultFileList} from "../../../../../model/resultFileList";
 import {Popup} from 'ng2-opd-popup';
 import {AnalysisDataService} from "../../../../../services/analysis-data.service";
+import {ConfigService} from "../../../../../services/config.service";
 import {AnalysisJob} from "../../../../../model/analysisJob";
 import {queue} from "rxjs/scheduler/queue";
 
@@ -20,13 +21,13 @@ export class UploadFilesComponent implements OnInit {
     analysisJobToken:string;
     fileUploadEnabled:boolean;
     closeResult: string;
-    uploadUrl = environment.analysisBaseUrl+ "file/upload";
-    allowedFileType = environment.allowedFileType;
+    uploadUrl : string;
+    allowedFileType : any;
     public uploader: FileUploader;
     modalReference:NgbModalRef;
 
     constructor(private modalService: NgbModal, private fileUploadService: FileUploadService,
-                 private analysisData:AnalysisDataService) {
+                 private analysisData:AnalysisDataService, private  configService:ConfigService) {
         this.analysisJobId = 0;
     }
 
@@ -75,7 +76,11 @@ export class UploadFilesComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.initUploader();
+        this.configService.getConfig().then(configJson  => {
+            this.uploadUrl = configJson.analysisBaseUrl+ "file/upload";
+            this.allowedFileType = configJson.allowedFileType;
+            this.initUploader();
+            });
         this.analysisData.currentAnalysisJob.subscribe(analysisJob => {this.analysisJob = analysisJob;
             if(this.analysisJob != null) {
                 this.analysisJobId = analysisJob.id
@@ -238,8 +243,7 @@ export class UploadFilesComponent implements OnInit {
         }else{
             fileExt = splitList[splitList.length - 1];
         }
-        console.log(fileExt);
-        if (environment.allowedFileType.indexOf(fileExt) >= 0){
+        if (this.allowedFileType.indexOf(fileExt) >= 0){
             return true;
         }else{
             return false;

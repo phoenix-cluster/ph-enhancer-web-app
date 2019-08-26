@@ -4,17 +4,22 @@ import {Headers, Http} from "@angular/http";
 import {Spectrum} from "../model/spectrum";
 import {LocalStorageService} from "./local-storage.service";
 import { environment } from '../../environments/environment';
+import {ConfigService} from "../services/config.service";
 // import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 
 export class SpectrumService {
+    private baseUrl:string;
 
-    private baseUrl = environment.baseUrl;
     private headers = new Headers({'Content-type': 'application/json'});
 
     constructor(private http: Http,
-                private localStorageService: LocalStorageService) {
+                private localStorageService: LocalStorageService,
+                private configService: ConfigService) {
+                this.configService.getConfig().then((configJson) => {
+            this.baseUrl = configJson.baseUrl;
+        });
     }
 
     public getSpectra(titlesStr: string): Promise<Spectrum[]> {

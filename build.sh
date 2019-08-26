@@ -5,4 +5,4 @@
 # Created Time: Tue 19 Sep 2017 11:38:35 PM DST
 #########################################################################
 #!/bin/bash
-ng build --prod; scp -r dist root@www.xsaoh.com:/opt/tomcat/webapps/ph
+ng build --prod --aot=false --env=prod; 
