@@ -43,7 +43,7 @@ export class Chart3Component implements OnChanges,OnInit{
     roundDomains = false;
     yScaleMax=0;
     colorScheme = {
-        domain: ['gray', '#A10A28', 'blue', '#10c008', 'purple', "pink"]
+        domain: ['gray', '#A10A28', 'blue', '#10c008', 'light blue', "purple"]
     };
     constructor(private router: Router, private statisticsService: StatisticsService,
                 private configService:ConfigService) {
@@ -102,8 +102,14 @@ export class Chart3Component implements OnChanges,OnInit{
                     });
                 anObject["series"].push(
                     {
+                        "name": "High Confident Id",
+                        "value": Math.abs(vennData.prePSM_high_conf_no)
+                    });
+
+                anObject["series"].push(
+                    {
                         "name": "Other Matched Id",
-                        "value": Math.abs(vennData.matched_id_spec_no - vennData.prePSM_low_conf_no)
+                        "value": Math.abs(vennData.matched_id_spec_no - vennData.prePSM_low_conf_no - vennData.prePSM_high_conf_no)
                     });
                 anObject["series"].push(
                     {
@@ -166,7 +172,7 @@ export class Chart3Component implements OnChanges,OnInit{
                 psmTableType = "low_conf";
                 break;
             }
-            case "Other Matched Id":{
+            case "High Confident Id":{
                 psmTableType = "high_conf";
                 break;
             }
