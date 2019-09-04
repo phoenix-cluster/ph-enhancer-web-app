@@ -127,7 +127,6 @@ export class HistogramChartComponent implements OnChanges{
             }
 
             //calcute customColors area
-            /*
             let r0 = this.activedBinRange[0].value < this.activedBinRange[1].value ? this.activedBinRange[0] : this.activedBinRange[1],
                 r1 = this.activedBinRange[0].value > this.activedBinRange[1].value ? this.activedBinRange[0] : this.activedBinRange[1],
                 lowRank = r0.rank,
@@ -320,16 +319,16 @@ export class HistogramChartComponent implements OnChanges{
 
                     sumOfValue += thisBin.value;
                 }
-            }*/
+            }
 
             this.customColors = [
-                // {
-                //     name: blueName,      //coverage of current page
-                //     value: "lightblue"
-                // },{
-                //     name: this.activedPsm.value.toString(),     //selected psm
-                //     value: "red"
-                // }
+                {
+                    name: blueName,      //coverage of current page
+                    value: "lightblue"
+                },{
+                    name: this.activedPsm.value.toString(),     //selected psm
+                    value: "red"
+                }
             ]
         }
         this.histData = this.histBins;
