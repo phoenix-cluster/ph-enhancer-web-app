@@ -65,7 +65,7 @@ export class HistogramChartsComponent implements OnChanges {
         //     this.renewHist();  //no need to reGetHistData
         // }else {
         //     console.log("regate hist data by " + this.selectedSpeciesId)
-            console.log("ngonchanges" + this.selectedSpeciesId)
+        //     console.log("ngonchanges" + this.selectedSpeciesId)
             this.currentFilterTaxid = this.selectedSpeciesId; // re get hist data, because selected species id changed
             this.reGetAndRenewHistData();
         // }

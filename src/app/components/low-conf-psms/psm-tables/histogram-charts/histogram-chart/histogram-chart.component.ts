@@ -140,7 +140,7 @@ export class HistogramChartComponent implements OnChanges{
                 activeBin = this.histBins[this.activedPsm.rank - 1],
                 activeBinResolved = this.histBinsResolved[this.activedPsm.rank - 1],
                 blueName = r0ValueFixed + " - " + r1ValueFixed;
-            if(activeBin.value == 0){
+            if(activeBin== undefined || activeBin.value == 0){
                 return;
             }
 

@@ -106,6 +106,9 @@ export class UploadFilesComponent implements OnInit {
         this.uploader.onSuccessItem = (item, response, status, headers) => this.onSuccessItem(item, response, status, headers);
         this.resultFileList = new ResultFileList();
         this.uploader.onAfterAddingFile = (fileItem: FileItem) => this.onAfterAddingFile(fileItem)
+        // this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
+        //     console.log(response);// the url will be in the response
+        // };
     }
 
 
