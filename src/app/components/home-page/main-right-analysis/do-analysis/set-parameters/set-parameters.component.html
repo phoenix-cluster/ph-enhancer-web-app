@@ -32,14 +32,14 @@
             </div>
         <div class="form-check abc-checkbox">
             <input class="form-check-input invisible" id="checkbox_make_public" type="checkbox"
-                   [(checked)]="makeResultsPublic" (click)="onMakePublicCheck(event)">
+                   [(checked)]="makeResultsPublic" (click)="onMakePublicCheck()">
             <label class="form-check-label" for="checkbox_make_public">
                 Make Public
             </label>
         </div>
     </div>
     <div class="form-row">
-        <button class="btn btn-lg btn-outline-primary outline" (click)="doAnalysis(content)" [disabled]="!analysisEnabled" >
+        <button class="btn btn-lg btn-outline-primary outline" (click)="doAnalysis()" [disabled]="!analysisEnabled" >
             Do Analysis
         </button>
     </div>
