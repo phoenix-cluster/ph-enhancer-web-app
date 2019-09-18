@@ -32,22 +32,22 @@ export class HistogramChartsComponent implements OnChanges {
     @Input() psmType: string;
     @Input() projectId: string;
     @Input() selectedSpeciesId: string;
-    private confScoreHistArray = new Array<HistgramBin>();
-    private clusterRatioHistArray = new Array<HistgramBin>();
-    private clusterSizeHistArray = new Array<HistgramBin>();
-    private currentFilterTaxid = "ALL";
+    confScoreHistArray = new Array<HistgramBin>();
+    clusterRatioHistArray = new Array<HistgramBin>();
+    clusterSizeHistArray = new Array<HistgramBin>();
+    currentFilterTaxid = "ALL";
 
-    private scores = [];
-    private ratios = [];
-    private sizes = [];
+    scores = [];
+    ratios = [];
+    sizes = [];
 
-    private activedConfScoreBin = new RankAndValue(-1, 0);
-    private activedClusterSizeBin = new RankAndValue(-1, 0);
-    private activedClusterRatioBin = new RankAndValue(-1, 0);
+    activedConfScoreBin = new RankAndValue(-1, 0);
+    activedClusterSizeBin = new RankAndValue(-1, 0);
+    activedClusterRatioBin = new RankAndValue(-1, 0);
 
-    private activedConfScoreBinRange = new Array<{rank: number, value: number}>();
-    private activedClusterSizeBinRange = new Array<{rank: number, value: number}>();
-    private activedClusterRatioBinRange = new Array<{rank: number, value: number}>();
+    activedConfScoreBinRange = new Array<{rank: number, value: number}>();
+    activedClusterSizeBinRange = new Array<{rank: number, value: number}>();
+    activedClusterRatioBinRange = new Array<{rank: number, value: number}>();
 
     constructor(private statisticsService: StatisticsService) {
         this.activedPsm = new Psm("null");

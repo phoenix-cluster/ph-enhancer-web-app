@@ -150,6 +150,8 @@ export class HistogramChartComponent implements OnChanges{
                     aver = (binUpper - binLower) / activeBin.value,
                     initPos = Math.floor((this.activedPsm.value - binLower) / aver),
                     thisBin = this.histBinsResolved[activeBin.rank - 1];
+                if(thisBin == undefined)
+                    return;
 
 
 

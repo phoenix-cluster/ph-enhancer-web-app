@@ -53,7 +53,7 @@ export class PsmTablesComponent implements OnInit {
     private activedHistItem: number;
     private specTableOffset:number = 0;
 
-    private export:ExportConfig;
+    export:ExportConfig;
 
 
     constructor(private psmTableService: PsmTableService,

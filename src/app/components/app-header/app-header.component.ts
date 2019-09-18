@@ -25,6 +25,12 @@ export class AppHeaderComponent implements OnInit {
                 }
             }
         });
+
+        this.configService.getConfig().then((configJson) => {
+            if(this.projectId == null) {
+                this.projectId = configJson.defaultProject;
+            }
+        });
     }
 
     getProject(currentUrl) {
@@ -39,18 +45,17 @@ export class AppHeaderComponent implements OnInit {
                 let projectId = dataValue;
                 return projectId;
             } else {
-                return this.configService.getConfig().then(configJson => {
-                    return configJson.defaultProject;
-                });
+                    return null;
+                }
             }
-        }
+
         return null;
+    }
 
         // let patern = /\/(\w+)/g;
         // if(patern.test(currentUrl)){
         //     return null;
         // }
-    }
 
     getClass(page: string): string {
         let currentUrl = this.router.routerState.snapshot.url;
@@ -81,7 +86,7 @@ export class AppHeaderComponent implements OnInit {
      * get the page type from url, result/appendix/job/index
      ***/
 
-    getPageType(page: string): string {
+    getPageType(): string {
         let currentUrl = this.router.routerState.snapshot.url;
         let pageName = null;
         let patern = /\/(\w+)\/(\w+)/g;
