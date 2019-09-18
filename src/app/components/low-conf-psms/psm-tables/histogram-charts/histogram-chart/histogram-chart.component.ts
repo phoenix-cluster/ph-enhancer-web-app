@@ -95,6 +95,7 @@ export class HistogramChartComponent implements OnChanges{
                     ]
                 }
             })
+
 /*
             for(let i=0; i<this.histBinsResolved.length; i++){
                 let histBin = this.histBinsResolved[i];
@@ -139,7 +140,7 @@ export class HistogramChartComponent implements OnChanges{
                 activeBin = this.histBins[this.activedPsm.rank - 1],
                 activeBinResolved = this.histBinsResolved[this.activedPsm.rank - 1],
                 blueName = r0ValueFixed + " - " + r1ValueFixed;
-            if(activeBin.value == 0){
+            if(activeBin== undefined || activeBin.value == 0){
                 return;
             }
 
@@ -149,6 +150,8 @@ export class HistogramChartComponent implements OnChanges{
                     aver = (binUpper - binLower) / activeBin.value,
                     initPos = Math.floor((this.activedPsm.value - binLower) / aver),
                     thisBin = this.histBinsResolved[activeBin.rank - 1];
+
+
 
                 initPos = initPos - 1 <= 0 ? 0 : initPos - 1;
 

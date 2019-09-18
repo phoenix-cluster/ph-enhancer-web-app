@@ -41,44 +41,51 @@
         <div class="docs-content col-lg-9 col-xl-9">
             <h2 id="theoretical_background">Theoretical Background</h2>
             <h3 id="spectral_clustering">Spectral Clustering</h3>
-            <p> Many mass spectra which come from different experiment/lab may derived from the same peptide, and they
-                have a chance to look similar in the peak list. Spectra clustering could find this relationship and
-                provides a new spect to do the data mining from these mass spectral data, such as detect the low confident
-                PSMs by checking the peptide sequence's ratio in a cluster, and refer new peptide sequence for the previous
+            <p> Many mass spectra from different experiments/labs may be derived from the same peptide, and they
+                have a chance to look similar in the peak list. Spectra clustering could reveal this relationship and
+                provides a new spect to do the data mining from these mass spectral data, such as detecting the low confident
+                PSMs by checking the the assigned peptide sequence's ratio in a cluster, and referring new peptide sequence for the previous
                 unidentified spectra if they are clustered with other identified spectra.
             </p>
-            <p> PRIDE Cluster is developed by our collaborators to handle the clustering of millions of spectra. PRIDE Cluster
-                has these advatages:
+            <p> PRIDE Cluster is developed by our collaborators to handle the clustering of millions of spectra[][],
+                which has these advatages:
             </p>
                 <ul>
-                    <li>1. Effectively handelling huge number of spectra;</li>
-                    <li>2. Handelling high hetergenous spectra which could be high quality or low quality.</li>
+                    <li>1. Effectively handling huge number of spectra;</li>
+                    <li>2. Clustering high heterogeneous spectra which could be high quality or low quality.</li>
                 </ul>
 
             <p>
-                PRIDE Cluster has released a clustered data based on all PRIDE Archive public experiments by April 2015, which could be used as
-                an useful data resource for data mining. This 201504 version contains 593 projects, 182 species, 38 kind of modifications.
+                PRIDE Cluster has released a clustered data based on all PRIDE Archive's public experiments by April 2015, which could be used as
+                an useful data resource for data mining proteomics/peptideomics. This "201504" version contains 593 projects, 182 species, 38 kind of modifications.
                 The cluster details could be explored at https://www.ebi.ac.uk/pride/cluster/, the whole package data could be download from ftp://ftp.pride.ebi.ac.uk/pride/data/cluster/result-files.
-                Some unidentified clusters with resonable size are retrieved for different spieces, which could be used as source of spectra archive searching[??].
+                Some unidentified clusters with reasonable sizes are retrieved for different spices, which could be used as source of spectra archive searching[].
             </p>
 
             <h3 id="spectral_archive"> Spectral Archive Searching</h3>
             <p>
                 When a user is willing to evaluate the originally database search PSMs, one way is to cluster all these PSMs
                 with the clusters in PRIDE Cluster, which is possible but complicate. Here we suggest another way, to address
-                the clusters as spectra archive and search que query spectra against the spectra archive built from PRIDE Cluster.
+                the clusters as spectra archive and search the query spectra against the spectra archive built from PRIDE Cluster.
             </p>
 
             <p>
-                <a herf="http://tools.proteomecenter.org/wiki/index.php?title=Software:SpectraST">SpectraST</a> is one component of TPP, which suport Spectral Archive Searching from version ????. SpectraST calculating
-                dot product score between the query spectrum and the arhichive spectrum, and other features are included to give
-                the f_val. In PhoenixEnhancer, we choose the default threshold 0.5 for f_val to accept the matches.
+                <a herf="http://tools.proteomecenter.org/wiki/index.php?title=Software:SpectraST">SpectraST</a>[] is one component of TPP, which support Spectral Archive Searching from version ????.
+                SpectraST calculating dot product scores between the query spectrum and the archive spectrum, and other features such as the distribution of the dot product scores are included to give
+                the finally score <i>f_val</i>. In Phoenix Enhancer, we choose the default threshold 0.5 for <i>f_val</i> to accept the matches.
             </p>
 
             <h3 id="spectral_similarity"> Spectral Similarity</h3>
             <p>
-                In PRIDE Cluster, the spectra similarity is calculated as this: ????
+                In PRIDE Cluster, the spectra similarity is calculated as this[]:
             </p>
+            <ul>
+                    <li>1. Filtering the peaks: selecting 70 highest peaks, and only the peaks that explain 50% of the total ion current but at least the top 25 are retained.</li>
+                    <li>2. Using a hypergeometric distribution to model the probability of matching peaks come from random chance.</li>
+                    <li>3. Using the Kendall-Tau score to calculate the similarity between the intensity ranks of the matched peaks ane then convert it
+                                into a probability of obtain better by random chance.</li>
+                    <li>4. These two probabilities are combined into a single p-value using Fisher’s method.</li>
+            </ul>
 
             <p>
                 In SpectraST, the spectra similarity is calculated as this: ????

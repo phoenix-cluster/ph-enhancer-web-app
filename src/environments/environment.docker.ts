@@ -4,6 +4,6 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false,
-  configFilePath: 'assets/config/config-dev.json',
+    production: false,
+    configFilePath: 'assets/config/config-docker.json',
 };

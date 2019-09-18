@@ -2,6 +2,7 @@ import {Component, Input, OnInit,Output,EventEmitter} from '@angular/core';
 import * as d3 from 'd3';
 import * as venn from 'venn.js/venn.js';
 import {StatisticsService} from "../../../../services/statistics.service";
+import {ConfigService} from "../../../../services/config.service";
 import {VennData} from "../../../../model/vennData";
 import {environment} from "../../../../../environments/environment";
 import { document } from 'app/typescripts/free/utils/facade/browser';
@@ -14,12 +15,16 @@ import {Router} from "@angular/router";
 })
 export class Chart1Component implements OnInit {
     @Output()
- change:EventEmitter<ChangeProject>=new EventEmitter();
+    change:EventEmitter<ChangeProject>=new EventEmitter();
     private sets = null;
     private vennData : VennData;
-    projects = [environment.defaultProject];
-    selectedProject=environment.defaultProject;
-    constructor(private router: Router,private statisticsService: StatisticsService) {
+    private defaultProject:string;
+    // projects = [environment.defaultProject];
+    projects : string[];
+    selectedProject:string
+        // =environment.defaultProject;
+    constructor(private router: Router,private statisticsService: StatisticsService,
+                private configService:ConfigService) {
         this.sets = [
             {"sets": [0], "label": "Original Identified", "size": 500, "addInfo": ", 400 unmatched"},
             {"sets": [1], "label": "Cluster Matched", "size": 400, "addInfo": ", 300 new identified"},
@@ -34,14 +39,17 @@ export class Chart1Component implements OnInit {
     }
 
     ngOnInit() {
-        this.getAndSetProjects();
-        this.getVennDataAndDraw();
+        this.configService.getConfig().then((configJson) => {
+            this.defaultProject = configJson.defaultProject;
+            this.getAndSetProjects();
+            this.getVennDataAndDraw();
+        });
     }
 
 
     getVennDataAndDraw() {
         if(this.selectedProject== null){
-            this.selectedProject = environment.defaultProject;
+            this.selectedProject = this.defaultProject;
         }
         document.getElementById('selectProject');
         this.statisticsService.getVennData(this.selectedProject)
@@ -117,11 +125,9 @@ export class Chart1Component implements OnInit {
     this.selectedProject=value;
   }
     onChange(event){
-        this.getVennDataAndDraw();
+       this.getVennDataAndDraw();
        this.change.emit(new ChangeProject(event));
-      
-
-    }    
+    }
     /* can not show each intersection's number, don't use it
     ngOnInit() {
         var sets = [

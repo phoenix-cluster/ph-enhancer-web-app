@@ -31,9 +31,11 @@ export class HistogramChartsComponent implements OnChanges {
     @Input() sortField: string;
     @Input() psmType: string;
     @Input() projectId: string;
+    @Input() selectedSpeciesId: string;
     private confScoreHistArray = new Array<HistgramBin>();
     private clusterRatioHistArray = new Array<HistgramBin>();
     private clusterSizeHistArray = new Array<HistgramBin>();
+    private currentFilterTaxid = "ALL";
 
     private scores = [];
     private ratios = [];
@@ -54,31 +56,38 @@ export class HistogramChartsComponent implements OnChanges {
     }
 
     ngOnInit(): void {
-      // console.log(this.sortField);
-      //   if(this.confScoreHistArray!=null && this.confScoreHistArray.length>=1)
-      //       return;
+        this.reGetAndRenewHistData();
+    }
 
+    ngOnChanges(): void {
+        // if (this.currentFilterTaxid == this.selectedSpeciesId){
+        //     console.log("no need to regate hist data")
+        //     this.renewHist();  //no need to reGetHistData
+        // }else {
+        //     console.log("regate hist data by " + this.selectedSpeciesId)
+        //     console.log("ngonchanges" + this.selectedSpeciesId)
+            this.currentFilterTaxid = this.selectedSpeciesId; // re get hist data, because selected species id changed
+            this.reGetAndRenewHistData();
+        // }
+    }
+
+
+    reGetAndRenewHistData():void{
+        let filterTaxid = this.currentFilterTaxid;
         if (this.psmType == "newid" && (this.confScoreHistArray ==null || this.confScoreHistArray.length < 1)) {
-            // this.statisticsService.getHistData(this.projectId,this.psmType, "recommConfScore").then(bins=>{this.confScoreHistArray = bins;} );
-            var promise1 =this.statisticsService.getHistData(this.projectId,this.psmType, "recommConfScore");
+            var promise1 =this.statisticsService.getHistData(this.projectId, this.psmType, "recommConfScore", filterTaxid);
         }
 
         else if (this.psmType != "newid" && (this.confScoreHistArray==null || this.confScoreHistArray.length < 1)) {
-            // this.statisticsService.getHistData(this.projectId,this.psmType, "confScore").then(bins=>{this.confScoreHistArray = bins;} );
-            var promise1 =this.statisticsService.getHistData(this.projectId,this.psmType, "confScore");
+            var promise1 =this.statisticsService.getHistData(this.projectId,this.psmType, "confScore", filterTaxid);
         }
 
         if (this.clusterRatioHistArray == null || this.clusterRatioHistArray.length < 1) {
-            var promise2 = this.statisticsService.getHistData(this.projectId,this.psmType, "clusterRatio");
-            // this.statisticsService.getHistData(this.projectId,this.psmType, "clusterRatio").then(
-            //     bins=>{
-            //         this.clusterRatioHistArray = bins;
-            //     });
+            var promise2 = this.statisticsService.getHistData(this.projectId,this.psmType, "clusterRatio", filterTaxid);
         }
 
         if (this.clusterSizeHistArray==null || this.clusterSizeHistArray.length < 1) {
-            // this.statisticsService.getHistData(this.projectId,this.psmType, "clusterSize").then(bins=>{this.clusterSizeHistArray = bins});
-            var promise3 = this.statisticsService.getHistData(this.projectId,this.psmType, "clusterSize");
+            var promise3 = this.statisticsService.getHistData(this.projectId,this.psmType, "clusterSize", filterTaxid);
         }
 
         Promise.all([promise1,promise2, promise3]).then(values => {
@@ -86,12 +95,13 @@ export class HistogramChartsComponent implements OnChanges {
             this.confScoreHistArray = values[0];
             this.clusterRatioHistArray = values[1];
             this.clusterSizeHistArray = values[2];
-            this.ngOnChanges();
+            this.renewHist();
         });
     }
 
-    ngOnChanges(): void {
+    renewHist(): void {
         // console.log(this.activedPsm);
+
         if(this.activedPsm) {
             let scoreRank = this.getBinRank(this.confScoreHistArray, this.activedPsm.confidentScore);
             this.activedConfScoreBin = {

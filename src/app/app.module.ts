@@ -65,6 +65,7 @@ import { ProjectsPieChartComponent } from './components/cluster-details/projects
 import { ClusterSpecCompareComponent } from './components/cluster-details/cluster-spec-compare/cluster-spec-compare.component';
 import { JobProgressComponent } from './components/job-progress/job-progress.component';
 import { HelpPageComponent } from './components/help-page/help-page.component';
+import {ConfigService} from "./services/config.service";
 
 
 
@@ -139,7 +140,7 @@ import { HelpPageComponent } from './components/help-page/help-page.component';
         FileUploadService,
         DoAnalysisService,
         AnalysisDataService,
-        // ConfigService,
+        ConfigService,
         // ConfigModule.init(),
     ],
     bootstrap: [AppComponent],

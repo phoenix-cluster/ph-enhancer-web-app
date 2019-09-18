@@ -4,7 +4,8 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false,
+  production: true,
+  configFilePath: 'assets/config/config-prod.json',
   baseUrl : 'http://enhancer.ncpsb.org:8090/v1/',
   // analysisBaseUrl : 'http://namenode:8090/example/v1/',
   analysisBaseUrl : 'http://enhancer.ncpsb.org:5000/',
