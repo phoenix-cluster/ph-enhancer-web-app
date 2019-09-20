@@ -1,9 +1,0 @@
-{
-  "debugging": true,
-
-  "API_ENDPOINTS": {
-    "USER": "api/v1/user",
-    "":""
-  },
-  "BASEURL":"http://192.168.6.20:8090/example/v1/"
-}
