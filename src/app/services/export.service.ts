@@ -32,7 +32,7 @@ export class ExportService {
                 if (exportConfig.recommBetter)
                     exportUrl += "&recommendRange=[" + exportConfig.recommBetterStart + "," + exportConfig.recommBetterEnd + "]";
 
-                exportUrl += "&hasAccept=" + exportConfig.hasAccepted;
+                exportUrl += "&hasAccept=" + exportConfig.hasAccpeted;
                 exportUrl += "&defaultAcceptType=" + exportConfig.defaultAccpetType;
                 exportUrl += "&hasRejected=" + exportConfig.hasRejected;
 

@@ -1,6 +1,7 @@
 import {Component, Input, OnChanges, SimpleChange} from '@angular/core';
 import {HistgramBin} from "../../../../model/histogram-bin";
 import {Psm} from "../../../../model/psm";
+import {Router} from "@angular/router";
 import {StatisticsService} from "../../../../services/statistics.service";
 
 class SimPsm {
@@ -28,66 +29,58 @@ export class HistogramChartsComponent implements OnChanges {
     @Input() activedPage: SimPsm[];
     @Input() activedPsm: Psm;
     @Input() activePsmIndex: number;
+    @Input() page: number;
+    @Input() sortType: any;
     @Input() sortField: string;
     @Input() psmType: string;
     @Input() projectId: string;
-    @Input() selectedSpeciesId: string;
-    confScoreHistArray = new Array<HistgramBin>();
-    clusterRatioHistArray = new Array<HistgramBin>();
-    clusterSizeHistArray = new Array<HistgramBin>();
-    currentFilterTaxid = "ALL";
+    private confScoreHistArray = new Array<HistgramBin>();
+    private clusterRatioHistArray = new Array<HistgramBin>();
+    private clusterSizeHistArray = new Array<HistgramBin>();
 
-    scores = [];
-    ratios = [];
-    sizes = [];
+    private scores = [];
+    private ratios = [];
+    private sizes = [];
 
-    activedConfScoreBin = new RankAndValue(-1, 0);
-    activedClusterSizeBin = new RankAndValue(-1, 0);
-    activedClusterRatioBin = new RankAndValue(-1, 0);
+    private activedConfScoreBin = new RankAndValue(-1, 0);
+    private activedClusterSizeBin = new RankAndValue(-1, 0);
+    private activedClusterRatioBin = new RankAndValue(-1, 0);
 
-    activedConfScoreBinRange = new Array<{rank: number, value: number}>();
-    activedClusterSizeBinRange = new Array<{rank: number, value: number}>();
-    activedClusterRatioBinRange = new Array<{rank: number, value: number}>();
-
-    constructor(private statisticsService: StatisticsService) {
+    private activedConfScoreBinRange = new Array<{rank: number, value: number}>();
+    private activedClusterSizeBinRange = new Array<{rank: number, value: number}>();
+    private activedClusterRatioBinRange = new Array<{rank: number, value: number}>();
+    
+    constructor(private statisticsService: StatisticsService, private router: Router) {
         this.activedPsm = new Psm("null");
         this.activePsmIndex = 1;
         this.sortField = "confidentScore";
     }
 
     ngOnInit(): void {
-        this.reGetAndRenewHistData();
-    }
-
-    ngOnChanges(): void {
-        // if (this.currentFilterTaxid == this.selectedSpeciesId){
-        //     console.log("no need to regate hist data")
-        //     this.renewHist();  //no need to reGetHistData
-        // }else {
-        //     console.log("regate hist data by " + this.selectedSpeciesId)
-        //     console.log("ngonchanges" + this.selectedSpeciesId)
-            this.currentFilterTaxid = this.selectedSpeciesId; // re get hist data, because selected species id changed
-            this.reGetAndRenewHistData();
-        // }
-    }
-
-
-    reGetAndRenewHistData():void{
-        let filterTaxid = this.currentFilterTaxid;
+      // console.log(this.sortField);
+      //   if(this.confScoreHistArray!=null && this.confScoreHistArray.length>=1)
+      //       return;
         if (this.psmType == "newid" && (this.confScoreHistArray ==null || this.confScoreHistArray.length < 1)) {
-            var promise1 =this.statisticsService.getHistData(this.projectId, this.psmType, "recommConfScore", filterTaxid);
+            // this.statisticsService.getHistData(this.projectId,this.psmType, "recommConfScore").then(bins=>{this.confScoreHistArray = bins;} );
+            var promise1 =this.statisticsService.getHistData(this.projectId,this.psmType, "recommConfScore");
         }
 
         else if (this.psmType != "newid" && (this.confScoreHistArray==null || this.confScoreHistArray.length < 1)) {
-            var promise1 =this.statisticsService.getHistData(this.projectId,this.psmType, "confScore", filterTaxid);
+            // this.statisticsService.getHistData(this.projectId,this.psmType, "confScore").then(bins=>{this.confScoreHistArray = bins;} );
+            var promise1 =this.statisticsService.getHistData(this.projectId,this.psmType, "confScore");
         }
 
         if (this.clusterRatioHistArray == null || this.clusterRatioHistArray.length < 1) {
-            var promise2 = this.statisticsService.getHistData(this.projectId,this.psmType, "clusterRatio", filterTaxid);
+            var promise2 = this.statisticsService.getHistData(this.projectId,this.psmType, "clusterRatio");
+            // this.statisticsService.getHistData(this.projectId,this.psmType, "clusterRatio").then(
+            //     bins=>{
+            //         this.clusterRatioHistArray = bins;
+            //     });
         }
 
         if (this.clusterSizeHistArray==null || this.clusterSizeHistArray.length < 1) {
-            var promise3 = this.statisticsService.getHistData(this.projectId,this.psmType, "clusterSize", filterTaxid);
+            // this.statisticsService.getHistData(this.projectId,this.psmType, "clusterSize").then(bins=>{this.clusterSizeHistArray = bins});
+            var promise3 = this.statisticsService.getHistData(this.projectId,this.psmType, "clusterSize");
         }
 
         Promise.all([promise1,promise2, promise3]).then(values => {
@@ -95,20 +88,32 @@ export class HistogramChartsComponent implements OnChanges {
             this.confScoreHistArray = values[0];
             this.clusterRatioHistArray = values[1];
             this.clusterSizeHistArray = values[2];
-            this.renewHist();
+            this.ngOnChanges();
         });
     }
 
-    renewHist(): void {
-        // console.log(this.activedPsm);
-
+    ngOnChanges(): void {
         if(this.activedPsm) {
-            let scoreRank = this.getBinRank(this.confScoreHistArray, this.activedPsm.confidentScore);
-            this.activedConfScoreBin = {
-                "rank": scoreRank,
-                "value": this.activedPsm.confidentScore || this.activedPsm.recommConfidentScore
-            };
-
+            if (this.sortField === 'confidentScore') {
+                let scoreRank = this.getBinRank(this.confScoreHistArray, this.activedPsm.confidentScore);
+                this.activedConfScoreBin = {
+                    "rank": scoreRank,
+                    "value": this.activedPsm.confidentScore || this.activedPsm.recommConfidentScore
+                };
+            } else {
+                let scoreRank = this.getBinRank(this.confScoreHistArray, this.activedPsm.confidentScore);
+                this.activedConfScoreBin = {
+                    "rank": scoreRank,
+                    "value": this.activedPsm.confidentScore || this.activedPsm.recommConfidentScore
+                };
+            }
+            if (this.sortField === 'recommConfidentScore' && this.router.url.split('/')[1] == 'new_id') {
+                let scoreRank = this.getBinRank(this.confScoreHistArray, this.activedPsm.recommConfidentScore);
+                this.activedConfScoreBin = {
+                    "rank": scoreRank,
+                    "value": this.activedPsm.recommConfidentScore
+                };
+            }
 
             let ratioRank = this.getBinRank(this.clusterRatioHistArray, this.activedPsm.clusterRatio);
             this.activedClusterRatioBin = {
@@ -152,22 +157,28 @@ export class HistogramChartsComponent implements OnChanges {
     };
 
     getBinRank(histogramArray:any[], score:number):number{
-
         if(histogramArray==null || histogramArray.length < 1) return -1;
-
         if(score <= histogramArray[0].upperBound) {
             return histogramArray[0].rank;
         }
         if(score >= histogramArray[histogramArray.length -1].lowerBound) {
             return histogramArray[histogramArray.length -1].rank;
         }
-
-        let binSize = histogramArray[1].upperBound - histogramArray[1].lowerBound; //the second bin is the really start of the histogram
-        let min = histogramArray[1].lowerBound;
-
-        let bin = Math.floor(((score - min) / binSize)) + 2;
-
-        return bin;
+        // 这里精确找出了区间但是需要确定便捷 >= 或　<= 应该用在　uper 还是 lower
+        // 另外rank数值不准确，当返回区间画图数据只有14条，最后一条的rank为20，应该为14会导致一些缺失数据最大值或者没法高亮。需要结局数据问题。
+        let bin
+        histogramArray.forEach((item, index) => {
+            if (score >= item.lowerBound && score <= item.upperBound) {
+                bin = item.rank
+            }
+        })
+        return bin
+        // let binSize = histogramArray[1].upperBound - histogramArray[1].lowerBound; //the second bin is the really start of the histogram
+        // console.log(score)
+        // let min = histogramArray[1].lowerBound;
+        // console.log((score - min) / binSize)
+        // let bin = Math.floor(((score - min) / binSize)) + 2;
+        // return bin;
     }
         // //overwrite, not sure is right
         // let i, bin = -1;

@@ -4,6 +4,8 @@ app-psm-tables{
 }
 
 .row{
-	width:1280px;
-	margin:0 auto;
+	.new-wrapper {
+		margin-bottom: 110px;
+		height: calc(100vh - 200px);
+	}
 }

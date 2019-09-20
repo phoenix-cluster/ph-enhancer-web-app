@@ -1,7 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {DOCUMENT} from '@angular/common';
-import {NavigationEnd, Router} from "@angular/router";
+import {NavigationEnd, Router, Params, ActivatedRoute} from "@angular/router";
 import {ConfigService} from "../../services/config.service";
+import {CheckExamplesService, changedProjectId} from "../../services/checkExams/check-examples.service";
 
 @Component({
     selector: 'app-header',
@@ -9,30 +10,33 @@ import {ConfigService} from "../../services/config.service";
     styleUrls: ['./app-header.component.scss']
 })
 export class AppHeaderComponent implements OnInit {
-    projectId: string ;
-
+    public projectId: string ;
     // constructor(@Inject(DOCUMENT) private document: Document) {
     // }
-    constructor(private router: Router, private configService: ConfigService) {
+    constructor(private router: Router, private configService: ConfigService, private routeInfo: ActivatedRoute, private checkExamService: CheckExamplesService) {
+        checkExamService.idEventer.subscribe(id => {
+            checkExamService.projectId = id
+        })
     }
-
+    protected subscribeId: changedProjectId;
     ngOnInit() {
-        this.router.events.subscribe((event) => {
+        // console.log(this.router.routerState.snapshot.url)
+        /*this.router.events.subscribe((event) => {
             if (event instanceof NavigationEnd) {
                 let projectId = this.getProject(this.router.routerState.snapshot.url);
                 if (projectId != null) {
                     this.projectId = projectId;
                 }
             }
-        });
-
-        this.configService.getConfig().then((configJson) => {
-            if(this.projectId == null) {
-                this.projectId = configJson.defaultProject;
-            }
+        });*/
+        this.getProjectId();
+        this.subscribeId = this.checkExamService.projectId;
+    }
+    getProjectId() {
+        this.configService.getConfig().then(configJson => {
+            this.projectId = configJson.defaultProject;
         });
     }
-
     getProject(currentUrl) {
         let dataType = null;
         let dataValue = null;
@@ -45,17 +49,19 @@ export class AppHeaderComponent implements OnInit {
                 let projectId = dataValue;
                 return projectId;
             } else {
-                    return null;
-                }
+                return this.configService.getConfig().then(configJson => {
+                    this.projectId = configJson.defaultProject;
+                    return configJson.defaultProject;
+                });
             }
-
+        }
         return null;
-    }
 
         // let patern = /\/(\w+)/g;
         // if(patern.test(currentUrl)){
         //     return null;
         // }
+    }
 
     getClass(page: string): string {
         let currentUrl = this.router.routerState.snapshot.url;
@@ -64,7 +70,7 @@ export class AppHeaderComponent implements OnInit {
         let a = patern.exec(currentUrl);
         if (a) {
             dataType = a[1];
-            if (dataType == page ) {
+            if (dataType === page ) {
                 return "activePage";
             }else{
                 return "deactivePage";
@@ -74,7 +80,7 @@ export class AppHeaderComponent implements OnInit {
         a = patern.exec(currentUrl);
         if (a) {
             dataType = a[1];
-            if (dataType == page ) {
+            if (dataType === page ) {
                 return "activePage";
             }else{
                 return "deactivePage";
@@ -86,7 +92,7 @@ export class AppHeaderComponent implements OnInit {
      * get the page type from url, result/appendix/job/index
      ***/
 
-    getPageType(): string {
+    getPageType(page: string): string {
         let currentUrl = this.router.routerState.snapshot.url;
         let pageName = null;
         let patern = /\/(\w+)\/(\w+)/g;

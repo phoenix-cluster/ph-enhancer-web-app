@@ -3,7 +3,7 @@
   "analysisBaseUrl" : "http://192.168.6.20:5002/",
   "clusterBaseUrl" : "http://192.168.6.20:8080/v1/",
   "defaultProject" : "PXD000021",
-  "defaultMinClusterSize" : 5,
+  "defaultMinClusterSize" : 10,
   "allowedFileType" : [
         "xml","xml.gz",
         "mzid","mzid.gz",

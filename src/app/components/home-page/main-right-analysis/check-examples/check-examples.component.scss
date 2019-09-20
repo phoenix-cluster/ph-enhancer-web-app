@@ -1,8 +1,30 @@
+.check_wrapper {
+    margin-bottom: 6px;
+    .label {
+        font-weight: 500;
+        font-size: 16px;
+    }
+    .custom_select {
+        position: relative;
+        border-radius: 4px;
+        border: 1px solid #dcdfe6;
+        box-sizing: border-box;
+        color: #606266;
+        display: inline-block;
+        font-size: 14px;
+        height: 32px;
+        line-height: 32px;
+        outline: none;
+        padding: 0 15px;
+        transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+        cursor: pointer;
+    }
+}
 .btn-group .waves-light{
-    background-color: #45526E!important;
+    background-color: #fff!important;
     margin: 6px 6px;
 }
 .waves-light:hover,.waves-light:focus{
-    background-color:  rgba(69, 82, 110, 0.8)!important;
+    background-color:  #fff!important;
     margin: 6px 6px;
 }

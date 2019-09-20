@@ -18,23 +18,23 @@ import { LocalStorageService } from '../../../../services/local-storage.service'
 })
 export class ClusterSpectraTableComponent implements OnChanges {
     @Input() currentClusterId:string;
-    spectrumInClusterHeaders = SpectrumInCluster.spectrumInClusterHeaders;
-    currentPage: number = 1;
+    private spectrumInClusterHeaders = SpectrumInCluster.spectrumInClusterHeaders;
+    private currentPage: number = 1;
     private currentSize: number = 10;
     private currentSortField = "confidentScore";
     private currentSortDirection = "DESC";
-    elemStart: number = (this.currentPage - 1) * this.currentSize + 1;
-    elemEnd: number = this.elemStart + this.currentSize - 1;
-    totalElem: number = 0;
-    totalPages: number = 0;
-    pages: number[];
+    private elemStart: number = (this.currentPage - 1) * this.currentSize + 1;
+    private elemEnd: number = this.elemStart + this.currentSize - 1;
+    private totalElem: number = 0;
+    private totalPages: number = 0;
+    private pages: number[];
     private sortByCol: string = "confidentScore"
 
     // private currentClusterId: string = "";
     private allSpectraTitlesOfaCluster: string[];
     private currentSpectraTitles: string[];
     private currentCluster: Cluster;
-    currentSpectra: SpectrumInCluster[];
+    private currentSpectra: SpectrumInCluster[];
 
 
     constructor(private spectrumInClusterTableService: SpectraInClusterTableService,

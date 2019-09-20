@@ -166,10 +166,12 @@
     </div>
 
 </ng-template>
-
-<button class="btn btn-lg btn-outline-primary outline" (click)="open(content)">
-    Upload files
-</button>
+<div class="upload_file_content">
+    <span class="label">Upload files to analyze</span>
+    <button class="custom_button" (click)="open(content)">
+        Upload Files
+    </button>
+</div>
 
 <!--<ng-template #confirmPopup let-c="close" let-d="dismiss">-->
     <!--<h2 class="modal-title">Confirm Upload files for your assigned Analysis ID: {{analysisJob.accessionId}}</h2>-->

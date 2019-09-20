@@ -1871,7 +1871,7 @@ var ui = require('jquery-ui');
 
         var rowspan = 2;
 
-		var parentTable = '<table cellpadding="0" cellspacing="5" class="lorikeet-outer-table"> ';
+		var parentTable = '<table cellpadding="0" cellspacing="5" class="lorikeet-outer-table" style="width: 100%;"> ';
 		parentTable += '<tbody> ';
 		parentTable += '<tr> ';
 

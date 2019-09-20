@@ -18,14 +18,13 @@ export class StatisticsService {
                 private configService: ConfigService) {
     }
 
-    public getHistData(identifier:string,psmType:string, fieldType: string, filterTaxid:string): Promise<HistgramBin[]> {
+    public getHistData(identifier:string,psmType:string, fieldType: string): Promise<HistgramBin[]> {
          return   this.configService.getConfig().then((configJson) => {
                 let histDataUrl = configJson.baseUrl + "statistics/histogram?" +
                     "identifier=" + identifier +
                     "&numBins=" + "20" +
                     "&psmType=" + psmType +
-                    "&fieldType=" + fieldType +
-                    "&FilterBySpecies=" + filterTaxid;
+                    "&fieldType=" + fieldType;
                 return this.http.get(histDataUrl)
                     .toPromise()
                     .then(response => {

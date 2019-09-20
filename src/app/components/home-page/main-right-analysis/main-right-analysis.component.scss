@@ -1,3 +1,29 @@
+.analysis_wrapper {
+    // height: calc(100vh - 440px);
+    p {
+        width:100%;
+        font-size:20px;
+        border-bottom:2px solid #e6e9eb;
+        font-weight:bold;
+        color:#45526E;
+        padding-left: 10px;
+        padding-bottom:5px;
+        margin-bottom:0px;
+        margin-top:10px;
+    }
+    .title{
+        padding-left: 10px;
+        border-left: 6px solid rgb(39,182,240);
+    }
+    .analysis_content {
+        padding: 1em;
+    }
+    .refresh {
+        float: right;
+        color: rgb(39,182,240);
+        margin-right: 6px;
+    }
+}
 .frame{
     padding-top: 20px!important;
     padding-bottom: 20px;

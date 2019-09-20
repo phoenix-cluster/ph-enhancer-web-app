@@ -1,36 +1,48 @@
 <div>
 <div class="row">
     <div class="col-md-4 ">
-        <app-histogram-chart 
-            [isSortField]="sortField == 'confidentScore' || sortField=='recommConfidentScore'"
-            [activedPageValues]="scores" 
-            [activedBinRange]="activedConfScoreBinRange" 
-            [activedPsm]="activedConfScoreBin"
-            [activedPsmIndex]="activePsmIndex" 
-            [histBins]="confScoreHistArray" 
-            [dataName]="'ConfidentScore'">
-        </app-histogram-chart>
+        <div style="display: block; height: 400px;">
+            <app-histogram-chart
+                    [isSortField]="sortField == 'confidentScore'  || (sortField=='recommConfidentScore' && this.router.url.split('/')[1] == 'new_id')"
+                    [activedPageValues]="scores"
+                    [activedBinRange]="activedConfScoreBinRange"
+                    [sortType]="sortType"
+                    [page]="page"
+                    [activedPsm]="activedConfScoreBin"
+                    [activedPsmIndex]="activePsmIndex"
+                    [histBins]="confScoreHistArray"
+                    [dataName]="'ConfidentScore'">
+            </app-histogram-chart>
+        </div>
     </div>
     <div class="col-md-4 ">
-        <app-histogram-chart
-            [isSortField]="sortField == 'clusterRatio'" 
-            [activedPageValues]="ratios" 
-            [activedBinRange]="activedClusterRatioBinRange" 
-            [activedPsm]="activedClusterRatioBin" 
-            [activedPsmIndex]="activePsmIndex" 
-            [histBins]="clusterRatioHistArray" 
-            [dataName]="'ClusterRatio'"></app-histogram-chart>
+        <div style="display: block; height: 400px;">
+            <app-histogram-chart
+                    [isSortField]="sortField == 'clusterRatio'"
+                    [activedPageValues]="ratios"
+                    [sortType]="sortType"
+                    [page]="page"
+                    [activedBinRange]="activedClusterRatioBinRange"
+                    [activedPsm]="activedClusterRatioBin"
+                    [activedPsmIndex]="activePsmIndex"
+                    [histBins]="clusterRatioHistArray"
+                    [dataName]="'ClusterRatio'"></app-histogram-chart>
+        </div>
     </div>
     <div class="col-md-4 ">
-        <app-histogram-chart
-            [isSortField]="sortField == 'clusterSize'" 
-            [activedPageValues]="sizes" 
-            [activedBinRange]="activedClusterSizeBinRange" 
-            [activedPsm]="activedClusterSizeBin" 
-            [activedPsmIndex]="activePsmIndex" 
-            [histBins]="clusterSizeHistArray" 
-            [dataName]="'ClusterSize'">
-        </app-histogram-chart>
+        <div style="display: block; height: 400px;">
+            <app-histogram-chart
+                    [isSortField]="sortField == 'clusterSize'"
+                    [activedPageValues]="sizes"
+                    [sortType]="sortType"
+                    [page]="page"
+                    [activedBinRange]="activedClusterSizeBinRange"
+                    [activedPsm]="activedClusterSizeBin"
+                    [activedPsmIndex]="activePsmIndex"
+                    [histBins]="clusterSizeHistArray"
+                    [dataName]="'ClusterSize'">
+            </app-histogram-chart>
+        </div>
     </div>
 </div>
 </div>

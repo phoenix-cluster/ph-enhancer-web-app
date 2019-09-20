@@ -47,13 +47,14 @@ export class PsmTablesComponent implements OnInit {
     downloadJsonHref:string; //for result download
 
     page = new Page();
+    sortType = ''
     specPage = new SpecPage();
     loading: boolean = false;
     isDefaultSort: boolean = true;
     private activedHistItem: number;
     private specTableOffset:number = 0;
 
-    export:ExportConfig;
+    private export:ExportConfig;
 
 
     constructor(private psmTableService: PsmTableService,
@@ -78,6 +79,7 @@ export class PsmTablesComponent implements OnInit {
         // this.setPageData(this.page);
         this.onSelectSpeciesChange();
         this.isDefaultSort = true;
+        this.sortType = 'desc'
         this.getAndSetSpeciesListInProject()
     }
 
@@ -160,6 +162,7 @@ export class PsmTablesComponent implements OnInit {
         this.loading = true;
         this.isDefaultSort = false;
         this.page = new Page();
+        this.sortType = event.newValue
         this.page.sortDirection = event.sorts[0].dir;
         this.page.sortField = event.sorts[0].prop;
         this.page.selectedSpeciesId = this.selectedSpeciesId;
@@ -169,7 +172,6 @@ export class PsmTablesComponent implements OnInit {
     }
 
     onSelectPsm({selected}) {
-        // console.log('selected');
         // console.log(selected[0].$$index);
         this.selectedPsmIndex = selected[0].$$index + 1;
         this.selectedPsm = selected[0];

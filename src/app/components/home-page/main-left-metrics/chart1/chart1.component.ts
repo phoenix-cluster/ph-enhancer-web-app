@@ -64,7 +64,6 @@ export class Chart1Component implements OnInit {
             {"sets": [0], "label": "Original Identified", "size": this.vennData.prePSM_no, "addInfo": ", " + this.vennData.prePSM_not_matched_no + " unmatched"},
             {"sets": [1], "label": "Cluster Matched", "size": this.vennData.matched_spec_no, "addInfo": ", " + this.vennData.new_PSM_no + "new identified"},
             {"sets": [2], "label": "Low Confident", "size": this.vennData.prePSM_low_conf_no},
-
             {"sets": [0, 1], "size": this.vennData.matched_id_spec_no},
             {"sets": [0, 2], "size": this.vennData.prePSM_low_conf_no},
             {"sets": [1, 2], "size": this.vennData.prePSM_low_conf_no},
@@ -76,7 +75,7 @@ export class Chart1Component implements OnInit {
         var chart = venn.VennDiagram()
             .width(400)
             .height(500);
-
+        let colors = ['gray', 'purple', 'purple']
         var div = d3.select("#venn")
         div.datum(this.sets).call(chart);
 
@@ -87,7 +86,17 @@ export class Chart1Component implements OnInit {
             .style("stroke-opacity", 0)
             .style("stroke", "#fff")
             .style("stroke-width", 3)
-
+        div.selectAll(".venn-circle path")
+            .style("fill", (d, i) => {
+                switch (d.label) {
+                    case "Original Identified":
+                        return 'gray'
+                    case "Cluster Matched":
+                        return 'purple'
+                    case "Low Confident":
+                        return 'gray'
+                }
+            });
         div.selectAll("g")
             .on("mouseover", function (d, i) {
                 // sort all the areas relative to the current item
@@ -120,10 +129,10 @@ export class Chart1Component implements OnInit {
                     .style("stroke-opacity", 0);
             });
     }
-  setSelectedProject(value){
-    document.getElementById('selectProject').value=value;
-    this.selectedProject=value;
-  }
+    setSelectedProject(value){
+        document.getElementById('selectProject').value=value;
+        this.selectedProject=value;
+    }
     onChange(event){
        this.getVennDataAndDraw();
        this.change.emit(new ChangeProject(event));

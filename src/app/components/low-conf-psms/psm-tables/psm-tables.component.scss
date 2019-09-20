@@ -70,9 +70,21 @@
 //  touch-action: manipulation;
 //}
 //
+.card {
+  margin-top: 10px;
+  .filter-wrapper {
+    margin-bottom: 6px;
+  }
+  .material {
+    box-shadow: none;
+  }
+}
 .default_acceptance {
   color: #172e5a !important;
   font-size: 22px;
+}
+.lorikeet-outer-table {
+  width: 100%!important;
 }
 //
 .mannual_acceptance {
@@ -226,12 +238,14 @@
 #spectrum_table{ height:772px;  overflow: auto;}
 
 :host /deep/ .datatable-body-row.active .datatable-row-group {
-  background-color: lightblue!important;
+  // background-color: #27b6f0!important;
+  background-color: #006699!important;
+  // background-color: rgba(39, 182, 240, .5) !important;
 }
 
 .material-like {
-  background: #FFF;
-  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  /*background: #FFF;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);*/
   height:770px;
   position:relative;
 }

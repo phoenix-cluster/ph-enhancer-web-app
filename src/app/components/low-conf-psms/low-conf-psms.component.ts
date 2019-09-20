@@ -7,10 +7,9 @@ import {ActivatedRoute} from "@angular/router";
   styleUrls: ['./low-conf-psms.component.scss']
 })
 export class LowConfPsmsComponent implements OnInit {
-
-  constructor(private route: ActivatedRoute) { }
-
   public project : string;
+  constructor(private route: ActivatedRoute) {}
+
   ngOnInit() {
       this.project = this.route.snapshot.paramMap.get('project');
   }

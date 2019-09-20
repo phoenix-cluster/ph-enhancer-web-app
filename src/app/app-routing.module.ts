@@ -2,11 +2,11 @@
  * Created by baimi on 2017/9/21.
  */
 
-import { BrowserModule } from '@angular/platform-browser';
+// import ng { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AppComponent } from './app.component';
+// import { AppComponent } from './app.component';
 
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { LowConfPsmsComponent } from './components/low-conf-psms/low-conf-psms.component';
