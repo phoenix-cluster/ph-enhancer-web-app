@@ -1,0 +1,202 @@
+.slide-btn{
+    position: fixed;
+    z-index: 999;
+    top: 0px;
+    width:100%;
+
+
+}
+//.slide-btn mdb-navbar{
+//	display:none;
+//}
+.position{
+    padding-left: 20%!important;
+    padding-right: 20%!important;
+}
+
+
+.nav ul {
+    list-style: none;
+    //background-color: #282d31;
+    text-align: center;
+    padding: 0;
+    margin: 0 auto;
+}
+/*
+.nav li {
+    font-family: "Open Sans", sans-serif;
+    font-size: 0.5em;
+    line-height: 40px;
+    height: 40px;
+    border-bottom: 1px solid #888;
+}
+
+.nav a {
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    transition: .3s background-color;
+}
+
+.nav a:hover {
+    background-color: #019fc2;
+}
+
+.nav a.active {
+    background-color: #f7f8fa;
+    color:red;
+    cursor: default;
+}
+*/
+/* Because Codepin haha
+@media screen and (min-width: 900px) {
+    .nav li {
+        width: 130px;
+        border-bottom: none;
+        height: 50px;
+        line-height: 50px;
+        font-size: 1.0em;
+    }
+
+    .nav li {
+        display: inline-block;
+        margin-right: -4px;
+    }
+ */
+.mdb-color{
+	min-width:1280px;
+	//background-color:#5d6576!important;
+}
+.navbar-brand{
+	display: inline-flex;
+}
+mdb-navbar{
+	line-height:80px;
+}
+.nav{
+	
+	width: 100%;
+    margin: 0 auto;
+    background-color: #fff;
+    height: 80px;
+    line-height:80px;
+    /*border-bottom: 2px solid #45526E;
+    position: relative;
+    z-index: 999 !important;*/
+    .logo-wrapper {
+        .logo {
+            height: 50px;
+            width: 80px;
+            vertical-align: middle;
+        }
+        .logo-title {
+            font-size: 28px;
+            font-weight: 700;
+            vertical-align: middle;
+        }
+    }
+
+}
+nav,navbar-nav,links{
+	width:100%;
+}
+ul{
+	display:block;
+    width: 1280px;
+    overflow: hidden;
+}
+.nav ul li{
+	float: left;
+    text-align: center;
+    padding: 0;
+    min-width: 120px;
+    margin-right: 6%;
+    border-top: none;
+    font-size: 22px;
+}
+.nav ul li a{
+	width:100%;
+    transition: 300ms;
+     color:#333;
+     font-weight:400;
+    border-radius: 5px;
+    padding: 5px 10px;
+    &:hover {
+        background: #eff3f6;
+        color: #909399!important;
+    }
+}
+.activePage {
+	// background-color:rgb(39,182,240);
+	a {
+        width:100%;
+        transition: 300ms;
+        color:#fff!important;
+        font-weight:400;
+        border-radius: 5px;
+        padding: 5px 10px;
+        background-color:rgb(39,182,240);
+    }
+}
+/*.activePage {
+    color: #fff!important;
+}*/
+/*.deactivePage {
+    color:white!important;
+}
+*/
+@media screen and (max-width:1831px){
+    .nav ul li{
+        float: left;
+        text-align: center;
+        padding: 0;
+        min-width: 120px;
+        margin-right: 4%;
+        border-top: none;
+        font-size: 22px;
+    }
+}
+@media screen and (max-width:1562px){
+    .nav ul li{
+        float: left;
+        text-align: center;
+        padding: 0;
+        min-width: 120px;
+        margin-right: 2%;
+        border-top: none;
+        font-size: 20px;
+    }
+}
+@media screen and (min-width:1562px)and(max-width: 1942px){
+    .nav ul li{
+        float: left;
+        text-align: center;
+        padding: 0;
+        min-width: 120px;
+        margin-right: 3%;
+        border-top: none;
+        font-size: 20px;
+    }
+}
+
+.nav a:hover {
+    background-color: rgb(39,182,240);
+    color:#fff!important;
+}
+
+@media screen and (max-width: 991px){
+  .mdb-color{
+    min-width:620px;
+  } 
+  .nav ul li{
+      margin-left: 30px;
+      margin-right: 0px;
+  }
+}
+@media screen and (min-width:991px)and(max-width: 1280px){
+    .nav ul li{
+        margin-left: 120px;
+        margin-right: 0px;
+    }
+}
+ 

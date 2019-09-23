@@ -1,0 +1,14 @@
+{
+  "baseUrl" : "http://192.168.6.20:8070/v1/",
+  "analysisBaseUrl" : "http://192.168.6.20:5001/",
+  "clusterBaseUrl" : "http://192.168.6.20:8070/v1/",
+  "defaultProject" : "PXD000021",
+  "defaultMinClusterSize" : 10,
+  "allowedFileType" : [
+        "xml","xml.gz",
+        "mzid","mzid.gz",
+        "mgf","mgf.gz",
+        "MGF","MGF.gz",
+        "mzML"
+    ]
+}

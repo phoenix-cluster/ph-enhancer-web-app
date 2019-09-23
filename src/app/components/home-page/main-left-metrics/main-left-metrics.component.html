@@ -1,0 +1,17 @@
+
+<div class="card mt-2">
+    <p><span>Description</span></p>
+    <app-description></app-description>
+</div>
+
+<div class="card">
+    <p><span>Analysis result for job {{currentProjectId}}</span></p>
+    <div class="row">
+        <app-chart3 class="col-md-6" [vennDataList]="vennDataList" [changeProject]="changeProject"
+        ></app-chart3>
+        <app-chart1 class="col-md-6" [projectId]="projectId" (change)="changeHandler($event)"></app-chart1>
+        <!--<app-chart1 class="col-xd-5 card ml-2"></app-chart1>-->
+        <!--<app-chart4 class="col-xd-3 card ml-2"></app-chart4>-->
+    </div>
+
+</div>

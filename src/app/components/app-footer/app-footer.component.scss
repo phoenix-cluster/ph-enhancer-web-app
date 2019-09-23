@@ -1,0 +1,32 @@
+.page-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: #fff;
+  color: #212529;
+  height: 100px;
+  margin-top: 0;
+  padding-top: 0;
+  a {
+    color: #27b6f0;
+    &:hover {
+      color: #27b6f0;
+      text-decoration: underline;
+    }
+  }
+  .links {
+    li {
+      display: inline-block;
+      margin-right: 10px;
+    }
+  }
+}
+.mdb-color{
+	min-width:1280px;
+}
+@media screen and (max-width: 991px){
+  .mdb-color{
+    min-width: auto;
+  }
+  
+}

@@ -1,0 +1,23 @@
+<!--add new note-->
+<div class="row">
+    <div class="col-sm-12 col-md-6">
+        <div class="dataTables_length" id="example_length">
+            <!--<label>Compare Spectra</label>-->
+            <p class="title-wrapper"><span class="title">Compare Spectra</span></p>
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-12" style="text-align: right;">
+        <div *ngIf="selectedPsm.recommendPeptide && selectedPsm.recommendPeptide.startsWith('R_Better_')">
+            <button id="checkRecommButton" class="custom_button custom_button_plain" (click)="onCheckRecommClick()" >Check Recommend Sequence</button>
+        </div>
+    </div>
+</div>
+<div class="row" style="margin-top: 10px;">
+    <div class="col-md-12">
+        <div id="lorikeet"></div>
+    </div>
+</div>
+<!--add new note-->
+
+
+

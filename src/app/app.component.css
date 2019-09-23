@@ -1,0 +1,14 @@
+
+/* .wrapper {
+  overflow-x: hidden;
+} */
+.main-wrapper {
+  padding-bottom: 120px;
+  overflow-x: hidden;
+}
+@media screen and (max-width: 991px){
+  .layout{
+    width:auto!important;
+  }
+  
+}

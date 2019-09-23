@@ -1,0 +1,38 @@
+@import "../../../../../assets/css/lorikeet.css";
+/*add new style*/
+.row .dataTables_length label{
+    border-left: 10px solid #45526e;
+    vertical-align: middle;
+    line-height: 37px;
+    padding-left: 10px;
+  }
+  .row{
+      font-weight: normal;
+      border-bottom: 1px solid #e6e9eb;
+      .title-wrapper {
+        margin-top: 1px;
+        padding-bottom: 7px;
+        border-bottom: none;
+        .title {
+          font-size: 16px;
+          font-weight: 600;
+        }
+      }
+  }
+  #lorikeet{
+      // padding-bottom:40px;
+    border: none;
+    box-shadow: none;
+      
+  }
+  span{
+      vertical-align: middle;
+    line-height: 40px;
+    font-weight: 600;
+  }
+[class^="icon-"]:before, [class*=" icon-"]:before {
+    text-decoration: inherit;
+    display: inline-block;
+    speak: none;
+}
+ 

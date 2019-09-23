@@ -1,0 +1,421 @@
+
+//table.dataTable thead .sorting:before, table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:before, table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:before, table.dataTable thead .sorting_desc:after {
+//  padding: 5px;
+//}
+//
+//.dataTables_wrapper .mdb-select {
+//  border: none;
+//}
+//
+//.dataTables_wrapper .mdb-select.form-control {
+//  padding-top: 0;
+//  margin-top: -1rem;
+//  margin-left: 0.7rem;
+//  margin-right: 0.7rem;
+//  width: 100px;
+//}
+//
+//.dataTables_length label {
+//  display: flex;
+//  justify-content: left;
+//}
+//
+//.dataTables_filter label {
+//  margin-bottom: 0;
+//}
+//
+//.dataTables_filter label input.form-control {
+//  margin-top: -0.6rem;
+//  padding-bottom: 0;
+//}
+//
+//table.dataTable {
+//  /*margin-bottom: 3rem!important;*/
+//  margin-bottom: 20px !important;
+//  table-layout: fixed;
+//  word-break: break-all;
+//}
+//
+//div.dataTables_wrapper div.dataTables_info {
+//  padding-top: 0;
+//}
+//
+//.table-wrapper-scroll {
+//  display: block;
+//  max-height: 500px;
+//  overflow-y: auto;
+//  -ms-overflow-style: -ms-autohiding-scrollbar;
+//}
+//
+//.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+//  background-color: seashell;
+//}
+//
+//[type=radio] + label, [type=checkbox] + label {
+//  position: relative;
+//  padding-left: 35px;
+//  cursor: pointer;
+//  display: inline-block;
+//  height: 25px;
+//  line-height: 25px;
+//  font-size: 1rem;
+//  -webkit-user-select: none;
+//  -moz-user-select: none;
+//  -khtml-user-select: none;
+//  -ms-user-select: none;
+//}
+//
+//[role=button], a, area, button, input, label, select, summary, textarea {
+//  -ms-touch-action: manipulation;
+//  touch-action: manipulation;
+//}
+//
+.card {
+  margin-top: 10px;
+  .filter-wrapper {
+    margin-bottom: 6px;
+  }
+  .material {
+    box-shadow: none;
+  }
+}
+.default_acceptance {
+  color: #172e5a !important;
+  font-size: 22px;
+}
+.lorikeet-outer-table {
+  width: 100%!important;
+}
+//
+.mannual_acceptance {
+  //color: #f44255 !important;
+  color: #FF8A80!important;
+  font-size: 22px;
+}
+//
+//.disabled {
+//  cursor: not-allowed !important;
+//  pointer-events: none;
+//}
+//
+//.page-item.active .page-link {
+//  z-index: 2;
+//  color: #fff !important;
+//  background-color: #007bff !important;
+//  border-color: #007bff !important;
+//}
+//
+//.unactived-sort-icon {
+//  color: lightgrey;
+//}
+//
+//thead, tbody, tfoot {
+//  display: block;
+//}
+//
+//tbody {
+//  height: 800px; /* Just for the demo          */
+//  overflow-y: auto; /* Trigger vertical scroll    */
+//  overflow-x: hidden; /* Hide the horizontal scroll */
+//}
+//
+///*show table nav*/
+//.row .dataTables_length label {
+//  border-left: 10px solid #45526e;
+//  vertical-align: middle;
+//  line-height: 37px;
+//  padding-left: 10px;
+//
+//}
+//
+//.dataTables_wrapper .mdb-select.form-control {
+//  margin-top: 0em;
+//  padding: 0px 0px;
+//  margin: 0px 10px;
+//  margin-left: 0px;
+//
+//}
+//
+//.dataTables_wrapper select {
+//  border: 1px solid #efefef !important;
+//  margin-bottom: 0px;
+//  margin-top: 0.2rem !important;
+//}
+//
+//.page {
+//  line-height: 35px;
+//  margin-bottom: 40px;
+//}
+//
+//table.table-bordered.dataTable th, table.table-bordered.dataTable tbody td {
+//  box-sizing: border-box;
+//  width: 10%;
+//  padding: 10px 10px;
+//  vertical-align: middle;
+//  text-align: center;
+//}
+//
+//table.table-bordered.dataTable th:last-child {
+//  width: 20%;
+//}
+//
+//table.table-bordered.dataTable tbody td:last-child {
+//  width: 18.3%;
+//}
+//
+//table.table-bordered.dataTable tbody td.abc-checkbox {
+//  width: 96px;
+//}
+//
+//table.table-bordered.dataTable th {
+//  height: 85px;
+//
+//}
+//
+//table.table-bordered.dataTable tbody td {
+//  width: 10.23%;
+//}
+//
+//.position_1 tbody td {
+//  width: 36.4% !important;
+//}
+//
+//.position_1 th {
+//  width: 35% !important;
+//}
+//
+//.position_1 th:first-child {
+//  width: 45% !important;
+//}
+//
+//.position_1 tbody td:first-child {
+//  width: 47.2% !important;
+//}
+//
+//.nowrap {
+//  flex-wrap: nowrap;
+//}
+//
+//@media screen and (max-width: 1030px) {
+//  .new-col-md-6 {
+//    -webkit-box-flex: 0;
+//    -ms-flex: 0 0 75%;
+//    flex: 0 0 75%;
+//    max-width: 75%;
+//    position: relative;
+//    width: 100%;
+//    min-height: 1px;
+//    padding-right: 15px;
+//    padding-left: 15px;
+//  }
+//
+//}
+//
+//@media screen and (max-width: 770px) {
+//  .new-col-md-6 {
+//    -webkit-box-flex: 0;
+//    -ms-flex: 0 0 100%;
+//    flex: 0 0 100%;
+//    max-width: 100%;
+//    position: relative;
+//    width: 100%;
+//    min-height: 1px;
+//    padding-right: 15px;
+//    padding-left: 15px;
+//  }
+//
+//}
+//
+//@media screen and (max-width: 991px) {
+//
+//  .table-responsive.table-bordered {
+//    border: 1px solid #e9ecef;
+//  }
+//}
+//
+
+
+#spectrum_table{ height:772px;  overflow: auto;}
+
+:host /deep/ .datatable-body-row.active .datatable-row-group {
+  // background-color: #27b6f0!important;
+  background-color: #006699!important;
+  // background-color: rgba(39, 182, 240, .5) !important;
+}
+
+.material-like {
+  /*background: #FFF;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);*/
+  height:770px;
+  position:relative;
+}
+.material-like-cur{
+  height: auto;
+}
+.meterial-cur{
+  height:auto;
+  overflow:visible;
+}
+.right {
+  position: absolute;
+  right: 50px;
+  //width: 50px;
+  //border: 3px solid #73AD21;
+  //padding: 10px;
+}
+.modal-center{
+  margin-left:auto;margin-right:auto;
+  width:100%;
+}
+.modal.fade{
+   left:50px;
+   position:fixed;
+   bottom:20px;
+   top:20px;
+}
+.outline{
+  border: 2px solid #45526E;
+  color: #9e9e9e!important;
+  border-radius: 4px;
+}
+
+[type=radio]+label, [type=checkbox]+label {
+  position: relative;
+  padding-left: 35px;
+  cursor: pointer;
+  display: inline-block;
+  height: 25px;
+  line-height: 25px;
+  font-size: 1rem;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -ms-user-select: none;
+}
+
+[role=button], a, area, button, input, label, select, summary, textarea {
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+}
+
+[type=checkbox]+label:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 17px;
+  height: 17px;
+  z-index: 0;
+  border: 1.5px solid #8a8a8a;
+  border-radius: 1px;
+  margin-top: 2px;
+  -webkit-transition: .2s;
+  transition: .2s;
+}
+
+[type=checkbox]:checked+label:before {
+  top: -4px;
+  left: -3px;
+  width: 12px;
+  height: 22px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: transparent #4285F4 #4285F4 transparent;
+  -webkit-transform: rotate(40deg);
+  -ms-transform: rotate(40deg);
+  transform: rotate(40deg);
+  -webkit-backface-visibility: hidden;
+  -webkit-transform-origin: 100% 100%;
+  -ms-transform-origin: 100% 100%;
+  transform-origin: 100% 100%;
+}
+form{
+  padding-left: 10px;
+}
+.outline{
+  border: 2px solid #45526E;
+  color: #9e9e9e!important;
+  border-radius: 4px;
+  margin-top: 0px;
+}
+#minSize{
+  width: 160px;
+}
+@media screen and (max-width:1270px){
+  #minSize{
+    margin-left: 35px;
+    margin-top: 10px;
+  }
+}
+
+.export_input{
+  height: 20px;
+  width:50px;
+}
+
+.row .dataTables_length label{
+    border-left: 10px solid #45526e;
+    vertical-align: middle;
+    //line-height: 37px;
+    padding-left: 10px;
+  }
+  .modal_button{
+    border-radius: 4px;
+    font-size: 12px;
+    text-align: center;
+    line-height: 20px;
+    margin-left: 5px;
+    background-color: #ec7f7a;
+    color: white;
+    border: 1px solid #ec7f7a;
+
+  }
+  .detail{
+      // position: fixed;
+      // z-index: 9999;
+       //top: 30px;
+      padding-left: 0px;
+       //margin: 0 auto;
+       //right: 50%; 
+      // padding: 0px;
+      //width: 642px;
+     // opacity:1;
+      //display:none; 
+     // margin-top: 190px;
+      //float:right;
+
+  }
+  .cur{
+  display:block;
+  }
+  .offPage{
+     background-color:white;
+     position:relative;
+  }
+  .offPage>button{
+      border-radius:50%;
+      z-index: 9999;
+      right: 0px;
+      top: 5px;
+      position:absolute;
+      border:1px solid red;
+      background-color:white;
+}
+p{
+  width:100%;
+  //font-size:30px;
+  border-bottom:2px solid #e6e9eb;
+  font-weight:bold;
+  color:#45526E;
+  padding-bottom:5px;
+  margin-bottom:20px;
+    margin-top:10px;
+}
+p>span{
+   padding-left: 10px;
+    border-left: 6px solid #45526E;
+}
+#Spectra-comparer ngx-datatable{
+  height: 770px;
+}
+

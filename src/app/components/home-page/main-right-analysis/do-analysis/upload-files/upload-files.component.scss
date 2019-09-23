@@ -1,0 +1,56 @@
+.upload_file_content {
+  margin-bottom: 6px;
+  .label {
+    font-weight: 500;
+    font-size: 16px;
+  }
+}
+.my-drop-zone {
+  border: dotted 3px lightgray;
+}
+
+.nv-file-over {
+  border: dotted 3px red;
+}
+
+/* Default class applied to drop zones on over */
+.another-file-over-class {
+  border: dotted 3px green;
+}
+
+
+.hugeModal > .modal-dialog {
+  height: 900px;
+  width: 900px;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+/* add*/
+.outline{
+    border: 2px solid #45526E;
+    color: #9e9e9e!important;   
+    border-radius: 4px;
+}
+.modal-title{
+  padding-left: 10px;
+  color: #45526E;
+  font-weight: 500;
+}
+table.table th, table.table td{
+  padding: 0.75rem;
+}
+.col-md-9 p{
+  color: #45526E;
+  font-weight: 500;
+}
+
+.right-fixed{
+  right:1px !important;
+
+  position: absolute !important;
+  //right: 50px;
+}

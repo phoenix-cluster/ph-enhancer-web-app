@@ -1,0 +1,79 @@
+.row{
+  .cluster-wrapper {
+    height: calc(100vh - 190px);
+    .cluster-content {
+      margin-top: 0px;
+      padding: 20px;
+    }
+  }
+}
+.card {
+  margin-top: 10px;
+}
+#sequences, #project{
+    padding: 10px;
+}
+
+.row .dataTables_length label{
+    border-left: 10px solid #45526e;
+    vertical-align: middle;
+    line-height: 37px;
+    padding-left: 10px;
+  }
+  .modal_button{
+    border-radius: 4px;
+    font-size: 12px;
+    text-align: center;
+    line-height: 20px;
+    margin-left: 5px;
+    background-color: #ec7f7a;
+    color: white;
+    border: 1px solid #ec7f7a;
+
+  }
+  .detail{
+      // position: fixed;
+      // z-index: 9999;
+       //top: 30px;
+      padding-left: 0px;
+       //margin: 0 auto;
+       //right: 50%; 
+      // padding: 0px;
+      //width: 642px;
+     // opacity:1;
+      //display:none; 
+     // margin-top: 190px;
+      //float:right;
+
+  }
+  .cur{
+  display:block;
+  }
+  .offPage{
+     background-color:white;
+     position:relative;
+  }
+  .offPage>button{
+      border-radius:50%;
+      z-index: 9999;
+      right: 0px;
+      top: 5px;
+      position:absolute;
+      border:1px solid red;
+      background-color:white;
+}
+p{
+  width:100%;
+  font-size:30px;
+  border-bottom:2px solid #e6e9eb;
+  font-weight:bold;
+  color:#45526E;
+  padding-bottom:5px;
+  margin-bottom:20px;
+    margin-top:10px;
+}
+p>span{
+   padding-left: 10px;
+    border-left: 6px solid #45526E;
+}
+

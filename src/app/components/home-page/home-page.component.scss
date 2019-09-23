@@ -1,0 +1,23 @@
+.home_page_wrapper {
+  // height: calc(100vh - 190px);
+  padding-bottom: 100px;
+  width: 100%;
+}
+@media screen and (max-width: 991px){
+  .col-md-8{
+     -webkit-box-flex: 0;
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+    padding-left: 20px;
+    padding-left: 20px;
+  }
+  .col-md-4{
+     -webkit-box-flex: 0;
+    -ms-flex: 0 0 80%;
+    flex: 0 0 80%;;
+    max-width: 80%;
+    padding-left: 40px;
+
+  }
+}
