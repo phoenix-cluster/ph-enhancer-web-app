@@ -1,7 +1,7 @@
 <div>
 <div class="row">
     <div class="col-md-4 ">
-        <div style="display: block; height: 400px;">
+        <div style="display: block; height: 300px;">
             <app-histogram-chart
                     [isSortField]="sortField == 'confidentScore'  || (sortField=='recommConfidentScore' && this.router.url.split('/')[1] == 'new_id')"
                     [activedPageValues]="scores"
@@ -16,7 +16,7 @@
         </div>
     </div>
     <div class="col-md-4 ">
-        <div style="display: block; height: 400px;">
+        <div style="display: block; height: 300px;">
             <app-histogram-chart
                     [isSortField]="sortField == 'clusterRatio'"
                     [activedPageValues]="ratios"
@@ -30,7 +30,7 @@
         </div>
     </div>
     <div class="col-md-4 ">
-        <div style="display: block; height: 400px;">
+        <div style="display: block; height: 300px;">
             <app-histogram-chart
                     [isSortField]="sortField == 'clusterSize'"
                     [activedPageValues]="sizes"

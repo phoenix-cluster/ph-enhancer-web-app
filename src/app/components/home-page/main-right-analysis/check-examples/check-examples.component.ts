@@ -34,7 +34,7 @@ export class CheckExamplesComponent implements OnInit, OnDestroy {
         let psmTableType = "low_conf"
         let projectId = this.selectedProject;
         this.checkExamService.projectId.id = event
-        this.router.navigateByUrl('' + psmTableType + "/" + projectId).then(_ =>{});
+        this.router.navigateByUrl('' + projectId  + "/" + psmTableType).then(_ =>{});
     }
     private getAndSetProjects() {
         this.statisticsService.getProjects()

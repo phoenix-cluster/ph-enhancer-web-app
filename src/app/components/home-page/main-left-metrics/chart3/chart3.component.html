@@ -1,24 +1,4 @@
-<div class="order" style="margin-bottom: 6px;">
-    <div class="row">
-        <div class="col-md-6">
-            <label for="" class="label">Order: &nbsp;&nbsp;</label>
-            <span class="sort">
-                <button class="up" (click)="upClick($event)">ASC</button>
-                <button class="down" style="marign-left: 10px;" (click)="downClick($event)">DESC</button>
-            </span>
-        </div>
-        <div class="col-md-6 pagination" style="justify-content: flex-end;">
-            <label class="label">Paging: &nbsp;&nbsp;</label>
-            <span>
-                <button class="left" (click)="leftOnclick($event)"><i class="fa fa-reply" aria-hidden="true"></i></button>
-                <button class="right" (click)="rightOnclick($event)"><i class="fa fa-share" aria-hidden="true"></i></button>
-            </span>
-            <!--<div class="left" (click)="leftOnclick($event)"></div>
-            <div class="right" (click)="rightOnclick($event)"></div>-->
-        </div>
-    </div>
-</div>
-<div style="display: block;padding: 30px; height: 560px; background: #eff3f6;">
+<div style="display: block;padding: 10px; height: 500px; background: #eff3f6;">
     <ngx-charts-bar-vertical-stacked
             [view]="view"
             [scheme]="colorScheme"
@@ -39,5 +19,25 @@
     <!--<div class="sort"><button class="up" (click)="upClick($event)">ASC</button><button class="down" (click)="downClick($event)">DESC</button></div>
     <div class="left" (click)="leftOnclick($event)"></div>
     <div class="right" (click)="rightOnclick($event)"></div>-->
+</div>
+<div class="order" style="margin-bottom: 6px; margin-top: 10px;">
+    <div class="row">
+        <div class="col-md-6">
+            <label for="" class="label">Order: &nbsp;&nbsp;</label>
+            <span class="sort">
+                <button class="up" (click)="upClick($event)">ASC</button>
+                <button class="down" style="marign-left: 10px;" (click)="downClick($event)">DESC</button>
+            </span>
+        </div>
+        <div class="col-md-6 pagination" style="justify-content: flex-end;">
+            <label class="label">Paging: &nbsp;&nbsp;</label>
+            <span>
+                <button class="left" (click)="leftOnclick($event)"><i class="fa fa-reply" aria-hidden="true"></i></button>
+                <button class="right" (click)="rightOnclick($event)"><i class="fa fa-share" aria-hidden="true"></i></button>
+            </span>
+            <!--<div class="left" (click)="leftOnclick($event)"></div>
+            <div class="right" (click)="rightOnclick($event)"></div>-->
+        </div>
+    </div>
 </div>
 

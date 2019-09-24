@@ -74,7 +74,7 @@ export class Chart1Component implements OnInit {
     drawVennDiagram(){
         var chart = venn.VennDiagram()
             .width(400)
-            .height(500);
+            .height(440);
         let colors = ['gray', 'purple', 'purple']
         var div = d3.select("#venn")
         div.datum(this.sets).call(chart);

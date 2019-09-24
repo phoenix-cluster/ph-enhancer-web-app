@@ -5,6 +5,23 @@
     font-size: 16px;
   }
 }
+.upload_control {
+  .drop {
+    height: 40px;
+    overflow: hidden;
+    font-size: 14px;
+  }
+  .Multiple {
+    height: 40px;
+    overflow: hidden;
+    font-size: 14px;
+  }
+  h3 {
+    font-size: 16px;
+    font-weight: 500;
+    margin-right: 10px;
+  }
+}
 .my-drop-zone {
   border: dotted 3px lightgray;
 }
@@ -41,7 +58,7 @@
   font-weight: 500;
 }
 table.table th, table.table td{
-  padding: 0.75rem;
+  padding: 10px;
 }
 .col-md-9 p{
   color: #45526E;

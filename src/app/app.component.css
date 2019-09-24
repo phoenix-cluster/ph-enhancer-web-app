@@ -3,8 +3,9 @@
   overflow-x: hidden;
 } */
 .main-wrapper {
-  padding-bottom: 120px;
-  overflow-x: hidden;
+  padding-bottom: 20px;
+  min-height: calc(100vh - 140px);
+  /* overflow-x: hidden; */
 }
 @media screen and (max-width: 991px){
   .layout{

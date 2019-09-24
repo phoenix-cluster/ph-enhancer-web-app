@@ -45,13 +45,13 @@
                 <a class="" routerLink="/index">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="" [ngClass]="getClass('low_conf')" *ngIf="getPageType() == 'result' || getPageType() == 'index'">
-                <a class="" routerLink="/low_conf/{{subscribeId.id}}">Low Confident</a>
+                <a class="" routerLink="/{{subscribeId.id}}/low_conf">Low Confident</a>
             </li>
             <li class="" [ngClass]="getClass('high_conf')" *ngIf="getPageType() == 'result' || getPageType() == 'index'">
-                <a class="" routerLink="/high_conf/{{subscribeId.id}}">High Confident</a>
+                <a class="" routerLink="/{{subscribeId.id}}/high_conf">High Confident</a>
             </li>
             <li class="" [ngClass]="getClass('new_id')" *ngIf="getPageType() == 'result' || getPageType() == 'index'">
-                <a class="" routerLink="/new_id/{{subscribeId.id}}">New Identified</a>
+                <a class="" routerLink="/{{subscribeId.id}}/new_id">New Identified</a>
             </li>
             <li class="" [ngClass]="getClass('cluster_details')" *ngIf="getPageType() == 'appendix'">
                 <a class="" routerLink="/cluster_details/{{clusterId}}">Cluster</a>

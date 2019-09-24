@@ -23,7 +23,7 @@ export class Chart3Component implements OnChanges,OnInit{
     multi: any[] = [];
     maxValue: any[] = [];
     yMulti:any[] = [];
-    view: any[] = [400, 500];
+    view: any[] = [400, 480];
     nodes:any;
     changeValue=this.changeProject;
   
@@ -181,8 +181,9 @@ export class Chart3Component implements OnChanges,OnInit{
                 break;
             }
         }
-       
-        this.router.navigateByUrl('' + psmTableType + "/" + projectId).then(_ =>{console.log("route changed")});
+       if (psmTableType !== null) {
+            this.router.navigateByUrl('' + projectId + "/" + psmTableType).then(_ =>{console.log("route changed")});
+       }
 
     }
     //chart1联动chart3
@@ -231,6 +232,9 @@ export class Chart3Component implements OnChanges,OnInit{
     }
 
     onClick(event){
+        // 截留判断
+        const re = /[a-z]/i
+        if (event.srcElement.tagName !== 'text' || !re.test(event.srcElement.innerHTML)) return
         //联动chart1的饼图
         let chart1Component=new Chart1Component(this.router,this.statisticsService, this.configService);
         chart1Component.setSelectedProject(event.srcElement.innerHTML.trim());
@@ -239,7 +243,7 @@ export class Chart3Component implements OnChanges,OnInit{
         if(undefined!=document.getElementsByClassName('showStyle')[0]){
              document.getElementsByClassName('showStyle')[0].classList.remove('showStyle');
         }
-        let projectId=event.srcElement.innerHTML;//获取点击的对象的节点项目ID
+        let projectId = event.srcElement.innerHTML;//获取点击的对象的节点项目ID
         event.srcElement.classList.add("showStyle");
         this.dynamics(projectId);
     }

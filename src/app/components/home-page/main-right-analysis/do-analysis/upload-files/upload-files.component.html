@@ -26,30 +26,30 @@
         <span aria-hidden="true">&times;</span>
     </button>
 
-    <div class="container modal-body">
+    <div class="container modal-body upload_control">
 
         <div class="row">
 
-            <div class="col-md-3">
-
-                <h3>Select files</h3>
-
-                <div ng2FileDrop
-                     [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
-                     (fileOver)="fileOverBase($event)"
-                     [uploader]="uploader"
-                     class="well my-drop-zone">
-                    Drop your files.
+            <div class="col-md-12">
+                <div class="drop">
+                        <h3 style="float: left;">Select files</h3>
+                        <div style="float: left;" ng2FileDrop
+                             [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+                             (fileOver)="fileOverBase($event)"
+                             [uploader]="uploader"
+                             class="well my-drop-zone">
+                            Drop your files.
+                        </div>
                 </div>
-
-                Multiple
-                <input type="file" ng2FileSelect [uploader]="uploader" multiple/><br/>
-
+                <div class="Multiple">
+                    <h3 style="float: left;">Multiple</h3>
+                    <input style="float: left;" type="file" ng2FileSelect [uploader]="uploader" multiple/><br/>
+                </div>
                 <!--Single-->
                 <!--<input type="file" ng2FileSelect [uploader]="uploader"/>-->
             </div>
 
-            <div class="col-md-7" style="margin-bottom: 40px">
+            <div class="col-md-12" style="margin-bottom: 10px; margin-top: 10px;">
 
                 <h3>Upload queue</h3>
                 <p>Queue length: {{ uploader?.queue?.length }}</p>

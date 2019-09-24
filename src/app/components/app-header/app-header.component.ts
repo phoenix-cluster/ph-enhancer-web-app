@@ -65,11 +65,18 @@ export class AppHeaderComponent implements OnInit {
 
     getClass(page: string): string {
         let currentUrl = this.router.routerState.snapshot.url;
+        if (currentUrl === '/index') {
+            if (page === 'index') {
+                return 'activePage'
+            } else {
+                return 'deactivePage'
+            }
+        }
         let dataType = null;
         let patern = /\/(\w+)\/(\w+)/g;
         let a = patern.exec(currentUrl);
         if (a) {
-            dataType = a[1];
+            dataType = a[2];
             if (dataType === page ) {
                 return "activePage";
             }else{
@@ -79,7 +86,7 @@ export class AppHeaderComponent implements OnInit {
         patern = /\/(\w+)/g;
         a = patern.exec(currentUrl);
         if (a) {
-            dataType = a[1];
+            dataType = a[2];
             if (dataType === page ) {
                 return "activePage";
             }else{
@@ -98,7 +105,7 @@ export class AppHeaderComponent implements OnInit {
         let patern = /\/(\w+)\/(\w+)/g;
         let a = patern.exec(currentUrl);
         if (a) {
-            pageName = a[1];
+            pageName = a[2];
 
             if (pageName == 'low_conf' || pageName =="high_conf" || pageName == "new_id"){
                 return "result";

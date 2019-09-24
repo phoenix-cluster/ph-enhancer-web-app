@@ -20,6 +20,7 @@ export class DoAnalysisService{
     constructor(private http: Http, private configService:ConfigService) {
 
         this.configService.getConfig().then(configJson => {
+            console.log(configJson)
             this.doAanlysisUrl = configJson.analysisBaseUrl + "analysis/do";
             this.getJobByTokenUrl = configJson.baseUrl + "/" + "analysis/getAnalysisJobByToken?"
             this.getPageOfLogByTokenUrl = configJson.baseUrl + "/" + "analysis/getPageOfLogByToken?";

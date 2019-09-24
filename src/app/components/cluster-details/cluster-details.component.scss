@@ -1,10 +1,10 @@
-.row{
-  .cluster-wrapper {
-    height: calc(100vh - 190px);
-    .cluster-content {
-      margin-top: 0px;
-      padding: 20px;
-    }
+.cluster-wrapper {
+  width: 100vw;
+  overflow: hidden;
+  // height: calc(100vh - 190px);
+  .cluster-content {
+    margin-top: 0px;
+    padding: 20px;
   }
 }
 .card {

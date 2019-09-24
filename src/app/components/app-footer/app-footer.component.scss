@@ -1,12 +1,20 @@
 .page-footer {
-  position: fixed;
-  bottom: 0;
   width: 100%;
   background: #fff;
   color: #212529;
-  height: 100px;
+  height: 80px;
+  box-sizing: border-box;
+  padding: 10px 0;
+  font-size: 14px;
   margin-top: 0;
-  padding-top: 0;
+  overflow: hidden;
+  .title {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .message {
+    font-size: 13px;
+  }
   a {
     color: #27b6f0;
     &:hover {

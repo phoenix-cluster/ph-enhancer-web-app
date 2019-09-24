@@ -19,9 +19,9 @@ import {HelpPageComponent} from "./components/help-page/help-page.component";
 const routes: Routes = [
     {path: '', redirectTo: '/index', pathMatch: 'full'},
     {path: 'index', component: HomePageComponent},
-    {path: 'low_conf/:project', component: LowConfPsmsComponent},
-    {path: 'high_conf/:project', component: HighConfPsmsComponent},
-    {path: 'new_id/:project', component: NewIdentifiedComponent},
+    {path: ':project/low_conf', component: LowConfPsmsComponent},
+    {path: ':project/high_conf', component: HighConfPsmsComponent},
+    {path: ':project/new_id', component: NewIdentifiedComponent},
     {path: 'cluster_details/:clusterId', component: ClusterDetailsComponent},
     {path: 'job_progress/:jobToken', component: JobProgressComponent},
     {path: 'help', component: HelpPageComponent},

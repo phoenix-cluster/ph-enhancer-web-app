@@ -1,6 +1,15 @@
 #textInLog
 {
   height: 300px;
-  max-height: 300px;
-  overflow-y: scroll;
+  // max-height: 300px;
+  overflow-y: auto;
+}
+.job_wrapper {
+  width: 100vw;
+  overflow: hidden;
+  padding: 10px 0;
+}
+.job_meesage {
+  padding: 20px;
+  font-size: 14px;
 }
