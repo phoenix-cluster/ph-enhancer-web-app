@@ -8,7 +8,7 @@
     </select>-->
     <label for="">Exp ID: &nbsp;&nbsp;</label>
     <div class="btn-group" dropdown>
-        <select placeholder="请选择" class="dropdown-toggle custom_select" id="selectProject" [(ngModel)]="selectedProject" (ngModelChange)="onChange($event)">
+        <select placeholder="Select Please" class="dropdown-toggle custom_select" id="selectProject" [(ngModel)]="selectedProject" (ngModelChange)="onChange($event)">
             <option  *ngFor="let p of projects">{{p}}</option>
         </select>
     </div>

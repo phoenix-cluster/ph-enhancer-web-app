@@ -3,7 +3,7 @@
   "analysisBaseUrl" : "http://enhancer.ncpbs.org:5000/",
   "clusterBaseUrl" : "http://enhancer.ncpbs.org:8090/v1/",
   "defaultProject" : "PXD000021",
-  "defaultMinClusterSize" : 10,
+  "defaultMinClusterSize" : 5,
   "allowedFileType" : [
         "xml","xml.gz",
         "mzid","mzid.gz",

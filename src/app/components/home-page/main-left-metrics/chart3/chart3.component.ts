@@ -8,8 +8,7 @@ import{Chart1Component,ChangeProject} from "../chart1/chart1.component"
 ///import { colorSets, id } from '../../../../../../node_modules/_@swimlane_ngx-charts@6.1.0@@swimlane/ngx-charts/release/utils';
 // import { AfterContentInit, AfterViewInit } from '../../../../../../node_modules/_@angular_core@5.1.3@@angular/core/src/metadata/lifecycle_hooks';
 import { document } from "app/typescripts/free/utils/facade/browser";
-
-
+import {project} from "../../../../../schema/checkExam";
 
 @Component({
     selector: 'app-chart3',
@@ -21,8 +20,10 @@ export class Chart3Component implements OnChanges,OnInit{
     @Input() vennDataList: VennData[];
     @Input() changeProject:ChangeProject;
     multi: any[] = [];
-    maxValue: any[] = [];
-    yMulti:any[] = [];
+    projects: any[] = [];
+    sortDirection: string = 'desc';
+    totalPSMInProject = {};
+    // yMulti:any[] = [];
     view: any[] = [400, 480];
     nodes:any;
     changeValue=this.changeProject;
@@ -47,11 +48,12 @@ export class Chart3Component implements OnChanges,OnInit{
     };
     constructor(private router: Router, private statisticsService: StatisticsService,
                 private configService:ConfigService) {
+        this.sortDirection = 'desc';
     }
     
     ngOnInit():void{
-        this.setDataForChart(0);
-        this.yMulti=[...this.yMulti];
+        this.setDataForChart(this.sortDirection, 0);
+        this.multi=[...this.multi];
     }
    
     ngOnChanges(changes: SimpleChanges): void {      
@@ -61,9 +63,10 @@ export class Chart3Component implements OnChanges,OnInit{
         }else{
             if(this.changeProject.selectedProject==""){
                 this.multi=[];
-                this.setDataForChart(0);
+                this.setDataForChart(this.sortDirection, 0);
                 this.multi = [...this.multi];
-                this.maxValue=[...this.maxValue];
+                this.projects=[...this.projects];
+                // this.totalPSMInProject=[...this.totalPSMInProject];
             }else{
                 return;
             }
@@ -73,11 +76,14 @@ export class Chart3Component implements OnChanges,OnInit{
        
 
     }
-    setDataForChart(index) {
+
+   //set the data for chart1 and chart3
+    setDataForChart(sortDirection, index) {
       let  subVennDataList=JSON.parse(JSON.stringify(this.vennDataList));
       let limit=index+10;
       let subMulit=[];
-      this.maxValue=[];
+      this.projects=[];
+      this.totalPSMInProject={};
      subVennDataList.forEach(
             vennData => {
                 let anObject = new Object;
@@ -133,18 +139,30 @@ export class Chart3Component implements OnChanges,OnInit{
                     "param":limit
                 })
                  //存放全部项目的ID和总值 
-                this.maxValue.push(valueCount);
+                this.projects.push(valueCount);
+                this.totalPSMInProject[vennData.projectId]=value;
                 this.multi.push(anObject);
-                this.yMulti.push(anObject);        
             }
         );
-       this.maxValue.sort(this.sortbyValue);
-       let maxValues=JSON.parse(JSON.stringify(this.maxValue));
+       this.projects.sort(this.sortbyValue);
+       // console.log(this.projects);
+       let projectValues=JSON.parse(JSON.stringify(this.projects));
        //处理当选择升降序排序，联动出现找不到projectId的问题
-       maxValues.sort(this.sortbyDefaultValue);
-       maxValues=maxValues.slice(index,limit);
-       maxValues.sort(this.sortbyValue);
-       maxValues.forEach(project=>{
+       // projectValues.sort(this.sortbyDefaultValue);
+       console.log(projectValues);
+       projectValues.sort(function(x,y){
+           if(sortDirection == 'desc'){
+               return y[0].value - x[0].value;
+           }
+           else if(sortDirection == 'asc'){
+               return x[0].value - y[0].value;
+           }
+           else{console.error("this.sortDirection is wrong! " + sortDirection)}
+       });
+       console.log(projectValues);
+       let projectValuesInWindow = projectValues.slice(index,limit);
+       projectValuesInWindow.sort(this.sortbyValue);
+       projectValuesInWindow.forEach(project=>{
             this.multi.forEach(item=>{
                 if(project[0].name.search(item.name)!=-1){
                      subMulit.push(item);
@@ -154,7 +172,7 @@ export class Chart3Component implements OnChanges,OnInit{
 
         })
         this.multi=JSON.parse(JSON.stringify(subMulit));
-        this.yMulti=JSON.parse(JSON.stringify(subMulit));
+        console.log(this.multi);
     }
     
     onSelect(event){
@@ -186,7 +204,9 @@ export class Chart3Component implements OnChanges,OnInit{
        }
 
     }
-    //chart1联动chart3
+
+
+    //link chart1 with chart3 for interactive
     linkChart3(element,proectId){ 
      
         if(undefined!=document.getElementsByClassName('showStyle')[0]){
@@ -196,10 +216,12 @@ export class Chart3Component implements OnChanges,OnInit{
            element.classList.add("showStyle");
            this.dynamics(projectId);
     }
+
+
     //获取chart1选择项目对应chart3的Dom节点
     setProjectValue(value){
         let me=this;
-        let subMaxValue=JSON.parse(JSON.stringify(this.maxValue));
+        let subMaxValue=JSON.parse(JSON.stringify(this.projects));
         let projectId=[];
         subMaxValue.forEach(element => {
            projectId.push(element[0].name);
@@ -214,10 +236,10 @@ export class Chart3Component implements OnChanges,OnInit{
               }
         }else{
             this.sortbyDefaultValue= this.sortbyValue=function(x, y,param1=-1,param2=1){
-                return x[0].value > y[0].value ? param1:param2 
+                return x[0].value > y[0].value ? param1:param2
             }
         }
-        this.setDataForChart(Math.trunc(projectIdIndex/10)*10);
+        this.setDataForChart(this.sortDirection, Math.trunc(projectIdIndex/10)*10);
         //联动时，处理chart3图表切换时事务的问题，强制渲染结束
         setTimeout(function(){
             let projects=document.getElementsByClassName('tick');
@@ -250,45 +272,46 @@ export class Chart3Component implements OnChanges,OnInit{
 
     leftOnclick(event){
         document.getElementsByClassName("right")[0].classList.remove("ven_cur");
-        let currenIndex=this.maxValue[0][0].param;
+        let currenIndex=this.projects[0][0].param;
         if(currenIndex==10){
             event.currentTarget.classList.add("ven_cur");
         }else{
             event.currentTarget.classList.remove("ven_cur");
             currenIndex=currenIndex-20;
-            this.yMulti=[];
             this.multi=[];
-            this.maxValue=[];
-            this.setDataForChart(currenIndex);
+            this.projects=[];
+            this.setDataForChart(this.sortDirection, currenIndex);
             //处理y轴显示
             let yValue=[];
-            this.maxValue.forEach(element => {
+            this.projects.forEach(element => {
                 yValue.push(element[0].value);
             });
             yValue.sort();
-            this.yScaleMax=yValue[yValue.length-1];
+            this.setMaxYScal();
         }
     }
 
     rightOnclick(event){
         document.getElementsByClassName("left")[0].classList.remove("ven_cur");
-        let currenIndex=this.maxValue[0][0].param;
+        let currenIndex=this.projects[0][0].param;
         if(currenIndex>=this.vennDataList.length){
             event.currentTarget.classList.add("ven_cur");
         }
         else{
             event.currentTarget.classList.remove("ven_cur");
-            this.yMulti=[];
             this.multi=[];
-            this.maxValue=[];
-            this.setDataForChart(currenIndex);
+            this.projects=[];
+            this.setDataForChart(this.sortDirection, currenIndex);
             //处理y轴显示
             let yValue=[];
-            this.maxValue.forEach(element => {
+            this.projects.forEach(element => {
                 yValue.push(element[0].value);
             });
             yValue.sort();
-            this.yScaleMax=yValue[yValue.length-1];
+            // console.log(yValue);
+            // console.log(this.yScaleMax);
+            this.setMaxYScal();
+            // console.log(this.projects);
         }
        
       
@@ -302,63 +325,76 @@ export class Chart3Component implements OnChanges,OnInit{
         document.getElementsByClassName("up")[0].classList.add("val_sort_cur"); 
         this.sortbyValue=function(x, y,param1=1,param2=-1){
            return x[0].value > y[0].value ? param1:param2
-   
          }
-         let currenIndex=this.maxValue[0][0].param;
-         this.yMulti=[];
+
+         this.sortDirection = 'asc';
          this.multi=[];
-         this.maxValue=[];
-         this.setDataForChart(currenIndex-10);
-        //处理y轴显示
-         let yValue=[];
-         this.maxValue.forEach(element => {
-               yValue.push(element[0].value);
-         });
-        yValue.sort();
-        this.yScaleMax=yValue[yValue.length-1];
+         this.projects=[];
+         this.setDataForChart(this.sortDirection,0);
+         this.setMaxYScal();
        }
-       downClick(event){
+
+    downClick(event){
         if(undefined!=document.getElementsByClassName('showStyle')[0]){
             document.getElementsByClassName('showStyle')[0].classList.remove('showStyle');
-       }
+        }
         document.getElementsByClassName("up")[0].classList.remove("val_sort_cur");
         document.getElementsByClassName("up")[0].classList.remove("sort_cur");
         document.getElementsByClassName("down")[0].classList.add("sort_cur");  
            this.sortbyValue=function(x, y,param1=-1,param2=1){
              return x[0].value > y[0].value ? param1:param2
            }
-           let currenIndex=this.maxValue[0][0].param;
-           this.yMulti=[];
+           this.sortDirection = 'desc';
            this.multi=[];
-           this.maxValue=[];
-           this.setDataForChart(currenIndex-10);
-            //处理y轴显示
-            let yValue=[];
-            this.maxValue.forEach(element => {
-                yValue.push(element[0].value);
-            });
-            yValue.sort();
-            this.yScaleMax=yValue[yValue.length-1];
-       
+           this.projects=[];
+           this.setDataForChart(this.sortDirection,0);
+            this.setMaxYScal();
        }
+
     sortbyValue(x, y,param1=-1,param2=1){
         return x[0].value > y[0].value ? param1:param2
     }
     sortbyDefaultValue(x, y,param1=-1,param2=1){
         return x[0].value > y[0].value ? param1:param2
     }
+
+
+    //set the max value of y axes
+    setMaxYScal(){
+        this.yScaleMax = 0;
+        for(let i in this.multi){
+                let project = this.multi[i];
+                let project_name = project.name;
+                if(this.yScaleMax < this.totalPSMInProject[project_name]){
+                    this.yScaleMax = this.totalPSMInProject[project_name];
+                }
+            }
+    }
+
+    sortbyDirection(x,y){
+        if (this.sortDirection == 'asc'){
+            return x[0].value - y[0].value
+        }
+        else if (this.sortDirection == 'desc'){
+            return y[0].value - x[0].value
+        }
+        else{
+            console.error("sortDirection " + this.sortDirection + "is not right!")
+        }
+    }
+
   
   dynamics(projectId){
     this.multi=[];
-    this.multi=JSON.parse(JSON.stringify(this.yMulti));
+    this.multi=JSON.parse(JSON.stringify(this.multi));
     let elements=document.getElementsByClassName("data-type");
     let projectValue;
-    this.maxValue.forEach(element => {
+    this.projects.forEach(element => {
        if(projectId.search(element[0].name)!=-1){
         projectValue=element[0].value;
        }
     });
-   this.maxValue.forEach(element => {
+   this.projects.forEach(element => {
     //超过y轴分界线的项目隐藏
     if(element[0].value>projectValue){         
         for(let index=0;index<this.multi.length;index++){

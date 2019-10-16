@@ -23,11 +23,13 @@
 <div class="order" style="margin-bottom: 6px; margin-top: 10px;">
     <div class="row">
         <div class="col-md-6">
+            {{yScaleMax}}
             <label for="" class="label">Order: &nbsp;&nbsp;</label>
             <span class="sort">
                 <button class="up" (click)="upClick($event)">ASC</button>
                 <button class="down" style="marign-left: 10px;" (click)="downClick($event)">DESC</button>
             </span>
+
         </div>
         <div class="col-md-6 pagination" style="justify-content: flex-end;">
             <label class="label">Paging: &nbsp;&nbsp;</label>
