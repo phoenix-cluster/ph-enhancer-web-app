@@ -190,7 +190,7 @@
                                 </span>
                             </ng-template>
                             <ng-template let-value="value" ngx-datatable-cell-template>
-                                <a target="_blank" href="http://wwwdev.ebi.ac.uk/pride/peptidesearch?keyword={{value.replace('R_NEW_','').replace('R_Better_','')}}&page=0&pageSize=10">                          
+                                <a target="_blank" href="{{peptideSearchURLPrefix}}{{value.replace('R_NEW_','').replace('R_Better_','')}}{{peptideSearchURLSuffix}}">
                                     <span data-toggle="popover" title="{{value.replace('R_NEW_','').replace('R_Better_','')}}">
                                         {{value.replace('R_NEW_','').replace('R_Better_','')}}
                                     </span>

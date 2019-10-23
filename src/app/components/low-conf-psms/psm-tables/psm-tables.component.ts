@@ -13,6 +13,7 @@ import {PSMsPage} from "../../../model/psmsPage";
 import {ExportConfig} from "../../../model/export-config";
 import {SpeciesInProject} from "../../../model/speciesInProject";
 import {SpecPage} from "../../../model/spec-page";
+import {ConfigService} from "../../../services/config.service";
 
 
 class SimPsm {
@@ -45,6 +46,8 @@ export class PsmTablesComponent implements OnInit {
     selectedSpeciesData: string = "0---ALL(ALL)";
     private defaultAcceptanceOfRecommPsm: boolean;//true means accept, false means reject
     downloadJsonHref:string; //for result download
+    peptideSearchURLPrefix = "http://wwwdev.ebi.ac.uk/pride/peptidesearch?keyword=";
+    peptideSearchURLSuffix = "&page=0&pageSize=10";
 
     page = new Page();
     sortType = ''
@@ -62,6 +65,7 @@ export class PsmTablesComponent implements OnInit {
                 private exportService: ExportService,
                 private http: Http,
                 private router: Router,
+                private configService: ConfigService,
                 ) {
         this.selectedPsm = new Psm("null_cluster_id");
         this.selectedPsmIndex = 1;
@@ -73,8 +77,13 @@ export class PsmTablesComponent implements OnInit {
         this.psm_rows = new Array<Psm>();
         this.spec_rows = new Array<Spectrum>();
         this.export = new ExportConfig();
-    }
 
+
+        this.configService.getConfig().then((configJson) => {
+                this.peptideSearchURLPrefix = configJson.peptideSearchURLPrefix;
+                this.peptideSearchURLSuffix= configJson.peptideSearchURLSuffix;
+        });
+    }
     ngOnInit() {
         // this.setPageData(this.page);
         this.onSelectSpeciesChange();
