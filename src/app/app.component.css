@@ -1,8 +1,16 @@
 
+/* .wrapper {
+  overflow-x: hidden;
+} */
+.main-wrapper {
+  padding-bottom: 20px;
+  min-height: calc(100vh - 140px);
+  padding-top: 20px;
+  /* overflow-x: hidden; */
+}
 @media screen and (max-width: 991px){
   .layout{
     width:auto!important;
   }
   
 }
-

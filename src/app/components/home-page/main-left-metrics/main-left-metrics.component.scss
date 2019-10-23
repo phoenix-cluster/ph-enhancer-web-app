@@ -1,5 +1,12 @@
+.card {
+  padding:0 1em 1em;
+  .row {
+    padding-top: 10px;
+  }
+}
+
 .mt-2 {
-  margin-top: 2em !important;
+  // margin-top: 2em !important;
   margin-bottom: 10px;
 }
 
@@ -33,27 +40,31 @@
   padding-left:40px;
   padding-right:40px;
   padding-top:40px;
-  margin:0 auto;
+  /*margin:0 auto;
   margin-top:10px;
-  margin-bottom:20px;
+  margin-bottom:20px;*/
 }
 .modify{
     background-color: aliceblue;
-    padding-left: 20px;
+    //padding-left: 20px;
 }
 p{
   width:100%;
-  font-size:30px;
+  font-size:20px;
   border-bottom:2px solid #e6e9eb;
   font-weight:bold;
   color:#45526E;
+  padding-left: 10px;
   padding-bottom:5px;
   margin-bottom:0px;
-    margin-top:10px;
+  margin-top:10px;
 }
 p>span{
    padding-left: 10px;
-    border-left: 6px solid #45526E;
+    border-left: 6px solid rgb(39,182,240);
+}
+.des_content {
+  font-size: 18px;
 }
 @media screen and (max-width: 991px){
   .layout{

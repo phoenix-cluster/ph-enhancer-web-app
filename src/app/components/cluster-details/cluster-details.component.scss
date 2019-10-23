@@ -1,11 +1,17 @@
-#sequences{
-    padding-top: 20px;
-    padding-left: 10px;
-    padding-right: 30px;
+.cluster-wrapper {
+  width: 100vw;
+  overflow: hidden;
+  // height: calc(100vh - 190px);
+  .cluster-content {
+    margin-top: 0px;
+    padding: 20px;
+  }
 }
-#project{
-    padding-top: 20px;
-    padding-right: 30px;
+.card {
+  margin-top: 10px;
+}
+#sequences, #project{
+    padding: 10px;
 }
 
 .row .dataTables_length label{

@@ -1,7 +1,15 @@
-<div style="display: block;background-color: #e6e9eb;">
+<div style="display: block;background-color: #eff3f6;">
     <div id="venn">
     </div>
-    <select id="selectProject" [(ngModel)]="selectedProject" (ngModelChange)="onChange($event)">
+</div>
+<div class="select" style="margin-bottom: 6px; margin-top: 10px;">
+    <!--<select id="selectProject" [(ngModel)]="selectedProject" (ngModelChange)="onChange($event)">
         <option *ngFor="let p of projects">{{p}}</option>
-    </select>
+    </select>-->
+    <label for="">Exp ID: &nbsp;&nbsp;</label>
+    <div class="btn-group" dropdown>
+        <select placeholder="Select Please" class="dropdown-toggle custom_select" id="selectProject" [(ngModel)]="selectedProject" (ngModelChange)="onChange($event)">
+            <option  *ngFor="let p of projects">{{p}}</option>
+        </select>
+    </div>
 </div>

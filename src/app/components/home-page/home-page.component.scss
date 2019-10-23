@@ -1,3 +1,9 @@
+.home_page_wrapper {
+  // height: calc(100vh - 190px);
+  // width: 100%;
+  width: 100vw;
+  // overflow: hidden;
+}
 @media screen and (max-width: 991px){
   .col-md-8{
      -webkit-box-flex: 0;

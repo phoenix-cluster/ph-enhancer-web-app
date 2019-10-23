@@ -69,13 +69,13 @@ export class SequencesPieChartComponent implements OnInit {
     svg.attr("height",cDim.height)
        .attr("width",cDim.width);
 
-    canvas.attr("transform", "translate(" + (cDim.width / 2) + "," + (cDim.height / 2) + ")");
+    canvas.attr("transform", "translate(" + (cDim.width / 2 + 10) + "," + (cDim.height / 2  + 20) + ")");
     
     let pied_data = jhw_pie(data);
     let pied_arc = d3.arc()
         .innerRadius(40)
         .outerRadius(100);
-    let pied_colors = d3.scaleOrdinal(d3.schemeCategory20);
+    let pied_colors = d3.scaleOrdinal(d3.schemeCategory10);
     let enteringArcs = art.selectAll(".wedge").data(pied_data).enter();
     
     enteringArcs.append("path")

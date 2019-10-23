@@ -18,7 +18,6 @@ export class DoAnalysisService{
     private headers = new Headers({'Content-type': 'application/json'});
 
     constructor(private http: Http, private configService:ConfigService) {
-
         this.configService.getConfig().then(configJson => {
             this.doAanlysisUrl = configJson.analysisBaseUrl + "analysis/do";
             this.getJobByTokenUrl = configJson.baseUrl + "/" + "analysis/getAnalysisJobByToken?"

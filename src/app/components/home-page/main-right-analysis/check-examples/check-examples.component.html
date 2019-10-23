@@ -1,17 +1,9 @@
-<h2>
-  Check Examples
-</h2>
-
-<div class="btn-group" dropdown>
-  <!--<button dropdownToggle type="button" class="btn btn-primary dropdown-toggle waves-light" mdbRippleRadius>-->
-   <!--PRIDE Projects-->
-  <!--</button>-->
-
-    <select  type="button" class="btn btn-primary dropdown-toggle waves-light"
-      id="selectProject" [(ngModel)]="selectedProject" (ngModelChange)="onChange($event)"
-    >
-    <option  *ngFor="let p of projects">{{p}}</option>
+<div class="check_wrapper">
+  <span class="label">Check Examples</span>
+  <div class="btn-group" dropdown>
+    <select placeholder="请选择" class="dropdown-toggle custom_select" id="selectProject" [(ngModel)]="selectedProject" (ngModelChange)="onChange($event)">
+      <option  *ngFor="let p of projects">{{p}}</option>
     </select>
-
+  </div>
 </div>
 

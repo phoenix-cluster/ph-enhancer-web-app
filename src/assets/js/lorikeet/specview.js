@@ -41,8 +41,8 @@ var ui = require('jquery-ui');
                 precursorPeaks: null,
                 precursorPeakClickFn: null,
                 zoomMs1: false,
-                width: 700, 	// width of the ms/ms plot
-                height: 450, 	// height of the ms/ms plot
+                width: 540, 	// width of the ms/ms plot
+                height: 400, 	// height of the ms/ms plot
                 massError: 0.5, // mass tolerance (in th) for labeling peaks
                 massErrorUnit: massErrorTypeTh, // 'Th' or 'ppm'
                 extraPeakSeries:[],
@@ -1871,7 +1871,7 @@ var ui = require('jquery-ui');
 
         var rowspan = 2;
 
-		var parentTable = '<table cellpadding="0" cellspacing="5" class="lorikeet-outer-table"> ';
+		var parentTable = '<table cellpadding="0" cellspacing="5" class="lorikeet-outer-table" style="width: 100%;"> ';
 		parentTable += '<tbody> ';
 		parentTable += '<tr> ';
 

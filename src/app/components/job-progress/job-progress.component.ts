@@ -29,6 +29,7 @@ export class JobProgressComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.token = this.getTokenFromUrl();
+        console.log(this.token)
         this.refreshData(this.token);
         this.refreshData2(this.token);
         // this.fileuploadService.get_analysis_job_by_token(this.token).subscribe(

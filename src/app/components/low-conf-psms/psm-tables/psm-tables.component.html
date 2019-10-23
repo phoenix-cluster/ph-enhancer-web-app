@@ -1,248 +1,382 @@
 <!-- Nav tabs -->
-
-<p><span>Histogram-charts</span></p>
-<div class="material-like"
-     style="box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);margin-bottom: 40px;height: auto;" >
-    <app-histogram-charts 
-        [sortField]="page.sortField" 
-        [activedPage]="psm_rows_sim" 
-        [activedPsm]="selectedPsm" 
-        [activePsmIndex]="selectedPsmIndex" 
-        [psmType]="psmType" 
-        [projectId]="projectId"
-        [selectedSpeciesId]="selectedSpeciesId">
-    </app-histogram-charts>
+<div class="card row">
+    <p class="title-wrapper"><span class="title">Histogram-charts</span></p>
+    <div class="material-like body-wrapper"
+         style="height: auto;" >
+        <app-histogram-charts
+                [sortField]="page.sortField"
+                [activedPage]="psm_rows_sim"
+                [page]="page"
+                [sortType]="sortType"
+                [activedPsm]="selectedPsm"
+                [activePsmIndex]="selectedPsmIndex"
+                [psmType]="psmType"
+                [projectId]="projectId">
+        </app-histogram-charts>
+    </div>
 </div>
-
-<p><span>Datatable</span></p>
-
-<select id="selectSpecies" [(ngModel)]="selectedSpeciesData" (ngModelChange)="onSelectSpeciesChange()">
-    <option *ngFor="let s of speciesList">{{s.psmNo}}---{{s.id}}({{s.name}})</option>
-</select>
-<div style="padding-top: 30px;padding-bottom: 30px">
-
-    <ngx-datatable
-            #datatable
-            class="material"
-            [rows]="psm_rows"
-            [columns]=""
-            [columnMode]="'force'"
-            [headerHeight]="80"
-            [footerHeight]="50"
-            [externalPaging]="true"
-            [rowHeight]="40"
-            [count]="page.totalElements"
-            [offset]="page.pageNumber-1"
-            [limit]="page.size"
-            [selected]="selected_psms"
-            [selectionType]="'single'"
-            (activate)="onActivatePsm($event)"
-            (select)='onSelectPsm($event)'
-            (page)='setPage($event)'
-            (sort)="onSort($event)"
-            [loadingIndicator]="loading"
-    >
-        <ngx-datatable-column name="id" [sortable]="false">
-            <ng-template let-value="value" ngx-datatable-cell-template>
-                {{value}}
-            </ng-template>
-        </ngx-datatable-column>
-
-        <ngx-datatable-column name="peptideSequence" [sortable]="false">
-            <ng-template ngx-datatable-header-template>
-                Peptide<br>Sequence
-            </ng-template>
-
-            <ng-template let-value="value" ngx-datatable-cell-template>
-                {{value|truncate: '10':'...'}}
-            </ng-template>
-        </ngx-datatable-column>
-
-        <ngx-datatable-column *ngIf="psmType=='negscore' || psmType=='posscore' " name="confidentScore" [sortable]="true">
-            <ng-template ngx-datatable-header-template let-sort="sortFn" class="sort-btn">
-                <a (click)="sort()">
-                    Confident<br>Score
-                    <span *ngIf="page.sortField != 'confidentScore'" data-icon="c" class="icon"></span>
-                    <span *ngIf="page.sortField == 'confidentScore' && page.sortDirection == 'asc' && isDefaultSort == true"
-                          data-icon="e" class="icon"></span>
-                    <span *ngIf="page.sortField == 'confidentScore' && page.sortDirection == 'desc' && isDefaultSort == true"
-                          data-icon="f" class="icon"></span>
-                </a>
-            </ng-template>
-            <ng-template let-value="value" ngx-datatable-cell-template>
-                {{value | number:'1.2-2'}}
-            </ng-template>
-        </ngx-datatable-column>
-
-        <ngx-datatable-column *ngIf="psmType=='negscore'|| psmType=='newid'" name="recommConfidentScore" [sortable]="true">
-            <ng-template ngx-datatable-header-template let-sort="sortFn" class="sort-btn">
-                <a (click)="sort()">
-                    Recommend Confident<br>Score
-                    <span *ngIf="page.sortField != 'recommConfidentScore'" data-icon="c" class="icon"></span>
-                    <span *ngIf="page.sortField == 'recommConfidentScore' && page.sortDirection == 'asc' && isDefaultSort == true"
-                          data-icon="e" class="icon"></span>
-                    <span *ngIf="page.sortField == 'recommConfidentScore' && page.sortDirection == 'desc' && isDefaultSort == true"
-                          data-icon="f" class="icon"></span>
-                </a>
-            </ng-template>
-            <ng-template let-value="value" ngx-datatable-cell-template>
-                {{value | number:'1.2-2'}}
-            </ng-template>
-        </ngx-datatable-column>
-
-
-        <ngx-datatable-column name="clusterId" [sortable]="false">
-            <ng-template ngx-datatable-header-template>
-                Cluster<br>Id
-            </ng-template>
-            <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
-                <a [popover]="popTemplate" popoverTitle="Sequences in Cluster" triggers="mouseenter:mouseleave"  container="body"
-                   placement="right" html="true" (click)="gotoClusterDetails(value)">
-                    <!--{{value | truncate_clusterid}}-->
-                    {{value}}
-                </a>
-                <ng-template #popTemplate>
-                        <html>  
-                            <body>
-                                <app-sequences-pie-chart  [ratioStr]="row.clusterRatioStr"></app-sequences-pie-chart>
-                            </body>
-                        </html>
-                </ng-template>
-                <!--<button type="button" class="btn btn-success"-->
-                        <!--[popover]="popTemplate" popoverTitle="Dynamic html inside">-->
-                    <!--Show me popover with html-->
-                <!--</button>-->
-            </ng-template>
-        </ngx-datatable-column>
-
-        <ngx-datatable-column name="clusterRatio" [sortable]="true">
-            <ng-template ngx-datatable-header-template let-sort="sortFn">
-                <a (click)="sort()">
-                    Cluster<br>Ratio
-                    <span *ngIf="page.sortField != 'clusterRatio'" data-icon="c" class="icon"></span>
-                </a>
-            </ng-template>
-            <ng-template let-value="value" ngx-datatable-cell-template>
-                {{value | number:'1.2-2'}}
-            </ng-template>
-        </ngx-datatable-column>
-
-        <ngx-datatable-column name="clusterSize" [sortable]="true">
-            <ng-template ngx-datatable-header-template let-sort="sortFn">
-                <a (click)="sort()">
-                    Cluster<br>Size
-                    <span *ngIf="page.sortField != 'clusterSize'" data-icon="c" class="icon"></span>
-                </a>
-            </ng-template>
-            <ng-template let-value="value" ngx-datatable-cell-template>
-                {{value | shortnumber}}
-            </ng-template>
-        </ngx-datatable-column>
-
-        <ngx-datatable-column name="recommendPeptide" [sortable]="false">
-            <ng-template ngx-datatable-header-template>
-                Recommend<br>Peptide
-            </ng-template>
-            <ng-template let-value="value" ngx-datatable-cell-template>
-                <a target="_blank" href="http://wwwdev.ebi.ac.uk/pride/peptidesearch?keyword={{value.replace('R_NEW_','').replace('R_Better_','')}}&page=0&pageSize=10">
-                    {{value.replace("R_NEW_","").replace('R_Better_','')}}
-                </a>
-            </ng-template>
-        </ngx-datatable-column>
-
-        <ngx-datatable-column name="taxIds" [sortable]="false">
-            <ng-template ngx-datatable-header-template>
-                Recommend<br>Peptide Taxids
-            </ng-template>
-            <ng-template let-value="value" ngx-datatable-cell-template>
-                <!--<a target="_blank" href="http://wwwdev.ebi.ac.uk/pride/???">-->
-                    <!--{{value}}-->
-                <!--</a>-->
-                <a *ngIf="value"   [popover]="popTemplate2" popoverTitle="Taxids of sequence" triggers="mouseenter:mouseleave"  container="body"
-                   placement="right" html="true" >
-                    {{value.join(',') |truncate:10}}
-                    <!--{{value }}-->
-                </a>
-                <ng-template #popTemplate2>
-                        <html>
-                            <body>
-                            <div *ngFor = "let item of value">
-                               {{item}}
-                            </div>
-                            </body>
-                        </html>
-                </ng-template>
-
-
-            </ng-template>
-        </ngx-datatable-column>
-
-        <ngx-datatable-column name="spectraNum" [sortable]="false">
-            <ng-template ngx-datatable-header-template>
-                Spectrum<br>Number
-            </ng-template>
-            <ng-template let-value="value" ngx-datatable-cell-template>
-                <span style="display: inline-block;width: 20px;text-align: center;">{{value | shortnumber}}</span>
-               <!--<button class="modal_button" id="modal_button"><a href="#detail" target="_self">查看详情</a></button>-->
-            </ng-template>
-        </ngx-datatable-column>
-
-        <ngx-datatable-column name="acceptance" [sortable]="true">
-            <ng-template ngx-datatable-header-template let-sort="sortFn">
-                <a (click)="sort()">
-                    Acceptance
-                    <span *ngIf="page.sortField != 'acceptance'" data-icon="c" class="icon"></span>
-                </a>
-            </ng-template>
-            <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
-                <a [ngClass]="getAcceptClass(value)" (click)="onAcceptClick(row)"></a>
-            </ng-template>
-        </ngx-datatable-column>
-
-
-        <ngx-datatable-footer>
-            <ng-template
-                    ngx-datatable-footer-template
-                    let-rowCount="rowCount"
-                    let-pageSize="pageSize"
-                    let-selectedCount="selectedCount"
-                    let-curPage="curPage"
-                    let-offset="offset"
-            >
-
-                <div style="padding-left: 10px;">
-                    Rows: [{{offset*pageSize + 1}}-{{offset*pageSize + pageSize}}] in {{rowCount}} |
-                    Size: {{pageSize}} |
-                    Current: {{curPage}}
-                    <!--Offset: {{offset}}-->
+<div class="row col-sm-offset-1">
+    <div class="table-wrapper col-sm-5">
+        <div class="card" style="margin-left: -15px; min-height: 770px;">
+            <p class="title-wrapper"><span class="title">Datatable</span></p>
+            <div class="body-wrapper" style="height: auto;" >
+                <div class="filter-wrapper row">
+                    <div class="col-md-6">
+                        <select id="selectSpecies" class="custom_select" [(ngModel)]="selectedSpeciesData" (ngModelChange)="onSelectSpeciesChange()">
+                            <option *ngFor="let s of speciesList">{{s.psmNo}}---{{s.id}}({{s.name}})</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <button class="custom_button custom_button_plain right" data-toggle="modal"
+                                data-target="#basicExampleright" (click)="fluid.show()" mdbRippleRadius>
+                            Export to File
+                        </button>
+                    </div>
                 </div>
-                <div class="datatable-footer_pagination">
-                    <datatable-pager
-                            [pagerLeftArrowIcon]="'datatable-icon-left'"
-                            [pagerRightArrowIcon]="'datatable-icon-right'"
-                            [pagerPreviousIcon]="'datatable-icon-prev'"
-                            [pagerNextIcon]="'datatable-icon-skip'"
-                            [page]="curPage"
-                            [size]="pageSize"
-                            [count]="rowCount"
-                            [hidden]="!((rowCount / pageSize) > 1)"
-                            (change)="datatable.onFooterPage($event)">
-                    </datatable-pager>
+                <div class="table-wrapper">
+                    <ngx-datatable
+                            #datatable
+                            class="material"
+                            [rows]="psm_rows"
+                            [columns]=""
+                            [columnMode]="'force'"
+                            [headerHeight]="50"
+                            [footerHeight]="50"
+                            [externalPaging]="true"
+                            [rowHeight]="40"
+                            [count]="page.totalElements"
+                            [offset]="page.pageNumber-1"
+                            [limit]="page.size"
+                            [selected]="selected_psms"
+                            [selectionType]="'single'"
+                            (activate)="onActivatePsm($event)"
+                            (select)='onSelectPsm($event)'
+                            (page)='setPage($event)'
+                            (sort)="onSort($event)"
+                            [loadingIndicator]="loading"
+                    >
+                        <!-- <ngx-datatable-column name="id" [sortable]="false">
+                            <ng-template let-value="value" ngx-datatable-cell-template>
+                                {{value}}
+                            </ng-template>
+                        </ngx-datatable-column> -->
+        
+                        <ngx-datatable-column name="peptideSequence" [sortable]="false">
+                            <ng-template ngx-datatable-header-template>
+                                <!-- Peptide<br>Sequence -->
+                                <span data-toggle="popover" title="Peptide Sequence">
+                                    Seq
+                                </span>
+                            </ng-template>
+        
+                            <ng-template let-value="value" ngx-datatable-cell-template>
+                                <span data-toggle="popover" title="{{value|truncate: '10':'...'}}">
+                                    {{value|truncate: '10':'...'}}
+                                </span>
+                            </ng-template>
+                        </ngx-datatable-column>
+        
+                        <ngx-datatable-column *ngIf="psmType=='negscore' || psmType=='posscore' " name="confidentScore" [sortable]="true">
+                            <ng-template ngx-datatable-header-template let-sort="sortFn" class="sort-btn">
+                                <a (click)="sort()">
+                                    <!-- Confident<br>Score -->
+                                    <span data-toggle="popover" title="Confident Score">
+                                        Score
+                                    </span>
+                                    <span *ngIf="page.sortField != 'confidentScore'" data-icon="c" class="icon"></span>
+                                    <span *ngIf="page.sortField == 'confidentScore' && page.sortDirection == 'asc' && isDefaultSort == true"
+                                            data-icon="e" class="icon"></span>
+                                    <span *ngIf="page.sortField == 'confidentScore' && page.sortDirection == 'desc' && isDefaultSort == true"
+                                            data-icon="f" class="icon"></span>
+                                </a>
+                            </ng-template>
+                            <ng-template let-value="value" ngx-datatable-cell-template>
+                                <span data-toggle="popover" title="{{value | number:'1.2-2'}}">
+                                    {{value | number:'1.2-2'}}
+                                </span>
+                            </ng-template>
+                        </ngx-datatable-column>
+        
+                        <ngx-datatable-column *ngIf="psmType=='negscore'|| psmType=='newid'" name="recommConfidentScore" [sortable]="true">
+                            <ng-template ngx-datatable-header-template let-sort="sortFn" class="sort-btn">
+                                <a (click)="sort()">
+                                    <!-- Recommend Confident<br>Score -->
+                                    <span data-toggle="popover" title="Recommend Confident Score">
+                                        Re_score
+                                    </span>
+                                    <span *ngIf="page.sortField != 'recommConfidentScore'" data-icon="c" class="icon"></span>
+                                    <span *ngIf="page.sortField == 'recommConfidentScore' && page.sortDirection == 'asc' && isDefaultSort == true"
+                                            data-icon="e" class="icon"></span>
+                                    <span *ngIf="page.sortField == 'recommConfidentScore' && page.sortDirection == 'desc' && isDefaultSort == true"
+                                            data-icon="f" class="icon"></span>
+                                </a>
+                            </ng-template>
+                            <ng-template let-value="value" ngx-datatable-cell-template>
+                                <span data-toggle="popover" title="{{value | number:'1.2-2'}}">
+                                    {{value | number:'1.2-2'}}
+                                </span>
+                            </ng-template>
+                        </ngx-datatable-column>
+        
+        
+                        <ngx-datatable-column name="clusterId" [sortable]="false">
+                            <ng-template ngx-datatable-header-template>
+                                <!-- Cluster<br>Id -->
+                                <span data-toggle="popover" title="Cluster Id">
+                                    Cluster
+                                </span>
+                            </ng-template>
+                            <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                <a [popover]="popTemplate" popoverTitle="Sequences in Cluster" triggers="mouseenter:mouseleave"  container="body"
+                                    placement="right" html="true" (click)="gotoClusterDetails(value)">
+                                    <!--{{value | truncate_clusterid}}-->
+                                    <span data-toggle="popover" title="{{value}}">
+                                        {{value}}
+                                    </span>
+                                </a>
+                                <ng-template #popTemplate>
+                                    <html>
+                                    <body>
+                                    <app-sequences-pie-chart  [ratioStr]="row.clusterRatioStr"></app-sequences-pie-chart>
+                                    </body>
+                                    </html>
+                                </ng-template>
+                                <!--<button type="button" class="btn btn-success"-->
+                                <!--[popover]="popTemplate" popoverTitle="Dynamic html inside">-->
+                                <!--Show me popover with html-->
+                                <!--</button>-->
+                            </ng-template>
+                        </ngx-datatable-column>
+        
+                        <ngx-datatable-column name="clusterRatio" [sortable]="true">
+                            <ng-template ngx-datatable-header-template let-sort="sortFn">
+                                <a (click)="sort()">
+                                    <!-- Cluster<br>Ratio -->
+                                    <span data-toggle="popover" title="Cluster Ratio">
+                                        Ratio
+                                    </span>
+                                    <span *ngIf="page.sortField != 'clusterRatio'" data-icon="c" class="icon"></span>
+                                </a>
+                            </ng-template>
+                            <ng-template let-value="value" ngx-datatable-cell-template>
+                                <span data-toggle="popover" title="{{value | number:'1.2-2'}}">
+                                    {{value | number:'1.2-2'}}
+                                </span>
+                            </ng-template>
+                        </ngx-datatable-column>
+        
+                        <ngx-datatable-column name="clusterSize" [sortable]="true">
+                            <ng-template ngx-datatable-header-template let-sort="sortFn">
+                                <a (click)="sort()">
+                                    <!-- Cluster<br>Size -->
+                                    <span data-toggle="popover" title="Cluster Size">
+                                        Size
+                                    </span>
+                                    <span *ngIf="page.sortField != 'clusterSize'" data-icon="c" class="icon"></span>
+                                </a>
+                            </ng-template>
+                            <ng-template let-value="value" ngx-datatable-cell-template>
+                                <span data-toggle="popover" title="{{value | shortnumber}}">
+                                    {{value | shortnumber}}
+                                </span>
+                            </ng-template>
+                        </ngx-datatable-column>
+        
+                        <ngx-datatable-column name="recommendPeptide" [sortable]="false">
+                            <ng-template ngx-datatable-header-template>
+                                <!-- Recommend<br>Peptide -->
+                                <span data-toggle="popover" title="Recommend Peptide">
+                                    Re_seq
+                                </span>
+                            </ng-template>
+                            <ng-template let-value="value" ngx-datatable-cell-template>
+                                <a target="_blank" href="{{peptideSearchURLPrefix}}{{value.replace('R_NEW_','').replace('R_Better_','')}}{{peptideSearchURLSuffix}}">
+                                    <span data-toggle="popover" title="{{value.replace('R_NEW_','').replace('R_Better_','')}}">
+                                        {{value.replace('R_NEW_','').replace('R_Better_','')}}
+                                    </span>
+                                </a>
+                            </ng-template>
+                        </ngx-datatable-column>
+        
+                        <ngx-datatable-column name="taxIds" [sortable]="false">
+                            <ng-template ngx-datatable-header-template>
+                                <!-- Recommend<br>Peptide Taxids -->
+                                <span data-toggle="popover" title="Recommend Peptide Taxids">
+                                    Tax_id
+                                </span>
+                            </ng-template>
+                            <ng-template let-value="value" ngx-datatable-cell-template>
+                                <!--<a target="_blank" href="http://wwwdev.ebi.ac.uk/pride/???">-->
+                                <!--{{value}}-->
+                                <!--</a>-->
+                                <a *ngIf="value"   [popover]="popTemplate2" popoverTitle="Taxids of sequence" triggers="mouseenter:mouseleave"  container="body"
+                                    placement="right" html="true" >
+                                    {{value.join(',') |truncate:10}}
+                                    <!--{{value }}-->
+                                </a>
+                                <ng-template #popTemplate2>
+                                    <html>
+                                    <body>
+                                    <div *ngFor = "let item of value">
+                                        {{item}}
+                                    </div>
+                                    </body>
+                                    </html>
+                                </ng-template>
+        
+        
+                            </ng-template>
+                        </ngx-datatable-column>
+        
+                        <ngx-datatable-column name="spectraNum" [sortable]="false">
+                            <ng-template ngx-datatable-header-template>
+                                <!-- Spectrum<br>Number -->
+                                <span data-toggle="popover" title="Spectrum Number">
+                                    N_spec
+                                </span>
+                            </ng-template>
+                            <ng-template let-value="value" ngx-datatable-cell-template>
+                                <span style="display: inline-block;width: 20px;text-align: center;">{{value | shortnumber}}</span>
+                                <!--<button class="modal_button" id="modal_button"><a href="#detail" target="_self">查看详情</a></button>-->
+                            </ng-template>
+                        </ngx-datatable-column>
+        
+                        <ngx-datatable-column name="acceptance" [sortable]="true">
+                            <ng-template ngx-datatable-header-template let-sort="sortFn">
+                                <a (click)="sort()">
+                                    <!-- Acceptance -->
+                                    <span data-toggle="popover" title="Acceptance">
+                                        Check
+                                    </span>
+                                    <span *ngIf="page.sortField != 'acceptance'" data-icon="c" class="icon"></span>
+                                </a>
+                            </ng-template>
+                            <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                <a [ngClass]="getAcceptClass(value)" (click)="onAcceptClick(row)"></a>
+                            </ng-template>
+                        </ngx-datatable-column>
+        
+        
+                        <ngx-datatable-footer>
+                            <ng-template
+                                ngx-datatable-footer-template
+                                let-rowCount="rowCount"
+                                let-pageSize="pageSize"
+                                let-selectedCount="selectedCount"
+                                let-curPage="curPage"
+                                let-offset="offset"
+                            >
+                                <div style="padding-left: 10px;">
+                                    Rows: [{{offset*pageSize + 1}}-{{offset*pageSize + pageSize}}] in {{rowCount}} |
+                                    Size: {{pageSize}} |
+                                    Current: {{curPage}}
+                                </div>
+                                <div class="datatable-footer_pagination">
+                                    <datatable-pager
+                                            [pagerLeftArrowIcon]="'datatable-icon-left'"
+                                            [pagerRightArrowIcon]="'datatable-icon-right'"
+                                            [pagerPreviousIcon]="'datatable-icon-prev'"
+                                            [pagerNextIcon]="'datatable-icon-skip'"
+                                            [page]="curPage"
+                                            [size]="pageSize"
+                                            [count]="rowCount"
+                                            [hidden]="!((rowCount / pageSize) > 1)"
+                                            (change)="datatable.onFooterPage($event)">
+                                    </datatable-pager>
+                                </div>
+        
+                                <!--<button class="right material-like">Export-->
+                                <!--</button>-->
+                                <!--<button class="btn btn-sm btn-outline-primary outline right" data-toggle="modal"
+                                        data-target="#basicExampleright" (click)="fluid.show()" mdbRippleRadius>
+                                    Export to File
+                                </button>-->
+                            </ng-template>
+                        </ngx-datatable-footer>
+                    </ngx-datatable>
+                    <span class="sortable sort-btn datatable-icon-ready"></span>
                 </div>
-
-                <!--<button class="right material-like">Export-->
-                <!--</button>-->
-                <button class="btn btn-sm btn-outline-primary outline right" data-toggle="modal"
-                        data-target="#basicExampleright" (click)="fluid.show()" mdbRippleRadius>
-                    Export to File
-                </button>
-            </ng-template>
-        </ngx-datatable-footer>
-    </ngx-datatable>
-    <span class="sortable sort-btn datatable-icon-ready"></span>
-
+            </div>
+        </div>
+    </div>
+    <div class="card col-sm-7">
+        <p class="title-wrapper"><span class="title">Spectra-comparer</span></p>
+        <div class="body-wrapper">
+            <div class="row" id='Spectra-comparer'>
+                <div class="col-sm-3">
+                    <ngx-datatable
+                            #specdatatable
+                            class="material"
+                            [rows]="spec_rows_in_page"
+                            [externalPaging]="true"
+                            [columnMode]="'force'"
+                            [headerHeight]="50"
+                            [footerHeight]="50"
+                            [rowHeight]="36"
+                            [selectionType]="'single'"
+                            [count]="specPage.totalElements"
+                            [offset]="specPage.pageNumber-1"
+                            [limit]="specPage.size"
+                            (page)="setSpecPage($event)"
+                            (activate)="onActivateSpec($event)"
+                            (select)='onSelectSpec($event)'
+                    >
+                        <ngx-datatable-column name="title">
+                            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                                <div data-toggle="popover" title="{{value}}">
+                                    {{(row.$$index + 1) + ((specPage.pageNumber-1) * specPage.size)}}
+                                </div>
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="charge"></ngx-datatable-column>
+                        <ngx-datatable-column name="precursorMz" [width]="180"></ngx-datatable-column>
+    
+    
+                        <ngx-datatable-footer>
+                            <ng-template
+                                    ngx-datatable-footer-template
+                                    let-rowCount="rowCount"
+                                    let-pageSize="pageSize"
+                                    let-selectedCount="selectedCount"
+                                    let-curPage="curPage"
+                                    let-offset="offset"
+                            >
+                                <div style="padding-left: 10px;">
+                                    Rows: [{{offset*pageSize + 1}}-{{offset*pageSize + pageSize}}] in {{rowCount}} |
+                                    Size: {{pageSize}} |
+                                    Current: {{curPage}}
+                                    <!--Offset: {{offset}}-->
+                                </div>
+                                <div class="datatable-footer_pagination">
+                                    <datatable-pager
+                                            [pagerLeftArrowIcon]="'datatable-icon-left'"
+                                            [pagerRightArrowIcon]="'datatable-icon-right'"
+                                            [pagerPreviousIcon]="'datatable-icon-prev'"
+                                            [pagerNextIcon]="'datatable-icon-skip'"
+                                            [page]="curPage"
+                                            [size]="pageSize"
+                                            [count]="rowCount"
+                                            [hidden]="!((rowCount / pageSize) > 1)"
+                                            (change)="specdatatable.onFooterPage($event)">
+                                    </datatable-pager>
+                                </div>
+    
+                            </ng-template>
+                        </ngx-datatable-footer>
+                    </ngx-datatable>
+                </div>
+                <div class="col-md-9 material-like " id="material-like">
+    
+                    <app-spectra-comparer [selectedPsm]="selectedPsm" [spectrum]="selectedSpectrum"
+                                          [psmType]="psmType"></app-spectra-comparer>
+    
+                </div>
+    
+            </div>
+        </div>
+    </div>
 </div>
-<p><span>Spectra-comparer</span></p>
+<!--<p><span>Spectra-comparer</span></p>
 <div class="row" style="padding-top:15px;padding-right:15px;" id='Spectra-comparer'>
     <div class="col-sm-4 col-md-4 col-lg-4">
 
@@ -281,7 +415,7 @@
                     Rows: [{{offset*pageSize + 1}}-{{offset*pageSize + pageSize}}] in {{rowCount}} |
                     Size: {{pageSize}} |
                     Current: {{curPage}}
-                    <!--Offset: {{offset}}-->
+                    &lt;!&ndash;Offset: {{offset}}&ndash;&gt;
                 </div>
                 <div class="datatable-footer_pagination">
                     <datatable-pager
@@ -312,7 +446,7 @@
 
 <div>
 
-</div>
+</div>-->
 
 
 <div mdbModal #fluid="mdb-modal" class="modal fade right" id="fullHeightModalRight" tabindex="-1" role="dialog"

@@ -5,9 +5,18 @@
 @import '~@swimlane/ngx-datatable/release/index.css';
 @import '~@swimlane/ngx-datatable/release/themes/material.css';
 @import '~@swimlane/ngx-datatable/release/assets/icons.css';
+@import '~font-awesome/css/font-awesome.css';
 
-
+.tooltip-inner{
+  background-color: #0e8ee7;
+}
+.tooltip.top .tooltip-arrow{
+  border-top-color: #0e8ee7;
+}
 .modal { overflow: auto !important; }
+.mdb-color {
+  background-color: #fff !important;
+}
 
 @media (min-width: 576px) {
     .modal-dialog {
@@ -40,8 +49,9 @@ venntooltip.venn {
 .venntooltip {
   position: absolute !important;
   text-align: center;
-  width: 228px;
-  height: 22px;
+  // width: 228px;
+  padding:0 20px;
+  // height: 22px;
   background: #333;
   color: #ddd;
   border: 0px;
@@ -61,7 +71,6 @@ svg {
 
 #venn {
   height: 100%;
-  width: 110%;
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -105,4 +114,107 @@ g.venn-area-part path {
 
 .popover {
   max-width: none !important;
+}
+.custom_select {
+  position: relative;
+  border-radius: 4px;
+  border: 1px solid #dcdfe6;
+  box-sizing: border-box;
+  color: #606266;
+  display: inline-block;
+  font-size: 14px;
+  height: 32px;
+  line-height: 32px;
+  outline: none;
+  padding: 0 15px;
+  transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+  cursor: pointer;
+}
+.custom_button {
+  display: inline-block;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  border: 1px solid #dcdfe6;
+  -webkit-appearance: none;
+  text-align: center;
+  box-sizing: border-box;
+  outline: none;
+  margin: 0;font-weight: 500;
+  padding: 9px 15px;
+  font-size: 14px;
+  transition: .1s;
+  border-radius: 3px;
+  color: #fff;
+  background-color: #27b6f0;
+}
+.custom_button_plain {
+  color: #27b6f0;
+  background: #ecf5ff;
+  border-color: rgba(39, 182, 240, .7);
+  &:hover {
+    color: #fff;
+    background-color: #27b6f0;
+    border: 1px solid #dcdfe6;
+  }
+}
+.custom_input {
+  -webkit-appearance: none;
+  background-color: #fff;
+  background-image: none;
+  border-radius: 4px;
+  border: 1px solid #dcdfe6;
+  box-sizing: border-box;
+  color: #606266;
+  display: inline-block;
+  font-size: inherit;
+  height: 32px;
+  line-height: 32px;
+  outline: none;
+  padding: 0 15px;
+  transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+  width: 100%;
+}
+.custom_input:focus {
+  outline: none;
+  border-color: #409eff;
+}
+#lorikeet{
+  border: none;
+  box-shadow: none;
+}
+// card
+.card {
+  padding: 0 8px 10px;
+  .title-wrapper {
+    width:100%;
+    font-size:20px;
+    border-bottom:2px solid #e6e9eb;
+    font-weight:bold;
+    color:#45526E;
+    padding-left: 10px;
+    padding-bottom:5px;
+    margin-bottom:0px;
+    margin-top:10px;
+    .title {
+      padding-left: 10px;
+      border-left: 6px solid rgb(39,182,240);
+    }
+  }
+  .body-wrapper {
+    // background: #eff3f6;
+    margin-top: 10px;
+    .table-wrapper {
+      .datatable-header {
+        // background: rgba(39, 182, 240, .3);
+      }
+      .datatable-header-cell {
+        color: #0b2a41;
+      }
+      .ngx-datatable .datatable-body .datatable-body-row {
+        // background: rgba(39, 182, 240, .3);
+        // background-color: #64d6ff;
+      }
+    }
+  }
 }

@@ -13,7 +13,7 @@ export class ExportConfig{
      newIdentEnd:number = 1.0;
      highConfStart:number = 0.0;
      highConfEnd:number = 1.0;
-     hasAccepted:boolean = true;
+     hasAccpeted:boolean = true;
      defaultAccpetType: string = "none";
      hasRejected:boolean = true;
 }

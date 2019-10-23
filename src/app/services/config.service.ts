@@ -14,7 +14,6 @@ export class ConfigService{
 
     private configFilePath = environment.configFilePath;
     private config:any = null;
-
     constructor(private http: Http) {
     }
 

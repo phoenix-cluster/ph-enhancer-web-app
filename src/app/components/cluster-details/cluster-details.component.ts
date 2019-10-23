@@ -48,6 +48,9 @@ export class ClusterDetailsComponent implements OnInit {
         this.spectrumService.getSpectra(tempSpectraTitlesStr)
             .then(spectra => {
                     // console.log(spectra);
+                    if (this.spec_rows == undefined){
+                        this.spec_rows = new Array<Spectrum>();
+                    }
                     this.spec_rows = this.spec_rows.concat(spectra);
                     // console.log(this.spec_rows[0]);
                 }

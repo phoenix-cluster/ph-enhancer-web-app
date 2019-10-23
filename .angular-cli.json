@@ -36,7 +36,8 @@
         "../src/app/utils/specview/lorikeet/peptide.js",
         "../src/app/utils/specview/lorikeet/aminoacid.js",
         "../src/app/utils/specview/lorikeet/ion.js",
-        "../src/app/utils/specview/lorikeet/specview.js"
+        "../src/app/utils/specview/lorikeet/specview.js",
+        "../node_modules/echarts/dist/echarts.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

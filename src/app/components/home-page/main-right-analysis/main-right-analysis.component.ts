@@ -11,5 +11,7 @@ export class MainRightAnalysisComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  refreshPage(){
+      location.reload();
+  }
 }

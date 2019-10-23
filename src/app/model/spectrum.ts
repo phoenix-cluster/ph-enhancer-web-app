@@ -10,6 +10,7 @@ export class Spectrum {
 
   title:string;
   charge:number;
+  index: number;
   recommPepSeq:string;
   precursorMz:number;
   peaklistMz:number[];

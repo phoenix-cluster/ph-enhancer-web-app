@@ -13,6 +13,7 @@ import {PSMsPage} from "../../../model/psmsPage";
 import {ExportConfig} from "../../../model/export-config";
 import {SpeciesInProject} from "../../../model/speciesInProject";
 import {SpecPage} from "../../../model/spec-page";
+import {ConfigService} from "../../../services/config.service";
 
 
 class SimPsm {
@@ -45,15 +46,18 @@ export class PsmTablesComponent implements OnInit {
     selectedSpeciesData: string = "0---ALL(ALL)";
     private defaultAcceptanceOfRecommPsm: boolean;//true means accept, false means reject
     downloadJsonHref:string; //for result download
+    peptideSearchURLPrefix = "http://wwwdev.ebi.ac.uk/pride/peptidesearch?keyword=";
+    peptideSearchURLSuffix = "&page=0&pageSize=10";
 
     page = new Page();
+    sortType = ''
     specPage = new SpecPage();
     loading: boolean = false;
     isDefaultSort: boolean = true;
     private activedHistItem: number;
     private specTableOffset:number = 0;
 
-    export:ExportConfig;
+    private export:ExportConfig;
 
 
     constructor(private psmTableService: PsmTableService,
@@ -61,6 +65,7 @@ export class PsmTablesComponent implements OnInit {
                 private exportService: ExportService,
                 private http: Http,
                 private router: Router,
+                private configService: ConfigService,
                 ) {
         this.selectedPsm = new Psm("null_cluster_id");
         this.selectedPsmIndex = 1;
@@ -72,12 +77,18 @@ export class PsmTablesComponent implements OnInit {
         this.psm_rows = new Array<Psm>();
         this.spec_rows = new Array<Spectrum>();
         this.export = new ExportConfig();
-    }
 
+
+        this.configService.getConfig().then((configJson) => {
+                this.peptideSearchURLPrefix = configJson.peptideSearchURLPrefix;
+                this.peptideSearchURLSuffix= configJson.peptideSearchURLSuffix;
+        });
+    }
     ngOnInit() {
         // this.setPageData(this.page);
         this.onSelectSpeciesChange();
         this.isDefaultSort = true;
+        this.sortType = 'desc'
         this.getAndSetSpeciesListInProject()
     }
 
@@ -160,6 +171,7 @@ export class PsmTablesComponent implements OnInit {
         this.loading = true;
         this.isDefaultSort = false;
         this.page = new Page();
+        this.sortType = event.newValue
         this.page.sortDirection = event.sorts[0].dir;
         this.page.sortField = event.sorts[0].prop;
         this.page.selectedSpeciesId = this.selectedSpeciesId;
@@ -169,7 +181,6 @@ export class PsmTablesComponent implements OnInit {
     }
 
     onSelectPsm({selected}) {
-        // console.log('selected');
         // console.log(selected[0].$$index);
         this.selectedPsmIndex = selected[0].$$index + 1;
         this.selectedPsm = selected[0];
@@ -235,8 +246,8 @@ export class PsmTablesComponent implements OnInit {
     }
 
     gotoClusterDetails(value: string) {
-//        this.router.navigateByUrl(`/cluster_details/${value}`);
-        window.open(`/cluster_details/${value}`);
+       this.router.navigateByUrl(`/cluster_details/${value}`);
+        // window.open(`/cluster_details/${value}`);
     }
 
 

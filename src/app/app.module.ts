@@ -8,6 +8,7 @@ import {MDBBootstrapModule} from './typescripts/free';
 import {AppComponent} from './app.component';
 import {CommonModule}     from '@angular/common';
 import {FileUploadModule} from 'ng2-file-upload';
+import {NgxEchartsModule} from 'ngx-echarts'
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
@@ -66,7 +67,7 @@ import { ClusterSpecCompareComponent } from './components/cluster-details/cluste
 import { JobProgressComponent } from './components/job-progress/job-progress.component';
 import { HelpPageComponent } from './components/help-page/help-page.component';
 import {ConfigService} from "./services/config.service";
-
+import {CheckExamplesService} from "./services/checkExams/check-examples.service";
 
 
 @NgModule({
@@ -120,6 +121,7 @@ import {ConfigService} from "./services/config.service";
         NgxDatatableModule,
         // SidebarModule.forRoot(),
         NgxChartsModule,
+        NgxEchartsModule,
         PopoverModule.forRoot(),
         PopupModule.forRoot(),
 
@@ -141,6 +143,7 @@ import {ConfigService} from "./services/config.service";
         DoAnalysisService,
         AnalysisDataService,
         ConfigService,
+        CheckExamplesService
         // ConfigModule.init(),
     ],
     bootstrap: [AppComponent],
