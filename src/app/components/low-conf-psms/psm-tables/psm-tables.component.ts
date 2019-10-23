@@ -246,8 +246,8 @@ export class PsmTablesComponent implements OnInit {
     }
 
     gotoClusterDetails(value: string) {
-//        this.router.navigateByUrl(`/cluster_details/${value}`);
-        window.open(`/cluster_details/${value}`);
+       this.router.navigateByUrl(`/cluster_details/${value}`);
+        // window.open(`/cluster_details/${value}`);
     }
 
 
