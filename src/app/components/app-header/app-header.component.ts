@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {DOCUMENT} from '@angular/common';
+import {DOCUMENT, PlatformLocation} from '@angular/common';
 import {NavigationEnd, Router, Params, ActivatedRoute} from "@angular/router";
 import {ConfigService} from "../../services/config.service";
 import {CheckExamplesService, changedProjectId} from "../../services/checkExams/check-examples.service";
@@ -13,14 +13,13 @@ export class AppHeaderComponent implements OnInit {
     public projectId: string ;
     // constructor(@Inject(DOCUMENT) private document: Document) {
     // }
-    constructor(private router: Router, private configService: ConfigService, private routeInfo: ActivatedRoute, private checkExamService: CheckExamplesService) {
+    constructor(private router: Router, private configService: ConfigService, private routeInfo: ActivatedRoute, private checkExamService: CheckExamplesService, private location: PlatformLocation) {
         checkExamService.idEventer.subscribe(id => {
             checkExamService.projectId = id
         })
     }
     protected subscribeId: changedProjectId;
     ngOnInit() {
-        // console.log(this.router.routerState.snapshot.url)
         /*this.router.events.subscribe((event) => {
             if (event instanceof NavigationEnd) {
                 let projectId = this.getProject(this.router.routerState.snapshot.url);
@@ -30,6 +29,14 @@ export class AppHeaderComponent implements OnInit {
             }
         });*/
         this.getProjectId();
+        // add address router parser and init refesh page, save url Info
+        let currentUrl = this.location.pathname
+        if (currentUrl.split('/')[2] === 'low_conf' || currentUrl.split('/')[2] === 'high_conf' || currentUrl.split('/')[2] === 'new_id') {
+            console.log('yes')
+            this.checkExamService.projectId = { id: currentUrl.split('/')[1] }
+        } else {
+            this.checkExamService.projectId = this.checkExamService.projectId;
+        }
         this.subscribeId = this.checkExamService.projectId;
     }
     getProjectId() {
