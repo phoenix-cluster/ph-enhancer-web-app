@@ -9,6 +9,7 @@ import{Chart1Component,ChangeProject} from "../chart1/chart1.component"
 // import { AfterContentInit, AfterViewInit } from '../../../../../../node_modules/_@angular_core@5.1.3@@angular/core/src/metadata/lifecycle_hooks';
 import { document } from "app/typescripts/free/utils/facade/browser";
 import {project} from "../../../../../schema/checkExam";
+import {CheckExamplesService} from "../../../../services/checkExams/check-examples.service";
 
 @Component({
     selector: 'app-chart3',
@@ -46,7 +47,7 @@ export class Chart3Component implements OnChanges,OnInit{
     colorScheme = {
         domain: ['gray', '#A10A28', 'blue', '#10c008', 'light blue', "purple"]
     };
-    constructor(private router: Router, private statisticsService: StatisticsService,
+    constructor(private router: Router, private statisticsService: StatisticsService,public checkExamService: CheckExamplesService,
                 private configService:ConfigService) {
         this.sortDirection = 'desc';
     }
@@ -197,6 +198,7 @@ export class Chart3Component implements OnChanges,OnInit{
             }
         }
        if (psmTableType !== null) {
+            this.checkExamService.projectId.id = projectId
             this.router.navigateByUrl('' + projectId + "/" + psmTableType).then(_ =>{console.log("route changed")});
        }
 
