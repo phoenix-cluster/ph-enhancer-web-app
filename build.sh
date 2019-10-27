@@ -6,3 +6,4 @@
 #########################################################################
 #!/bin/bash
 ng build --prod --aot=false --env=prod; 
+#ng build --prod  --env=prod; 

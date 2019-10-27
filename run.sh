@@ -3,4 +3,4 @@
 # Created Time: Fri 25 Jan 2019 05:16:50 PM CST
 #########################################################################
 #!/bin/bash
-ng serve  --host 0.0.0.0 --disable-host-check --port 4201
+ng serve  --host 0.0.0.0 --disable-host-check --port 4202
