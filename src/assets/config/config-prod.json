@@ -1,7 +1,7 @@
 {
-  "baseUrl" : "http://enhancer.ncpbs.org:8090/v1/",
-  "analysisBaseUrl" : "http://enhancer.ncpbs.org:5000/",
-  "clusterBaseUrl" : "http://enhancer.ncpbs.org:8090/v1/",
+  "baseUrl" : "http://enhancer.ncpsb.org:8090/v1/",
+  "analysisBaseUrl" : "http://enhancer.ncpsb.org:5000/",
+  "clusterBaseUrl" : "http://enhancer.ncpsb.org:8090/v1/",
   "peptideSearchURLPrefix" : "https://unipept.ugent.be/sequences/",
   "peptideSearchURLSuffix" : "",
   "defaultProject" : "PXD000021",
