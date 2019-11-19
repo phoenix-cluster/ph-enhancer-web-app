@@ -12,5 +12,10 @@
         "mgf","mgf.gz",
         "MGF","MGF.gz",
         "mzML"
-    ]
+    ],
+  "maxFileSize" : 200,
+  "maxTotalFileSize" : 300,
+  "fileSizeUnitInBytes" : 1000000
 }
+
+
