@@ -22,6 +22,7 @@ export class DoAnalysisService{
             this.doAanlysisUrl = configJson.analysisBaseUrl + "analysis/do";
             this.getJobByTokenUrl = configJson.baseUrl + "/" + "analysis/getAnalysisJobByToken?"
             this.getPageOfLogByTokenUrl = configJson.baseUrl + "/" + "analysis/getPageOfLogByToken?";
+            console.log(this.getPageOfLogByTokenUrl);
         });
     }
 
@@ -60,20 +61,40 @@ export class DoAnalysisService{
         if(token == null || token.length != 10){
             return null;
         }
+        return this.configService.getConfig2().map(
+            response1 => {
+                let configJson = response1.json();
+                this.doAanlysisUrl = configJson.analysisBaseUrl + "analysis/do";
+                this.getJobByTokenUrl = configJson.baseUrl + "/" + "analysis/getAnalysisJobByToken?"
+                this.getPageOfLogByTokenUrl = configJson.baseUrl + "/" + "analysis/getPageOfLogByToken?";
+                console.log(this.getPageOfLogByTokenUrl);
 
-            return this.http.get(this.getJobByTokenUrl + "token=" + token)
-                .map(response => response.json())
-                .catch(this.handleError);
+                return this.http.get(this.getJobByTokenUrl + "token=" + token)
+                    .map(response => {
+                        console.log(response.json())
+                        return response.json()})
+                    .catch(this.handleError);
+            }).toArray()[0];
     }
 
     get_page_of_log_by_token(token:string, startLineNo:number): Observable<PageOfLogFile> {
-        if(token == null || token.length != 10){
-            return null;
-        }
+        // if(token == null || token.length != 10){
+        //     return null;
+        // }
+        return this.configService.getConfig2().map(
+            response1 => {
+                let configJson = response1.json();
+                this.doAanlysisUrl = configJson.analysisBaseUrl + "analysis/do";
+                this.getJobByTokenUrl = configJson.baseUrl + "/" + "analysis/getAnalysisJobByToken?"
+                this.getPageOfLogByTokenUrl = configJson.baseUrl + "/" + "analysis/getPageOfLogByToken?";
+                console.log(this.getPageOfLogByTokenUrl);
 
-            return this.http.get(this.getPageOfLogByTokenUrl + "token=" + token + "&startLineNo=" + startLineNo)
-                .map(response => response.json())
-                ;
+                return this.http.get(this.getPageOfLogByTokenUrl + "token=" + token + "&startLineNo=" + startLineNo)
+                    .map(response => {
+                        console.log(response.json())
+                        return response.json()})
+                    ;
+            }).toArray()[0];
     }
 
 }

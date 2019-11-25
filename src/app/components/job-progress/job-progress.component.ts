@@ -84,7 +84,9 @@ export class JobProgressComponent implements OnInit, OnDestroy {
     }
 
     private refreshData2(token): void {
-        this.postsSubscription2 = this.doAnalysisService.get_page_of_log_by_token(token, this.currentPageOfLog.endLineNo + 1).subscribe(pageOfLog => {
+        this.postsSubscription2 = this.doAnalysisService.get_page_of_log_by_token(
+            token, this.currentPageOfLog.endLineNo + 1)
+            .subscribe(pageOfLog => {
             this.appendToCurrentPage(pageOfLog);
             console.log(pageOfLog);
             if (pageOfLog.length != -1) { //all data have been downloaded
