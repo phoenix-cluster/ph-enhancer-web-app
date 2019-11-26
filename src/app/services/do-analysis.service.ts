@@ -18,12 +18,11 @@ export class DoAnalysisService{
     private headers = new Headers({'Content-type': 'application/json'});
 
     constructor(private http: Http, private configService:ConfigService) {
-        this.configService.getConfig().then(configJson => {
-            this.doAanlysisUrl = configJson.analysisBaseUrl + "analysis/do";
-            this.getJobByTokenUrl = configJson.baseUrl + "/" + "analysis/getAnalysisJobByToken?"
-            this.getPageOfLogByTokenUrl = configJson.baseUrl + "/" + "analysis/getPageOfLogByToken?";
-            console.log(this.getPageOfLogByTokenUrl);
-        });
+        // this.configService.getConfig().then(configJson => {
+        //     this.doAanlysisUrl = configJson.analysisBaseUrl + "analysis/do";
+        //     this.getJobByTokenUrl = configJson.baseUrl + "/" + "analysis/getAnalysisJobByToken?"
+        //     this.getPageOfLogByTokenUrl = configJson.baseUrl + "/" + "analysis/getPageOfLogByToken?";
+        // });
     }
 
 
@@ -61,40 +60,21 @@ export class DoAnalysisService{
         if(token == null || token.length != 10){
             return null;
         }
-        return this.configService.getConfig2().map(
-            response1 => {
-                let configJson = response1.json();
-                this.doAanlysisUrl = configJson.analysisBaseUrl + "analysis/do";
-                this.getJobByTokenUrl = configJson.baseUrl + "/" + "analysis/getAnalysisJobByToken?"
-                this.getPageOfLogByTokenUrl = configJson.baseUrl + "/" + "analysis/getPageOfLogByToken?";
-                console.log(this.getPageOfLogByTokenUrl);
-
-                return this.http.get(this.getJobByTokenUrl + "token=" + token)
-                    .map(response => {
-                        console.log(response.json())
-                        return response.json()})
-                    .catch(this.handleError);
-            }).toArray()[0];
-    }
+        return this.configService.getConfig2().mergeMap(config => {
+            const c = config.json();
+            return this.http.get(c.baseUrl + "/" + "analysis/getAnalysisJobByToken?" + 'token=' + token).map(v => v.json()).first();
+        });
+    };
 
     get_page_of_log_by_token(token:string, startLineNo:number): Observable<PageOfLogFile> {
         // if(token == null || token.length != 10){
         //     return null;
         // }
-        return this.configService.getConfig2().map(
-            response1 => {
-                let configJson = response1.json();
-                this.doAanlysisUrl = configJson.analysisBaseUrl + "analysis/do";
-                this.getJobByTokenUrl = configJson.baseUrl + "/" + "analysis/getAnalysisJobByToken?"
-                this.getPageOfLogByTokenUrl = configJson.baseUrl + "/" + "analysis/getPageOfLogByToken?";
-                console.log(this.getPageOfLogByTokenUrl);
-
-                return this.http.get(this.getPageOfLogByTokenUrl + "token=" + token + "&startLineNo=" + startLineNo)
-                    .map(response => {
-                        console.log(response.json())
-                        return response.json()})
-                    ;
-            }).toArray()[0];
+        return this.configService.getConfig2().mergeMap(config => {
+            const c = config.json();
+            return this.http.get(c.baseUrl + "/" + "analysis/getPageOfLogByToken?" + "token=" + token + "&startLineNo=" + startLineNo)
+                .map(v => v.json()).first();
+        })
     }
 
 }

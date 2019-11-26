@@ -73,36 +73,33 @@ export class JobProgressComponent implements OnInit, OnDestroy {
     }
 
     private refreshData(token): void {
-        this.postsSubscription = this.doAnalysisService.get_analysis_job_by_token(token).subscribe(analysisJob => {
+        this.postsSubscription2 = this.doAnalysisService.get_analysis_job_by_token(token).subscribe(analysisJob => {
             this.analysisJob = analysisJob;
             if (this.analysisJob.status != "finished") {
                 this.subscribeToData(token);
             }
-
         });
 
     }
 
     private refreshData2(token): void {
-        this.postsSubscription2 = this.doAnalysisService.get_page_of_log_by_token(
-            token, this.currentPageOfLog.endLineNo + 1)
+        this.postsSubscription2 = this.doAnalysisService.get_page_of_log_by_token(token, this.currentPageOfLog.endLineNo + 1)
             .subscribe(pageOfLog => {
-            this.appendToCurrentPage(pageOfLog);
-            console.log(pageOfLog);
-            if (pageOfLog.length != -1) { //all data have been downloaded
-                this.subscribeToData2(token);
-            }
-        }, error2 => {
-            console.log("ERROR: " + error2);
-            if (this.postsSubscription2) {
-                console.log("postsSubscription2.unsubscribe()")
-                this.postsSubscription2.unsubscribe();
-            }
-            if (this.timerSubscription2) {
-                console.log("timerSubscription2.unsubscribe()")
-                this.timerSubscription2.unsubscribe();
-            }
-        });
+                this.appendToCurrentPage(pageOfLog);
+                if (pageOfLog.length != -1) { //all data have been downloaded
+                    this.subscribeToData2(token);
+                }
+            }, error2 => {
+                console.log("ERROR: " + error2);
+                if (this.postsSubscription2) {
+                    console.log("postsSubscription2.unsubscribe()")
+                    this.postsSubscription2.unsubscribe();
+                }
+                if (this.timerSubscription2) {
+                    console.log("timerSubscription2.unsubscribe()")
+                    this.timerSubscription2.unsubscribe();
+                }
+            });
     }
 
 
