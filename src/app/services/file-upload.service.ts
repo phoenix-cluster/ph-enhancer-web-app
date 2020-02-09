@@ -19,7 +19,7 @@ export class FileUploadService {
 
     constructor(private http: Http,
     private configService: ConfigService) {
-
+        console.log("set applyJobUrls here");
         this.configService.getConfig().then((configJson) => {
             this.applyJobUrl = configJson.baseUrl +  "analysis/apply"
             this.analysisBaseUrl = configJson.analysisBaseUrl;

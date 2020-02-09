@@ -5,7 +5,7 @@
   "peptideSearchURLPrefix" : "https://unipept.ugent.be/sequences/",
   "peptideSearchURLSuffix" : "",
   "defaultProject" : "PXD000021",
-  "defaultMinClusterSize" : 5,
+  "defaultMinClusterSize" : 10,
   "allowedFileType" : [
         "xml","xml.gz",
         "mzid","mzid.gz",
