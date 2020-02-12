@@ -29,6 +29,15 @@ export class ConfigService{
             });
     }
 
+     public getConfig2(): Observable<any> {
+        // if (this.config != null){
+        //     return ;
+        // }
+        return this.http.get(this.configFilePath);
+    }
+
+
+
     private handleError(error: any): Promise<any> {
         console.log('A error occurred', error);
         return Promise.reject(error.message || error);

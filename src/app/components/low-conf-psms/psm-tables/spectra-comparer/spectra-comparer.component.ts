@@ -43,10 +43,12 @@ export class SpectraComparerComponent implements OnChanges {
 
     ngOnChanges() {
         this.currentClusterId = this.selectedPsm.clusterId;
-        this.currentSpectrumTitle = this.spectrum.title;
-        if (this.currentClusterId != null && this.currentClusterId != "null_cluster_id"
-            && this.spectrum != null && this.spectrum.title != "null_spectrum_title") {
-            this.resetDataAndRefresh();
+        if(this.spectrum != null) {
+            this.currentSpectrumTitle = this.spectrum.title;
+            if (this.currentClusterId != null && this.currentClusterId != "null_cluster_id"
+                && this.spectrum != null && this.spectrum.title != "null_spectrum_title") {
+                this.resetDataAndRefresh();
+            }
         }
     }
 

@@ -156,6 +156,18 @@
 
 
     <div class="modal-footer">
+        <row>
+        <h5>Only these file types are supported now.</h5>
+        <ul>
+            <li><b>Peak & PSM</b>: PRIDE XML, MGF with sequences(SEQ section)</li>
+            <li><b>Peak</b>: mzML, MGF</li>
+            <li><b>PSM</b>: mzIdentML(mzid)</li>
+        </ul>
+        </row>
+        <row>
+            <h5>Single file size is limited to {{maxFileSize}} M bytes</h5>
+            <h5>Total file size is limited to {{maxTotalFileSize}} M bytes </h5>
+        </row>
         <!--<button type="button" class="btn btn-outline-primary " (click)="getAnalysisId()">Get Analysis Id</button>-->
         <button id="confirmFileButton" [disabled]="!fileUploadEnabled" type="button" class="btn btn-outline-primary "
                 title="After confirming file list, you will not able to upload new files."

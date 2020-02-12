@@ -1,16 +1,21 @@
 {
-  "baseUrl" : "http://192.168.6.20:8070/v1/",
-  "analysisBaseUrl" : "http://192.168.6.20:5001/",
-  "clusterBaseUrl" : "http://192.168.6.20:8070/v1/",
+  "baseUrl" : "http://20.20.10.181:8070/v1/",
+  "analysisBaseUrl" : "http://20.20.10.181:5000/",
+  "clusterBaseUrl" : "http://20.20.10.180:8090/v1/",
   "peptideSearchURLPrefix" : "https://unipept.ugent.be/sequences/",
   "peptideSearchURLSuffix" : "",
-  "defaultProject" : "PXD000021",
-  "defaultMinClusterSize" : 5,
+  "defaultProject" : "PXD000450",
+  "defaultMinClusterSize" : 10,
   "allowedFileType" : [
         "xml","xml.gz",
         "mzid","mzid.gz",
         "mgf","mgf.gz",
         "MGF","MGF.gz",
         "mzML"
-    ]
+    ],
+  "maxFileSize" : 200,
+  "maxTotalFileSize" : 300,
+  "fileSizeUnitInBytes" : 1000000
 }
+
+

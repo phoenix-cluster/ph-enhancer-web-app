@@ -23,6 +23,9 @@ export class UploadFilesComponent implements OnInit {
     closeResult: string;
     uploadUrl : string;
     allowedFileType : any;
+    maxFileSize: number; //in M bytes
+    maxTotalFileSize: number; //in M bytes
+    fileSizeUnitInBytes: number; //M bytes
     public uploader: FileUploader;
     modalReference:NgbModalRef;
 
@@ -79,6 +82,9 @@ export class UploadFilesComponent implements OnInit {
         this.configService.getConfig().then(configJson  => {
             this.uploadUrl = configJson.analysisBaseUrl+ "file/upload";
             this.allowedFileType = configJson.allowedFileType;
+            this.maxFileSize = configJson.maxFileSize ;
+            this.maxTotalFileSize = configJson.maxTotalFileSize;
+            this.fileSizeUnitInBytes = configJson.fileSizeUnitInBytes;
             this.initUploader();
             });
         this.analysisData.currentAnalysisJob.subscribe(analysisJob => {this.analysisJob = analysisJob;
@@ -95,12 +101,8 @@ export class UploadFilesComponent implements OnInit {
         this.uploader = new FileUploader({
             url: this.uploadUrl,
             isHTML5: true,
-            maxFileSize: 1000 * 1000 * 1000,
+            maxFileSize: this.maxFileSize  * this.fileSizeUnitInBytes, //maxFileSize number and unit (in M bytes)
             // headers: [{name: 'myId', value: String(this.analysisJobId)}],
-            // allowedMimeType: ['text/xml', 'application/x-gzip']
-            // allowedFileType: ['xml', 'xml.gz']
-            // allowedFileType: ['image', 'pdf', 'txt', 'doc', 'xml', 'mzid', 'mgf']
-            // allowedFileType: environment.allowedFileType;
         });
         this.uploader.onErrorItem = (item, response, status, headers) => this.onErrorItem(item, response, status, headers);
         this.uploader.onSuccessItem = (item, response, status, headers) => this.onSuccessItem(item, response, status, headers);
@@ -120,7 +122,7 @@ export class UploadFilesComponent implements OnInit {
 
     //check file types
     isFileTypesSet(){
-        console.log(this.uploader, queue);
+        // console.log(this.uploader, queue);
         for (let i = 0; i < this.uploader.queue.length; i++) {
             let fileItem = this.uploader.queue[i];
             //we only use headers[0] to store the information here
@@ -133,6 +135,8 @@ export class UploadFilesComponent implements OnInit {
         }
         return true;
     }
+
+
 
     confirmFilesForSure(){
         // this.popup2.hide();
@@ -156,7 +160,7 @@ export class UploadFilesComponent implements OnInit {
         this.uploader.options.disableMultipart = true;
         this.uploader.options.allowedMimeType = [];
         this.analysisData.changeFileUploadEnabled(false);
-        console.log(this.resultFileList);
+        // console.log(this.resultFileList);
         this.resultFileList.fileListLength = this.uploader.queue.length;
         this.fileUploadService.conform_files(this.resultFileList, this.analysisJobId).then(
             status => {
@@ -175,13 +179,13 @@ export class UploadFilesComponent implements OnInit {
         if (this.analysisJobId == 0) {
             this.fileUploadService.apply_an_analysis_job().then(
                 analysisJob => {
-                    console.log(analysisJob);
+                    // console.log(analysisJob);
                     this.analysisJob = this.analysisJob;
                     this.analysisJobId = analysisJob.id;
                     this.analysisData.changeAnalysisJob(analysisJob);
                     this.analysisJobToken = analysisJob.token;
                     this.analysisData.changeAnalysisToken(analysisJob.token);
-                    console.log(this.analysisJob.accessionId);
+                    // console.log(this.analysisJob.accessionId);
                     this.uploader.options.headers = [{name: 'analysisId', value: String(this.analysisJob.id)},
                                                      {name: 'token', value: String(this.analysisJobToken)},
                                                      {name: 'accessionId', value: String(this.analysisJob.accessionId)}];
@@ -235,7 +239,42 @@ export class UploadFilesComponent implements OnInit {
     }
 
 
-    private isFileAllowed(fileName:String):boolean{
+    private isFileSizeAllowed():boolean{
+        let totalFileSize = 0;
+        for (let i = 0; i < this.uploader.queue.length; i++) {
+            let fileItem = this.uploader.queue[i];
+            totalFileSize += fileItem.file.size;
+        }
+        if (totalFileSize > this.maxTotalFileSize * this.fileSizeUnitInBytes){
+            alert("The total file's size " + totalFileSize +
+                "is above the max threshold " + this.maxTotalFileSize * this.fileSizeUnitInBytes);
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+    private isFileRedundance(fileName:String):boolean{
+        let thisFileCount = 0;
+        for (let i = 0; i < this.uploader.queue.length; i++) {
+            let fileItem = this.uploader.queue[i];
+            if(fileItem.file.name == fileName){
+                thisFileCount += 1;
+            };
+        }
+        if (thisFileCount == 1){
+            return false;
+        }
+        else if(thisFileCount >= 2){
+            alert("This file name " + fileName + "is already in list, will be removed");
+            return true;
+        }
+        else{
+            console.error("Something is wrong, thisFileCount less than 1");
+        }
+    }
+
+    private isFileTypeAllowed(fileName:String):boolean{
         let fileExt = "";
         let splitList = fileName.split('.');
         if (splitList[splitList.length - 1] == 'gz'){
@@ -252,7 +291,9 @@ export class UploadFilesComponent implements OnInit {
 
     onAfterAddingFile(fileItem: FileItem) {
         var filename = fileItem.file.name;
-        if(!this.isFileAllowed(filename)){
+        if(!this.isFileTypeAllowed(filename) || !this.isFileSizeAllowed() ||
+            this.isFileRedundance(filename)
+            ){
             this.uploader.removeFromQueue(fileItem);
         }
     }

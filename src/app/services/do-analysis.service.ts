@@ -40,7 +40,6 @@ export class DoAnalysisService{
             params: params,
             withCredentials: false
         });
-
         return this.http.post(this.doAanlysisUrl, null, options)
                     .toPromise()
                     .then(response => {
@@ -60,20 +59,21 @@ export class DoAnalysisService{
         if(token == null || token.length != 10){
             return null;
         }
-
-            return this.http.get(this.getJobByTokenUrl + "token=" + token)
-                .map(response => response.json())
-                .catch(this.handleError);
-    }
+        return this.configService.getConfig2().mergeMap(config => {
+            const c = config.json();
+            return this.http.get(c.baseUrl + "/" + "analysis/getAnalysisJobByToken?" + 'token=' + token).map(v => v.json()).first();
+        });
+    };
 
     get_page_of_log_by_token(token:string, startLineNo:number): Observable<PageOfLogFile> {
-        if(token == null || token.length != 10){
-            return null;
-        }
-
-            return this.http.get(this.getPageOfLogByTokenUrl + "token=" + token + "&startLineNo=" + startLineNo)
-                .map(response => response.json())
-                ;
+        // if(token == null || token.length != 10){
+        //     return null;
+        // }
+        return this.configService.getConfig2().mergeMap(config => {
+            const c = config.json();
+            return this.http.get(c.baseUrl + "/" + "analysis/getPageOfLogByToken?" + "token=" + token + "&startLineNo=" + startLineNo)
+                .map(v => v.json()).first();
+        })
     }
 
 }
