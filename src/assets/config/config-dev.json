@@ -1,6 +1,6 @@
 {
   "baseUrl" : "http://20.20.10.181:8070/v1/",
-  "analysisBaseUrl" : "http://20.20.10.181:5000/",
+  "analysisBaseUrl" : "http://20.20.10.181:5001/",
   "clusterBaseUrl" : "http://20.20.10.180:8090/v1/",
   "peptideSearchURLPrefix" : "https://unipept.ugent.be/sequences/",
   "peptideSearchURLSuffix" : "",
