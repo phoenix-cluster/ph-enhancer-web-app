@@ -80,5 +80,26 @@
 
         </div>
     </div>
+
+
     </div>
+
+    <div class="x-fieldset">
+        <div class="x-fieldset-body">
+            <span xmlns="http://www.w3.org/1999/html" class="legend">Check Job Result</span>
+            <label class="form-check-label" >Check Job Result</label>
+            <input class="mb-2 mr-sm-2 mb-sm-0 custom_input" [(ngModel)]="analysisJobToken" name="analysisJobTokenInput"  id="tokenInput2" placeholder={{analysisJobToken}}>
+           aaa
+            <!--{{analysisJob.status}}-->
+            <div class="form-row">
+                <div class="col-md-8 hidden-sm"></div>
+                <div class="col-md-4 col-sm-6" style="text-align: center;">
+                    <button class="custom_button" (click)="checkJobResult()">Go Check</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
 </form>

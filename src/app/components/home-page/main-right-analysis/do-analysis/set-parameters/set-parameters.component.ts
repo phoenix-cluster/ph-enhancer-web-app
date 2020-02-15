@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnDestroy, Input, OnInit} from '@angular/core';
 import {environment} from "../../../../../../environments/environment";
 import {DoAnalysisService} from "../../../../../services/do-analysis.service";
 import {AnalysisDataService} from "../../../../../services/analysis-data.service";
@@ -6,6 +6,8 @@ import {ConfigService} from "../../../../../services/config.service";
 import {Router} from "@angular/router";
 import {_catch} from "rxjs/operator/catch";
 import {AnalysisJob} from "../../../../../model/analysisJob";
+import {AnonymousSubscription} from "rxjs/Subscription";
+import {Observable} from "rxjs/Observable";
 // import { NG_VALIDATORS,Validator, Validators,AbstractControl,ValidatorFn } from '@angular/forms';
 
 @Component({
@@ -23,6 +25,10 @@ export class SetParametersComponent implements OnInit {
     makeResultsPublic:boolean = false;
     public minClusterSize:number ;
 
+
+    private timerSubscription: AnonymousSubscription;
+    private postsSubscription: AnonymousSubscription;
+
     constructor(private router: Router, private  doAnalysisService: DoAnalysisService, private analysisData:AnalysisDataService,
                 private configService:ConfigService) {
     }
@@ -39,7 +45,25 @@ export class SetParametersComponent implements OnInit {
                 this.minClusterSize = configJson.defaultMinClusterSize;
             }
         )
+        // console.log(this.analysisJobToken);
+        // if(this.analysisJobToken == null || this.analysisJobToken.length < 1){
+        //     this.analysisJobToken = "nulltokenn";
+        //     console.log(this.analysisJobToken);
+        // }
+        // this.refreshData(this.analysisJobToken);
+
     }
+
+    // ngOnDestroy(): void {
+    //     if (this.postsSubscription) {
+    //         this.postsSubscription.unsubscribe();
+    //     }
+    //     if (this.timerSubscription) {
+    //         this.timerSubscription.unsubscribe();
+    //     }
+    // }
+
+
 
     doAnalysis() {
 
@@ -95,6 +119,16 @@ export class SetParametersComponent implements OnInit {
         this.router.navigateByUrl("job_progress/" + this.analysisJobToken).then(_ =>{console.log("route changed to job_progress")});
     }
 
+    checkJobResult(){
+        if(this.analysisJobToken.length != 10){
+            alert("The analysis job token is not char(10)");
+            return;
+        }
+
+        this.router.navigateByUrl(this.analysisJobToken + "/low_conf" ).then(_ =>{console.log("route changed to low_conf")});
+    }
+
+
     refreshPage(){
         location.reload();
     }
@@ -114,5 +148,22 @@ export class SetParametersComponent implements OnInit {
         this.makeResultsPublic = !this.makeResultsPublic;
         console.log(this.makeResultsPublic);
     }
+
+    // private subscribeToData(token): void {
+    //     this.timerSubscription = Observable.timer(50000).first().subscribe(() => this.refreshData(token));
+    // }
+
+
+    // private refreshData(token): void {
+    //     this.postsSubscription = this.doAnalysisService.get_analysis_job_by_token(token).subscribe(analysisJob => {
+    //         this.analysisJob = analysisJob;
+    //         if (this.analysisJob.status != "finished") {
+    //             this.subscribeToData(token);
+    //         }
+    //     });
+
+    // }
+
+
 
 }
