@@ -8,6 +8,7 @@ import {_catch} from "rxjs/operator/catch";
 import {AnalysisJob} from "../../../../../model/analysisJob";
 import {AnonymousSubscription} from "rxjs/Subscription";
 import {Observable} from "rxjs/Observable";
+import {CheckExamplesService} from "../../../../../services/checkExams/check-examples.service";
 // import { NG_VALIDATORS,Validator, Validators,AbstractControl,ValidatorFn } from '@angular/forms';
 
 @Component({
@@ -30,7 +31,7 @@ export class SetParametersComponent implements OnInit {
     private postsSubscription: AnonymousSubscription;
 
     constructor(private router: Router, private  doAnalysisService: DoAnalysisService, private analysisData:AnalysisDataService,
-                private configService:ConfigService) {
+                private configService:ConfigService, public checkExamService: CheckExamplesService) {
     }
 
     ngOnInit() {
@@ -125,7 +126,10 @@ export class SetParametersComponent implements OnInit {
             return;
         }
 
-        this.router.navigateByUrl(this.analysisJobToken + "/low_conf" ).then(_ =>{console.log("route changed to low_conf")});
+        this.router.navigateByUrl(this.analysisJobToken + "/low_conf" ).then(_ =>{
+            this.checkExamService.projectId.id = this.analysisJobToken
+            console.log("route changed to low_conf")
+        });
     }
 
 

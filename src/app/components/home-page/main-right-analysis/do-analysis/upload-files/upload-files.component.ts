@@ -9,7 +9,7 @@ import {AnalysisDataService} from "../../../../../services/analysis-data.service
 import {ConfigService} from "../../../../../services/config.service";
 import {AnalysisJob} from "../../../../../model/analysisJob";
 import {queue} from "rxjs/scheduler/queue";
-
+import {CheckExamplesService} from "../../../../../services/checkExams/check-examples.service";
 @Component({
     selector: 'app-upload-files',
     templateUrl: './upload-files.component.html',
@@ -30,7 +30,7 @@ export class UploadFilesComponent implements OnInit {
     modalReference:NgbModalRef;
 
     constructor(private modalService: NgbModal, private fileUploadService: FileUploadService,
-                 private analysisData:AnalysisDataService, private  configService:ConfigService) {
+                 private analysisData:AnalysisDataService, private  configService:ConfigService, public checkExamService: CheckExamplesService) {
         this.analysisJobId = 0;
     }
 
@@ -165,6 +165,7 @@ export class UploadFilesComponent implements OnInit {
         this.fileUploadService.conform_files(this.resultFileList, this.analysisJobId).then(
             status => {
                 console.log(status)
+                this.checkExamService.projectId.id = this.analysisJobToken
             }
         )
         this.modalReference.close();
