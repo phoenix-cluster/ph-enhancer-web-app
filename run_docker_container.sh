@@ -15,7 +15,7 @@ docker container run \
   phoenixenhancer/enhancer-web-app
 
 #copy the modified config file into container
-docker cp config-docker.ini enhancer_web_app_container:/usr/share/nginx/html/dist/assets/config/.
+docker cp  src/assets/config/config-docker.json enhancer_web_app_container:/app/assets/config/.
 
 #reload nginx service 
 docker exec enhancer_web_app_container sh -c "nginx -s reload"
