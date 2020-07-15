@@ -21,7 +21,7 @@ export class SpectrumService {
     public getSpectra(titlesStr: string): Promise<Spectrum[]> {
         return    this.configService.getConfig().then((configJson) => {
             let spectraUrl = configJson.baseUrl.concat("spectrum/titles/", encodeURIComponent(titlesStr));
-            //        console.log(spectraUrl);
+                   // console.log(spectraUrl);
             let spectra = this.localStorageService.getData("spectra_" + titlesStr);
             if(spectra != null && spectra.length > 0) {
                 // console.log(spectra);
@@ -31,6 +31,7 @@ export class SpectrumService {
                     .toPromise()
                     .then(response => {
                         let spectra: Spectrum[] = response.json() as Spectrum[];
+                        // console.log(spectra);
                         this.localStorageService.setData("spectra_" +titlesStr, spectra);
                         return spectra
                     })
