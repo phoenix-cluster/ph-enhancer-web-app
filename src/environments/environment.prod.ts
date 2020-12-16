@@ -5,18 +5,5 @@
 
 export const environment = {
   production: true,
-  configFilePath: 'assets/config/config-prod.json',
-  baseUrl : 'http://enhancer.ncpsb.org:8090/v1/',
-  // analysisBaseUrl : 'http://namenode:8090/example/v1/',
-  analysisBaseUrl : 'http://enhancer.ncpsb.org:5000/',
-  clusterBaseUrl : 'http://enhancer.ncpsb.org:8090/v1/',
-  defaultProject : 'PXD000021',
-  defaultMinClusterSize : 10,
-  allowedFileType : [
-        'xml','xml.gz',
-        'mzid','mzid.gz',
-        'mgf','mgf.gz',
-        'MGF','MGF.gz',
-        'mzML'
-    ]
+  configFilePath: 'assets/config/config-prod.json'
 };
