@@ -41,7 +41,7 @@
     "font-awesome": "^4.7.0",
     "hammerjs": "2.0.x",
     "jquery": "^3.2.1",
-    "jquery-ui": "^1.12.1",
+    "jquery-ui": "^1.13.2",
     "ng-html-util": "1.0.x",
     "ng-sidebar": "^6.0.4",
     "ng2-file-upload": "1.3.0",
